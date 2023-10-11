@@ -18,7 +18,7 @@ export interface IRegisterUserFormData {
   street: string;
   number: string;
   complement: string | null;
-  account_type: string | null;
+  account_type: string;
   password: string;
   confirmPassword: string;
 }

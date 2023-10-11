@@ -5,6 +5,7 @@ import {
   StyledFooterLink,
   StyledFooterParagraph,
 } from './style';
+import logo from '../../assets/icons/logo.svg';
 
 export const Footer = () => {
   return (
@@ -19,10 +20,10 @@ export const Footer = () => {
           </StyledFooterParagraph>
         </StyledFooterContainer>
         <StyledFooterContainer>
-          <StyledFooterLink to='aboutus'></StyledFooterLink>
+          <StyledFooterLink to='#'></StyledFooterLink>
         </StyledFooterContainer>
       </StyledFooterContainer>
-      <a href={'#'}></a>
+      <a href={'#'}>Botão que rola a página para a nav</a>
     </StyledFooter>
   );
 };
