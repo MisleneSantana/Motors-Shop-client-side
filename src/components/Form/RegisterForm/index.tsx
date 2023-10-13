@@ -1,23 +1,24 @@
 import { zodResolver } from '@hookform/resolvers/zod/src/zod.js';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { RegisterFormSchema, TRegisterFormSchema } from './RegisterFormSchema';
+import { RegisterFormSchema } from './RegisterFormSchema';
 import { RadioInput } from '../../RadioInput';
 import { Input } from '../../Input';
+import { UserContext } from '../../../providers/UserContext';
 
-export interface IRegisterUserFormData {
+export interface IRegisterUserFormValues {
   name: string;
   email: string;
   cpf: string;
   phone_number: string;
   birth_date: string;
-  description: string | null;
+  description?: string | null;
   cep: string;
   state: string;
   city: string;
   street: string;
   number: string;
-  complement: string | null;
+  complement?: string | null;
   account_type: string;
   password: string;
   confirmPassword: string;
@@ -25,18 +26,18 @@ export interface IRegisterUserFormData {
 
 export const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
-  //   const { newUserRegister } = useContext(UserContext);
+  const { userRegister } = useContext(UserContext);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegisterUserFormData>({
+  } = useForm<IRegisterUserFormValues>({
     resolver: zodResolver(RegisterFormSchema),
   });
 
-  const submit: SubmitHandler<TRegisterFormSchema> = (formData) => {
-    // newUserRegister(formData, setLoading);
+  const submit: SubmitHandler<IRegisterUserFormValues> = (formData) => {
+    userRegister(formData, setLoading);
   };
 
   return (

@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 import { TLoginFormSchema } from '../../components/Form/LoginForm/LoginFormSchema';
 import { toast } from 'react-toastify';
-import { IRegisterUserFormData } from '../../components/Form/RegisterForm';
+import { IRegisterUserFormValues } from '../../components/Form/RegisterForm';
 
 export interface IUserProviderProps {
   children: React.ReactNode;
@@ -14,16 +14,13 @@ export interface IUserContext {
     formData: TLoginFormSchema,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => Promise<void>;
-  register: (
-    formData: IRegisterUserFormData,
+  userRegister: (
+    formData: IUserRegister,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => Promise<void>;
-  updateUserProfile: (userEditFormData: IRegisterUserFormData) => Promise<void>;
-
-  // logout: () => void;
-  // isEditUserProfileModalOpen: boolean;
-  // setIsEditUserProfileModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  // setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
+  updateUserProfile: (
+    userEditFormData: IRegisterUserFormValues
+  ) => Promise<void>;
 }
 
 export interface IUser {
@@ -39,13 +36,13 @@ export interface IUserRegister {
   cpf: string;
   phone_number: string;
   birth_date: string;
-  description: string | null;
+  description?: string | null;
   cep: string;
   state: string;
   city: string;
   street: string;
   number: string;
-  complement: string | null;
+  complement?: string | null;
   account_type: string;
   password: string;
   confirmPassword: string;
@@ -167,7 +164,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
   };
 
   // 3. Cadastrar (user)
-  const register = async (
+  const userRegister = async (
     formData: IUserRegister,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
@@ -192,7 +189,9 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
   };
 
   // 3. Atualizar perfil (user)
-  const updateUserProfile = async (userEditFormData: IRegisterUserFormData) => {
+  const updateUserProfile = async (
+    userEditFormData: IRegisterUserFormValues
+  ) => {
     const userId = localStorage.getItem('@user:id');
     const userToken = localStorage.getItem('@user:token');
     try {
@@ -215,7 +214,9 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, login, register, updateUserProfile }}>
+    <UserContext.Provider
+      value={{ user, login, userRegister, updateUserProfile }}
+    >
       {children}
     </UserContext.Provider>
   );

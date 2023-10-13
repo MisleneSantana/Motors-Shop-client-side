@@ -4,13 +4,14 @@ import { useLocation } from 'react-router-dom';
 import { LoginFormSchema, TLoginFormSchema } from './LoginFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../../Input';
+import { UserContext } from '../../../providers/UserContext';
 
 export const LoginForm = () => {
   const route = useLocation();
   const location = `${route.pathname}`;
 
   const [loading, setLoading] = useState(false);
-  // const { signIn } = useContext(UserContext);
+  const { login } = useContext(UserContext);
 
   const {
     register,
@@ -19,7 +20,7 @@ export const LoginForm = () => {
   } = useForm<TLoginFormSchema>({ resolver: zodResolver(LoginFormSchema) });
 
   const submit: SubmitHandler<TLoginFormSchema> = (formData) => {
-    // signIn(formData, setLoading);
+    login(formData, setLoading);
   };
   if (location === '/signin') {
     return (

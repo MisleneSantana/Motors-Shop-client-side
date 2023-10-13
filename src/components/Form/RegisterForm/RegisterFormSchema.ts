@@ -19,13 +19,13 @@ export const RegisterFormSchema = z
     cpf: z.string().nonempty('O CPF é obrigatório'),
     phone_number: z.string().nonempty('O telefone é obrigatório'),
     birth_date: z.string().nonempty('A data de nascimento é obrigatória'),
-    description: z.string(),
+    description: z.string().optional(),
     cep: z.string().nonempty('O CEP é obrigatório'),
     state: z.string().nonempty('O estado é obrigatório'),
     city: z.string().nonempty('A cidade é obrigatória'),
     street: z.string().nonempty('A rua é obrigatória'),
     number: z.string().nonempty('O número é obrigatório'),
-    complement: z.string(),
+    complement: z.string().optional(),
     account_type: z.string().nonempty('Selecione o tipo de conta'),
     password: z
       .string()
