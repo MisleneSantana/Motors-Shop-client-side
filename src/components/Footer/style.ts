@@ -46,16 +46,19 @@ export const StyledFooterContainer = styled.div`
   display: flex;
   gap: 2rem;
   align-items: center;
+
+  > a {
+    border: transparent;
+  }
 `;
 
 export const StyledFooterImage = styled.img`
   width: 180px;
   max-width: 100%;
-  color: ;
 `;
 
 export const StyledFooterParagraph = styled.p`
-  color: ;
+  color: #ffffff;
 `;
 
 export const StyledFooterLink = styled(Link)`
@@ -66,6 +69,6 @@ export const StyledFooterLink = styled(Link)`
   justify-content: center;
   border-radius: 4px;
   cursor: pointer;
-  color: ;
+  color: #ffffff;
   background-color: ;
 `;

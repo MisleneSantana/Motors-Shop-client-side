@@ -1,4 +1,5 @@
 import { AnnouncementList } from '../../components/AnnouncementList';
+import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
 
 export const Home = () => {
@@ -14,6 +15,7 @@ export const Home = () => {
           <AnnouncementList />
         </section>
       </main>
+      <Footer />
     </>
   );
 };

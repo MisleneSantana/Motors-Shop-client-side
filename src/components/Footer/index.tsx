@@ -5,7 +5,8 @@ import {
   StyledFooterLink,
   StyledFooterParagraph,
 } from './style';
-import logo from '../../assets/icons/logo.svg';
+import logo from '../../assets/icons/logo_white.svg';
+import { FaAngleUp } from 'react-icons/fa';
 
 export const Footer = () => {
   return (
@@ -23,7 +24,9 @@ export const Footer = () => {
           <StyledFooterLink to='#'></StyledFooterLink>
         </StyledFooterContainer>
       </StyledFooterContainer>
-      <a href={'#'}>Botão que rola a página para a nav</a>
+      <a href='#'>
+        <FaAngleUp />
+      </a>
     </StyledFooter>
   );
 };
