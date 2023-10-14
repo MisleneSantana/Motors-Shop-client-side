@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { RegisterFormSchema } from './RegisterFormSchema';
 import { RadioInput } from '../../RadioInput';
 import { Input } from '../../Input';
-import { UserContext } from '../../../providers/UserContext';
+import { UserContext } from '../../../providers/User/UserContext';
 
 export interface IRegisterUserFormValues {
   name: string;

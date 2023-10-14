@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AnnouncementContext } from '../../providers/AnnouncementContext';
+import { AnnouncementContext } from '../../providers/Announcement/AnnouncementContext';
 import { AnnouncementCard } from './AnnouncementCard';
 
 export const AnnouncementList = () => {

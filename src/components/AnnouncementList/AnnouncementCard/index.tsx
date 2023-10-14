@@ -1,4 +1,4 @@
-import { IAnnouncementResponse } from '../../../providers/AnnouncementContext';
+import { IAnnouncementResponse } from '../../../providers/Announcement/AnnouncementContext';
 
 interface IAnnouncementCartProps {
   announcement: IAnnouncementResponse;

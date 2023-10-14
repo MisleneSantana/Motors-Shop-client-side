@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { LoginFormSchema, TLoginFormSchema } from './LoginFormSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../../Input';
-import { UserContext } from '../../../providers/UserContext';
+import { UserContext } from '../../../providers/User/UserContext';
 
 export const LoginForm = () => {
   const route = useLocation();

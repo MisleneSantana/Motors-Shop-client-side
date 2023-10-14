@@ -1,6 +1,6 @@
 import logo from '../../assets/icons/logo.svg';
 import { useContext } from 'react';
-import { UserContext } from '../../providers/UserContext';
+import { UserContext } from '../../providers/User/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
