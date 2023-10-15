@@ -2,6 +2,7 @@ import { GlobalStyle } from './styles/global';
 import { LoadingProvider } from './providers/Loading/LoadingContext';
 import { UserProvider } from './providers/User/UserContext';
 import { RoutesMain } from './routes';
+import { AuthProvider } from './providers/Auth/AuthContext';
 
 const App = () => {
   return (
@@ -9,7 +10,9 @@ const App = () => {
       <GlobalStyle />
       <LoadingProvider>
         <UserProvider>
-          <RoutesMain />
+          <AuthProvider>
+            <RoutesMain />
+          </AuthProvider>
         </UserProvider>
       </LoadingProvider>
     </>

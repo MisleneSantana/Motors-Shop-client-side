@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import {
   userAddressRegisterSchema,
-  userAddressReturnSchema,
+  userAddressResponseSchema,
   userAddressUpdateSchema,
 } from './address.schema';
 
@@ -44,7 +44,7 @@ export const userResponseSchema = z
   })
   .omit({ password: true, reset_password: true, code_expire: true });
 
-export const userReadSchema = userAddressReturnSchema.array();
+export const userReadSchema = userAddressResponseSchema.array();
 
 export const userUpdateSchema = userRegisterSchema.optional();
 
@@ -55,4 +55,9 @@ export const userLoginSchema = z.object({
 
 export const userLoginResponse = z.object({
   token: z.string(),
+});
+
+export const userLoginReturn = z.object({
+  token: z.string(),
+  user: userSchema,
 });
