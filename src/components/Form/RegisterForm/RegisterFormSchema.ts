@@ -4,7 +4,7 @@ export const RegisterFormSchema = z
   .object({
     name: z
       .string()
-      .nonempty('O nome é obrigatório')
+      .nonempty({ message: 'Campo obrigatório' })
       .transform((name) => {
         return name
           .trim()
@@ -15,18 +15,18 @@ export const RegisterFormSchema = z
     email: z
       .string()
       .email('E-mail inválido')
-      .nonempty('O e-mail é obrigatório'),
-    cpf: z.string().nonempty('O CPF é obrigatório'),
-    phone_number: z.string().nonempty('O telefone é obrigatório'),
-    birth_date: z.string().nonempty('A data de nascimento é obrigatória'),
+      .nonempty({ message: 'Campo obrigatório' }),
+    cpf: z.string().nonempty({ message: 'Campo obrigatório' }),
+    phone_number: z.string().nonempty({ message: 'Campo obrigatório' }),
+    birth_date: z.string().nonempty({ message: 'Campo obrigatório' }),
     description: z.string().optional(),
-    cep: z.string().nonempty('O CEP é obrigatório'),
-    state: z.string().nonempty('O estado é obrigatório'),
-    city: z.string().nonempty('A cidade é obrigatória'),
-    street: z.string().nonempty('A rua é obrigatória'),
-    number: z.string().nonempty('O número é obrigatório'),
+    cep: z.string().nonempty({ message: 'Campo obrigatório' }),
+    state: z.string().nonempty({ message: 'Campo obrigatório' }),
+    city: z.string().nonempty({ message: 'Campo obrigatório' }),
+    street: z.string().nonempty({ message: 'Campo obrigatório' }),
+    number: z.string().nonempty({ message: 'Campo obrigatório' }),
     complement: z.string().optional(),
-    account_type: z.string().nonempty('Selecione o tipo de conta'),
+    account_type: z.string().nonempty('Selecione o perfil da conta'),
     password: z
       .string()
       .min(7, 'Mínimo de 7 caracteres')

@@ -1,21 +1,29 @@
 import { createContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
-import { TLoginFormSchema } from '../../components/Form/LoginForm/LoginFormSchema';
-import { toast } from 'react-toastify';
 import { IRegisterUserFormValues } from '../../components/Form/RegisterForm';
+import {
+  TUser,
+  TUserLogin,
+  TUserLoginResponse,
+  TUserRegisterRequest,
+  TUserResponse,
+} from '../../interfaces/user.interfaces';
+import { TLoginFormSchema } from '../../components/Form/LoginForm/LoginFormSchema';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useRequest } from '../../hooks/useRequest.hook';
 
 export interface IUserProviderProps {
   children: React.ReactNode;
 }
 export interface IUserContext {
-  user: IUser | null;
+  user: TUser | undefined;
   login: (
     formData: TLoginFormSchema,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => Promise<void>;
-  userRegister: (
-    formData: IUserRegister,
+  registerUser: (
+    formData: TUserRegisterRequest,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => Promise<void>;
   updateUserProfile: (
@@ -23,48 +31,31 @@ export interface IUserContext {
   ) => Promise<void>;
 }
 
-export interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  account_type: string;
-}
-
-export interface IUserRegister {
-  name: string;
-  email: string;
-  cpf: string;
-  phone_number: string;
-  birth_date: string;
-  description?: string | null;
-  cep: string;
-  state: string;
-  city: string;
-  street: string;
-  number: string;
-  complement?: string | null;
-  account_type: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface IUserLoginResponse {
-  token: string;
-  user: IUser;
-}
-
-interface IUserRegisterResponse {
-  token: string;
-  user: IUser;
-}
-
 export const UserContext = createContext({} as IUserContext);
 
 export const UserProvider = ({ children }: IUserProviderProps) => {
-  const route = useLocation();
-  const location = `${route.pathname}`;
   const navigate = useNavigate();
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<TUser | undefined>({} as TUser);
+  const request = useRequest();
+
+  // 1. Cadastrar (user)
+  const registerUser = async (formData: TUserRegisterRequest) => {
+    await request({
+      tryFunction: async () => {
+        const response = await api.post<TUserResponse>('/users', formData);
+        const newUser = response.data;
+
+        toast.success('Cadastro realizado', {
+          autoClose: 2000,
+        });
+      },
+      errorFunction: () => {
+        toast.error('Algo deu errado', {
+          autoClose: 2000,
+        });
+      },
+    });
+  };
 
   // 1. Auto-login
   useEffect(() => {
@@ -110,13 +101,13 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
 
   // 2. Login (entrar)
   const login = async (
-    formData: TLoginFormSchema,
+    formData: TUserLogin,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
     if (location === '/login') {
       try {
         setLoading(true);
-        const { data } = await api.post<IUserLoginResponse>('/login', formData);
+        const { data } = await api.post<TUserLoginResponse>('/login', formData);
 
         if (data.user.account_type.toLocaleUpperCase() === 'seller') {
           localStorage.setItem('@user:token', data.token);
@@ -163,31 +154,6 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     }
   };
 
-  // 3. Cadastrar (user)
-  const userRegister = async (
-    formData: IUserRegister,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
-    if (location === '/register') {
-      try {
-        await api.post<IUserRegisterResponse>('/users', formData);
-        setLoading(true);
-        toast.success('Cadastro realizado com sucesso', {
-          autoClose: 2000,
-        });
-        setTimeout(() => {
-          navigate('/login');
-        }, 2000);
-      } catch (error) {
-        toast.error('Oops! Algo deu errado tente novamente', {
-          autoClose: 2000,
-        });
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
   // 3. Atualizar perfil (user)
   const updateUserProfile = async (
     userEditFormData: IRegisterUserFormValues
@@ -215,7 +181,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
 
   return (
     <UserContext.Provider
-      value={{ user, login, userRegister, updateUserProfile }}
+      value={{ user, registerUser, login, updateUserProfile }}
     >
       {children}
     </UserContext.Provider>

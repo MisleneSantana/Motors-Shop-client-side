@@ -14,14 +14,7 @@ export const RoutesMain = () => {
       <Route path='/register' element={<Register />}></Route>
 
       {/* <Route element={<RoutesProtected />}> */}
-      <Route
-        path='/buyerHome'
-        element={
-          // <CommerceProvider>
-          <BuyerDashboard />
-          // </CommerceProvider>
-        }
-      />
+      <Route path='/buyerHome' element={<BuyerDashboard />} />
       <Route path='/sellerHome' element={<SellerDashboard />} />
       {/* </Route> */}
 

@@ -10,8 +10,8 @@ export const LoginForm = () => {
   const route = useLocation();
   const location = `${route.pathname}`;
 
-  const [loading, setLoading] = useState(false);
   const { login } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -22,31 +22,6 @@ export const LoginForm = () => {
   const submit: SubmitHandler<TLoginFormSchema> = (formData) => {
     login(formData, setLoading);
   };
-  if (location === '/signin') {
-    return (
-      <form onSubmit={handleSubmit(submit)}>
-        <h1>Faça login na sua conta</h1>
-        <Input
-          id='login'
-          type='email'
-          disabled={loading}
-          label='Email'
-          {...register('email')}
-        />
-        {errors ? <span>{errors.email?.message}</span> : null}
-        <Input
-          id='senha'
-          type='password'
-          label='Senha'
-          {...register('password')}
-        />
-        {errors ? <span>{errors.password?.message}</span> : null}
-        <button type='submit' disabled={loading}>
-          {loading ? 'Entrando...' : 'Entrar'}
-        </button>
-      </form>
-    );
-  }
   if (location === '/login') {
     return (
       <form onSubmit={handleSubmit(submit)}>

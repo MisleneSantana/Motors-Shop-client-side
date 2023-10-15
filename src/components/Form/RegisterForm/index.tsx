@@ -26,6 +26,7 @@ export interface IRegisterUserFormValues {
 
 export const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
+  // const [isSeller, setIsSeller] = useState(Boolean);
   const { userRegister } = useContext(UserContext);
 
   const {
