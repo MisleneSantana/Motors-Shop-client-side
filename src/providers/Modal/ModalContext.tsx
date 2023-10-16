@@ -5,22 +5,29 @@ export interface IModalProviderProps {
 }
 
 export interface IModalContext {
-  showModal: string;
-  setShowModal: React.Dispatch<React.SetStateAction<string>>;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  openModal: () => void;
   closeModal: () => void;
 }
 
 export const ModalContext = createContext({} as IModalContext);
 
 export const ModalProvider = ({ children }: IModalProviderProps) => {
-  const [showModal, setShowModal] = useState<string>('');
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
 
   const closeModal = () => {
-    setShowModal('');
+    setShowModal(false);
   };
 
   return (
-    <ModalContext.Provider value={{ showModal, setShowModal, closeModal }}>
+    <ModalContext.Provider
+      value={{ showModal, setShowModal, openModal, closeModal }}
+    >
       {children}
     </ModalContext.Provider>
   );

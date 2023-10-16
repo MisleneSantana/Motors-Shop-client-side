@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod/src/zod.js';
 import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { TRegisterFormSchema, registerFormSchema } from './register.validator';
+import { TRegisterValidator, registerValidator } from './register.validator';
 import { RadioInput } from '../../RadioInput';
 import { Input } from '../../Input';
 import { UserContext } from '../../../providers/User/UserContext';
@@ -17,8 +17,8 @@ export const RegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TRegisterFormSchema>({
-    resolver: zodResolver(registerFormSchema),
+  } = useForm<TRegisterValidator>({
+    resolver: zodResolver(registerValidator),
   });
 
   const submit: SubmitHandler<TUserRegisterRequest> = (formData) => {

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const registerFormSchema = z
+export const registerValidator = z
   .object({
     name: z
       .string()
@@ -43,7 +43,7 @@ export const registerFormSchema = z
     path: ['confirmPassword'],
   });
 
-export const registerFormRequest = z.object({
+export const registerRequestValidator = z.object({
   name: z
     .string()
     .nonempty({ message: 'Campo obrigatório' })
@@ -74,6 +74,8 @@ export const registerFormRequest = z.object({
   password: z.string().nonempty('Campo obrigatório'),
 });
 
-export type TRegisterFormSchema = z.infer<typeof registerFormSchema>;
-export type TRegisterRequest = z.infer<typeof registerFormRequest>;
-export const editUserSchema = registerFormRequest.partial();
+export type TRegisterValidator = z.infer<typeof registerValidator>;
+export type TRegisterRequestValidator = z.infer<
+  typeof registerRequestValidator
+>;
+export const editUserSchema = registerRequestValidator.partial();

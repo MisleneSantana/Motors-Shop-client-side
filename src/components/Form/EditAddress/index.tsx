@@ -8,7 +8,7 @@ import {
   editUserSchema,
 } from '../RegisterForm/register.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TAddressRequest, addressSchema } from './address.validator';
+import { addressSchema } from './address.validator';
 import { Input } from '../../Input';
 
 export const EditAddress = () => {
