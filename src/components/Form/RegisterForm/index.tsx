@@ -1,44 +1,28 @@
 import { zodResolver } from '@hookform/resolvers/zod/src/zod.js';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { RegisterFormSchema } from './RegisterFormSchema';
+import { TRegisterFormSchema, registerFormSchema } from './register.validator';
 import { RadioInput } from '../../RadioInput';
 import { Input } from '../../Input';
 import { UserContext } from '../../../providers/User/UserContext';
-
-export interface IRegisterUserFormValues {
-  name: string;
-  email: string;
-  cpf: string;
-  phone_number: string;
-  birth_date: string;
-  description?: string | null;
-  cep: string;
-  state: string;
-  city: string;
-  street: string;
-  number: string;
-  complement?: string | null;
-  account_type: string;
-  password: string;
-  confirmPassword: string;
-}
+import { LoadingContext } from '../../../providers/Loading/LoadingContext';
+import { TUserRegisterRequest } from '../../../interfaces/user.interfaces';
+import { TextArea } from '../../Textarea';
 
 export const RegisterForm = () => {
-  const [loading, setLoading] = useState(false);
-  // const [isSeller, setIsSeller] = useState(Boolean);
-  const { userRegister } = useContext(UserContext);
+  const { loading } = useContext(LoadingContext);
+  const { registerUser } = useContext(UserContext);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegisterUserFormValues>({
-    resolver: zodResolver(RegisterFormSchema),
+  } = useForm<TRegisterFormSchema>({
+    resolver: zodResolver(registerFormSchema),
   });
 
-  const submit: SubmitHandler<IRegisterUserFormValues> = (formData) => {
-    userRegister(formData, setLoading);
+  const submit: SubmitHandler<TUserRegisterRequest> = (formData) => {
+    registerUser(formData);
   };
 
   return (
@@ -90,14 +74,12 @@ export const RegisterForm = () => {
         {...register('birth_date')}
         error={errors.birth_date}
       />
-      <Input
-        type='description'
+      <TextArea
         label='Digitar descrição'
         placeholder='00/00/00'
         id='description'
         disabled={loading}
         {...register('description')}
-        error={errors.description}
       />
       <h3>Informações de endereço</h3>
       <Input
@@ -106,8 +88,8 @@ export const RegisterForm = () => {
         placeholder='00000.000'
         id='cep'
         disabled={loading}
-        {...register('cep')}
-        error={errors.cep}
+        {...register('address.cep')}
+        error={errors.address?.cep}
       />
       <div>
         <Input
@@ -116,8 +98,8 @@ export const RegisterForm = () => {
           placeholder='Ex: SP'
           id='state'
           disabled={loading}
-          {...register('state')}
-          error={errors.state}
+          {...register('address.state')}
+          error={errors.address?.state}
         />
         <Input
           type='city'
@@ -125,8 +107,8 @@ export const RegisterForm = () => {
           placeholder='Digitar cidade'
           id='city'
           disabled={loading}
-          {...register('city')}
-          error={errors.city}
+          {...register('address.city')}
+          error={errors.address?.city}
         />
       </div>
       <Input
@@ -135,8 +117,8 @@ export const RegisterForm = () => {
         placeholder='Digitar rua'
         id='street'
         disabled={loading}
-        {...register('street')}
-        error={errors.street}
+        {...register('address.street')}
+        error={errors.address?.street}
       />
       <div>
         <Input
@@ -145,8 +127,8 @@ export const RegisterForm = () => {
           placeholder='Digitar rua'
           id='number'
           disabled={loading}
-          {...register('number')}
-          error={errors.number}
+          {...register('address.number')}
+          error={errors.address?.number}
         />
         <Input
           type='complement'
@@ -154,8 +136,8 @@ export const RegisterForm = () => {
           placeholder='Ex: apto 102'
           id='complement'
           disabled={loading}
-          {...register('complement')}
-          error={errors.complement}
+          {...register('address.complement')}
+          error={errors.address?.complement}
         />
       </div>
       <>

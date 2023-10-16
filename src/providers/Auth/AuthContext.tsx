@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { LoadingContext } from '../Loading/LoadingContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -8,32 +8,32 @@ import {
   TUserLoginReturn,
 } from '../../interfaces/user.interfaces';
 import { api } from '../../services/api';
-import { UserContext } from '../User/UserContext';
 
 export interface IAuthProviderProps {
   children: React.ReactNode;
 }
 export interface IAuthContextValues {
+  user: TUser | undefined;
+  setUser: React.Dispatch<React.SetStateAction<TUser | undefined>>;
   login: (formData: TUserLogin) => Promise<void>;
-  logOut: () => void;
+  logout: () => void;
 }
 
 export const AuthContext = createContext({} as IAuthContextValues);
 
 export const AuthProvider = ({ children }: IAuthProviderProps) => {
+  const [user, setUser] = useState<TUser | undefined>({} as TUser);
   const navigate = useNavigate();
-
   const { setLoading } = useContext(LoadingContext);
-  const { setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    const userToken = localStorage.getItem('@user:token');
+  // useEffect(() => {
+  //   const userToken = localStorage.getItem('@user:token');
 
-    if (!userToken) setLoading(false);
+  //   if (!userToken) setLoading(false);
 
-    api.defaults.headers.common.authorization = `Bearer ${userToken}`;
-    setLoading(false);
-  }, []);
+  //   api.defaults.headers.common.authorization = `Bearer ${userToken}`;
+  //   setLoading(false);
+  // }, []);
 
   // 1. Login (entrar)
   const login = async (formData: TUserLogin) => {
@@ -66,15 +66,17 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 
     const autoLogin = async () => {
       try {
-        if (api.defaults.headers.common.authorization) {
-          const { data } = await api.get<TUser>(`/users/${userId}`);
-          setUser(data);
+        if (token) {
+          const response = await api.get<TUser>(`/users/${userId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setUser(response.data);
 
-          data.account_type.toLocaleUpperCase() === 'seller'
+          response.data.account_type.toLocaleLowerCase() === 'seller'
             ? navigate('/sellerHome')
             : navigate('/');
 
-          data.account_type.toLocaleUpperCase() === 'buyer'
+          response.data.account_type.toLocaleLowerCase() === 'buyer'
             ? navigate('/buyerHome')
             : navigate('/');
         }
@@ -93,25 +95,21 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     }
   }, []);
 
-  const logOut = () => {
-    try {
-      const keysToRemove = ['@user:token', '@user:id'];
-      keysToRemove.forEach((key) => localStorage.removeItem(key));
-
-      toast.success('Sessão finalizada', {
-        autoClose: 2000,
-      });
+  // 3. Logout
+  const logout = () => {
+    const keysToRemove = ['@user:token', '@user:id'];
+    keysToRemove.forEach((key) => localStorage.removeItem(key));
+    toast.success('Logout realizado com sucesso!', {
+      autoClose: 2000,
+    });
+    setTimeout(() => {
       setUser(undefined);
       navigate('/');
-    } catch (error) {
-      toast.error('Algo deu errado', {
-        autoClose: 2000,
-      });
-    }
+    }, 2000);
   };
 
   return (
-    <AuthContext.Provider value={{ login, logOut }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

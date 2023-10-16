@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import {
   userAddressRegisterSchema,
-  userAddressResponseSchema,
   userAddressUpdateSchema,
 } from './address.schema';
 
@@ -15,17 +14,17 @@ export const userSchema = z.object({
   description: z.string().optional(),
   account_type: z.string(),
   password: z.string(),
+  address: userAddressRegisterSchema,
   reset_password: z.string().optional(),
   code_expire: z.string().optional(),
   createdAt: z.string(),
-  address: userAddressRegisterSchema,
 });
 
 export const userRegisterSchema = userSchema.omit({
   id: true,
-  createdAt: true,
   reset_password: true,
   code_expire: true,
+  createdAt: true,
 });
 
 export const userResponseSchema = z
@@ -44,9 +43,9 @@ export const userResponseSchema = z
   })
   .omit({ password: true, reset_password: true, code_expire: true });
 
-export const userReadSchema = userAddressResponseSchema.array();
+export const userReadSchema = userResponseSchema.array();
 
-export const userUpdateSchema = userRegisterSchema.optional();
+export const userUpdateSchema = userRegisterSchema.partial();
 
 export const userLoginSchema = z.object({
   email: z.string().email(),

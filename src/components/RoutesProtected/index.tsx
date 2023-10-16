@@ -1,10 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 export const RoutesProtected = () => {
-  const userBuyerToken = localStorage.getItem('@userBuyer:token');
-  const userSellerToken = localStorage.getItem('@userSeller:token');
+  const userToken = localStorage.getItem('@user:token');
 
-  if (!userSellerToken && !userBuyerToken) {
+  if (!userToken) {
     return <Navigate to='/' />;
   }
 
