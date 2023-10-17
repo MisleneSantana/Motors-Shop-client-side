@@ -4,14 +4,14 @@ import { UserContext } from '../../../providers/User/UserContext';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
-  TRegisterRequest,
+  TRegisterRequestValidator,
   editUserSchema,
 } from '../RegisterForm/register.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../../Input';
 import { TextArea } from '../../Textarea';
 
-export const EditProfile = () => {
+export const EditOrDeleteProfile = () => {
   const { user } = useContext(AuthContext);
   const { updateUserProfileOrAddress, deleteUser } = useContext(UserContext);
   const { closeModal } = useContext(ModalContext);
@@ -20,11 +20,11 @@ export const EditProfile = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TRegisterRequest>({
+  } = useForm<TRegisterRequestValidator>({
     resolver: zodResolver(editUserSchema),
   });
 
-  const submit: SubmitHandler<TRegisterRequest> = (formData) => {
+  const submit: SubmitHandler<TRegisterRequestValidator> = (formData) => {
     const data = editUserSchema.parse(formData);
     if (user) updateUserProfileOrAddress(data, user.id);
     closeModal();
@@ -95,6 +95,7 @@ export const EditProfile = () => {
           placeholder={user?.description}
           {...register('description')}
         />
+        {errors.description?.message && <p>{errors.description?.message}</p>}
         <div>
           <button type='button' onClick={() => closeModal()}>
             Cancelar

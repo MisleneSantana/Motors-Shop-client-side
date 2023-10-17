@@ -14,9 +14,9 @@ export const announcementValidator = z.object({
   price: z.number(),
   description: z.string().optional(),
   cover_image_url: z.string().nonempty({ message: 'Imagem obrigatória' }),
-  image: z
+  images: z
     .object({
-      image_url: z.string(),
+      image_url: z.string().url('Insira uma URL válida.'),
     })
     .array(),
 });

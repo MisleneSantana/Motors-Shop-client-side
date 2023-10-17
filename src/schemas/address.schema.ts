@@ -16,4 +16,4 @@ export const userAddressRegisterSchema = userAddressSchema.omit({
 
 export const userAddressResponseSchema = userAddressSchema;
 
-export const userAddressUpdateSchema = userAddressRegisterSchema.optional();
+export const userAddressUpdateSchema = userAddressRegisterSchema.partial();

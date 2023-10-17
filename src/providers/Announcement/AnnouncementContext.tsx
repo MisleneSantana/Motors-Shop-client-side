@@ -1,36 +1,17 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { api } from '../../services/api';
 import { toast } from 'react-toastify';
-import {
-  IAnnouncement,
-  IAnnouncementRequest,
-  IAnnouncementResponse,
-} from './announcement.interfaces';
-import { AxiosResponse } from 'axios';
 import { ModalContext } from '../Modal/ModalContext';
-
-export interface IAnnouncementProviderProps {
-  children: React.ReactNode;
-}
-
-interface IAnnouncementProviderValues {
-  announcements: IAnnouncement[];
-  setAnnouncements: React.Dispatch<React.SetStateAction<IAnnouncement[]>>;
-  singleAnnouncement: IAnnouncement | undefined;
-  sellerAnnouncement: IAnnouncement[];
-  loading: boolean;
-  getAnnouncements: () => Promise<void>;
-  createAnnouncement: (
-    formData: IAnnouncementRequest
-  ) => Promise<AxiosResponse<IAnnouncementResponse> | undefined>;
-  getAnnouncementById: (announcementId: string | undefined) => Promise<void>;
-  getAnnouncementsBySeller: (userId: string | undefined) => Promise<void>;
-  updateAnnouncement: (
-    announcementData: Partial<IAnnouncement>,
-    announcementId: string
-  ) => Promise<void>;
-  deleteAnnouncement: (announcementId: string) => Promise<void>;
-}
+import {
+  TAnnouncement,
+  TAnnouncementRequest,
+  TAnnouncementResponse,
+} from '../../interfaces/announcement.interfaces';
+import {
+  IAnnouncementProviderProps,
+  IAnnouncementProviderValues,
+} from './announcement.props';
+import { LoadingContext } from '../Loading/LoadingContext';
 
 export const AnnouncementContext = createContext<IAnnouncementProviderValues>(
   {} as IAnnouncementProviderValues
@@ -39,24 +20,26 @@ export const AnnouncementContext = createContext<IAnnouncementProviderValues>(
 export const AnnouncementProvider = ({
   children,
 }: IAnnouncementProviderProps) => {
-  const [announcements, setAnnouncements] = useState<IAnnouncement[]>([]);
+  const [announcements, setAnnouncements] = useState<TAnnouncement[]>([]);
   const [singleAnnouncement, setSingleAnnouncement] = useState<
-    IAnnouncement | undefined
-  >({} as IAnnouncement);
-  const [sellerAnnouncement, setSellerAnnouncement] = useState<IAnnouncement[]>(
+    TAnnouncement | undefined
+  >({} as TAnnouncement);
+  const [sellerAnnouncement, setSellerAnnouncement] = useState<TAnnouncement[]>(
     []
   );
-  const [loading, setLoading] = useState(false);
+
+  const { loading, setLoading } = useContext(LoadingContext);
   const { closeModal } = useContext(ModalContext);
 
   // 1. Leitura de anúncios:
   const getAnnouncements = async () => {
     try {
-      const response = await api.get<IAnnouncement[]>('/announcements');
+      const response = await api.get<TAnnouncement[]>('/announcements');
       setAnnouncements(response.data);
     } catch (error) {
-      toast.error('Não foi possível carregar todos os anúncios');
-      console.error(error);
+      toast.error('Não foi possível concluir sua solicitação.', {
+        autoClose: 2000,
+      });
     }
   };
 
@@ -65,12 +48,12 @@ export const AnnouncementProvider = ({
   }, []);
 
   // 2. Cria um novo anúncio:
-  const createAnnouncement = async (formData: IAnnouncementRequest) => {
+  const createAnnouncement = async (formData: TAnnouncementRequest) => {
     try {
-      const userToken = localStorage.getItem('@userCompany:token');
+      const userToken = localStorage.getItem('@user:token');
 
-      const response = await api.post<IAnnouncementResponse>(
-        `announcements/`,
+      const response = await api.post<TAnnouncementResponse>(
+        `/announcements`,
         formData,
         {
           headers: { Authorization: `Bearer ${userToken}` },
@@ -84,7 +67,7 @@ export const AnnouncementProvider = ({
       await getAnnouncements();
       return response;
     } catch (error) {
-      toast.error('Tente novamente', {
+      toast.error('Não foi possível concluir sua solicitação.', {
         autoClose: 2000,
       });
     } finally {
@@ -93,33 +76,36 @@ export const AnnouncementProvider = ({
   };
 
   // 3. Buscar um anúncio por id:
-  const getAnnouncementById = async (announcementId: string | undefined) => {
+  const getAnnouncement = async (announcementId: string | undefined) => {
     try {
-      const { data } = await api.get<IAnnouncementResponse>(
+      const { data } = await api.get<TAnnouncementResponse>(
         `announcements/${announcementId}`
       );
       setSingleAnnouncement(data);
     } catch (error) {
-      toast.error('Não foi possível carregar as informações deste anúncio');
-      console.error(error);
+      toast.error('Não foi possível concluir sua solicitação.', {
+        autoClose: 2000,
+      });
     }
   };
 
   // 4. Buscar os anúncios de um user:
   const getAnnouncementsBySeller = async (userId: string | undefined) => {
     try {
-      const { data } = await api.get<IAnnouncementResponse[]>(
+      const { data } = await api.get<TAnnouncementResponse[]>(
         `announcements/${userId}/seller`
       );
       setSellerAnnouncement(data);
     } catch (error) {
-      toast.error('Não foi possível carregar seus anúncios');
+      toast.error('Não foi possível concluir sua solicitação.', {
+        autoClose: 2000,
+      });
     }
   };
 
   // 5. Atualizar um anúncio:
   const updateAnnouncement = async (
-    formData: Partial<IAnnouncement>,
+    formData: Partial<TAnnouncementRequest>,
     announcementId: string
   ) => {
     try {
@@ -131,7 +117,9 @@ export const AnnouncementProvider = ({
       setSingleAnnouncement(response.data);
       toast.success('Anúncio atualizado com sucesso');
     } catch (error) {
-      toast.error('Não foi possível atualizar o anúncio');
+      toast.error('Não foi possível concluir sua solicitação.', {
+        autoClose: 2000,
+      });
     }
   };
 
@@ -149,7 +137,9 @@ export const AnnouncementProvider = ({
       closeModal();
       toast.success('Anúncio deletado com sucesso');
     } catch (error) {
-      toast.error('Não foi possível deletar o anúncio');
+      toast.error('Não foi possível concluir sua solicitação.', {
+        autoClose: 2000,
+      });
     }
   };
 
@@ -163,7 +153,7 @@ export const AnnouncementProvider = ({
         loading,
         getAnnouncements,
         createAnnouncement,
-        getAnnouncementById,
+        getAnnouncement,
         getAnnouncementsBySeller,
         updateAnnouncement,
         deleteAnnouncement,

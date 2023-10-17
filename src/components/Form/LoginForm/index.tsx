@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
-import { LoginFormSchema, TLoginFormSchema } from './LoginFormSchema';
+import { LoginFormSchema, TLoginFormSchema } from './login.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../../Input';
 import { AuthContext } from '../../../providers/Auth/AuthContext';

@@ -1,22 +1,24 @@
 import { useContext, useState } from 'react';
 import { AnnouncementContext } from '../../../providers/Announcement/AnnouncementContext';
-import { LoadingContext } from '../../../providers/Loading/LoadingContext';
+import { ModalContext } from '../../../providers/Modal/ModalContext';
+import { Input } from '../../Input';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   TAnnouncementValidator,
   announcementValidator,
-} from './announcement.validator';
+} from '../CreateAnnouncement/announcement.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { ModalContext } from '../../../providers/Modal/ModalContext';
-import { Input } from '../../Input';
+import { TAnnouncementUpdate } from '../../../interfaces/announcement.interfaces';
 import { TextArea } from '../../Textarea';
-import { TAnnouncementRequest } from '../../../interfaces/announcement.interfaces';
+import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 
-export const CreateAnnouncement = () => {
+export const EditOrDeleteAnnouncement = () => {
   const [inputImage, setInputImage] = useState(2);
-  const { createAnnouncement } = useContext(AnnouncementContext);
   const { openModal, closeModal } = useContext(ModalContext);
   const { loading } = useContext(LoadingContext);
+  const { singleAnnouncement } = useContext(AnnouncementContext);
+  const { updateAnnouncement, deleteAnnouncement } =
+    useContext(AnnouncementContext);
 
   const renderImageInputs = () => {
     const inputsImages: React.JSX.Element[] = [];
@@ -28,7 +30,6 @@ export const CreateAnnouncement = () => {
             label={`${i} Imagem da galeria`}
             placeholder='https://image.com'
             id='image_url'
-            {...register('images')}
             error={
               errors?.images?.[i] && (
                 <p>{`* ${errors.images[i]?.image_url?.message}`}</p>
@@ -49,15 +50,20 @@ export const CreateAnnouncement = () => {
     resolver: zodResolver(announcementValidator),
   });
 
-  const submit: SubmitHandler<TAnnouncementRequest> = (formData) => {
-    createAnnouncement(formData);
+  const submit: SubmitHandler<TAnnouncementUpdate> = (formData) => {
+    if (singleAnnouncement) updateAnnouncement(formData, singleAnnouncement.id);
     openModal();
+  };
+
+  const destroyAnnouncement = () => {
+    if (singleAnnouncement) deleteAnnouncement(singleAnnouncement.id);
+    closeModal();
   };
 
   return (
     <div>
       <nav>
-        <h2>Criar anúncio</h2>
+        <h2>Editar anúncio</h2>
         <button onClick={() => closeModal()}>X</button>
       </nav>
       <form onSubmit={handleSubmit(submit)}>
@@ -154,9 +160,9 @@ export const CreateAnnouncement = () => {
         <button type='button' onClick={() => setInputImage(inputImage + 1)}>
           'Adicionar campo para imagem da galeria'
         </button>
-        <button onClick={() => closeModal()}>Cancelar</button>
+        <button onClick={() => destroyAnnouncement()}>Excluir anúncio</button>
         <button type='submit'>
-          {loading ? 'Carregando' : 'Criar anúncio'}
+          {loading ? 'Salvando' : 'Salvar as alterações'}
         </button>
       </form>
     </div>

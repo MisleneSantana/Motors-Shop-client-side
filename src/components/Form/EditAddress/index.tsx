@@ -4,7 +4,7 @@ import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { UserContext } from '../../../providers/User/UserContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import {
-  TRegisterRequest,
+  TRegisterRequestValidator,
   editUserSchema,
 } from '../RegisterForm/register.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,11 +20,11 @@ export const EditAddress = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TRegisterRequest>({
+  } = useForm<TRegisterRequestValidator>({
     resolver: zodResolver(addressSchema),
   });
 
-  const submit: SubmitHandler<TRegisterRequest> = (formData) => {
+  const submit: SubmitHandler<TRegisterRequestValidator> = (formData) => {
     const data = editUserSchema.parse(formData);
     if (user) updateUserProfileOrAddress(data, user.id);
     closeModal();

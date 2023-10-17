@@ -1,48 +1,58 @@
-export interface IAnnouncement {
-  id: string;
-  brand: string;
-  model: string;
-  year: string;
-  fuel: string;
-  km: number;
-  color: string;
-  table_price: number;
-  price: number;
-  description?: string | null | undefined;
-  cover_image_url: string;
-  images: { image_url: string }[];
-}
+import { z } from 'zod';
 
-export interface IAnnouncementRequest {
-  brand: string;
-  model: string;
-  year: string;
-  fuel: string;
-  km: number;
-  color: string;
-  table_price: number;
-  price: number;
-  description?: string | null | undefined;
-  cover_image_url: string;
-  images: { image_url: string }[];
-}
+export const imageSchema = z.object({
+  id: z.string(),
+  image_url: z.string(),
+});
 
-export interface IAnnouncementResponse extends IAnnouncement {
-  id: string;
-  announcement_is_active: boolean;
-  createdAt: string;
-  user: {
-    id: string;
-    name: string;
-    phone_number: string;
-    description?: string | null | undefined;
-  };
-  images: { id: string; image_url: string }[];
-}
+export const imageRequestSchema = z.object({
+  image_url: z.string(),
+});
 
-export interface IPaginationAnnouncements {
-  prevPage: string | null;
-  nextPage: string | null;
-  count: number;
-  data: IAnnouncementResponse[];
-}
+export const announcementSchema = z.object({
+  id: z.string(),
+  brand: z.string(),
+  model: z.string(),
+  year: z.string(),
+  fuel: z.string(),
+  km: z.number(),
+  color: z.string(),
+  table_price: z.number(),
+  price: z.number(),
+  description: z.string().optional(),
+  cover_image_url: z.string(),
+  images: z.array(imageSchema),
+});
+
+export const announcementRequestSchema = z.object({
+  brand: z.string(),
+  model: z.string(),
+  year: z.string(),
+  fuel: z.string(),
+  km: z.number(),
+  color: z.string(),
+  table_price: z.number(),
+  price: z.number(),
+  description: z.string().optional(),
+  cover_image_url: z.string(),
+  images: z.array(imageRequestSchema),
+});
+
+export const announcementResponseSchema = announcementSchema.extend({
+  id: z.string(),
+  announcement_is_active: z.boolean(),
+  createdAt: z.string(),
+  user: z.object({
+    id: z.string(),
+    name: z.string(),
+    phone_number: z.string(),
+    description: z.string().optional(),
+  }),
+  images: z
+    .object({
+      id: z.string(),
+      image_url: z.string().max(280),
+    })
+    .array(),
+});
+export const announcementUpdate = announcementRequestSchema.partial();
