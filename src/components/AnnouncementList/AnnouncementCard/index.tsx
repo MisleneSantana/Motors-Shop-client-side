@@ -1,7 +1,7 @@
-import { IAnnouncementResponse } from '../../../providers/Announcement/AnnouncementContext';
+import { TAnnouncementResponse } from '../../../interfaces/announcement.interfaces';
 
 interface IAnnouncementCartProps {
-  announcement: IAnnouncementResponse;
+  announcement: TAnnouncementResponse;
 }
 
 export const AnnouncementCard = ({ announcement }: IAnnouncementCartProps) => {

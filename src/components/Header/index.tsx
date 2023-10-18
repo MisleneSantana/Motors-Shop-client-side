@@ -1,12 +1,12 @@
 import logo from '../../assets/icons/logo.svg';
 import { useContext } from 'react';
-import { UserContext } from '../../providers/User/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../providers/Auth/AuthContext';
 
 export const Header = () => {
-  // const seller = localStorage.getItem('@user:sellerName');
-  // const buyer = localStorage.getItem('@user:buyerName');
-  const { user: userState } = useContext(UserContext);
+  // const userToken = localStorage.getItem('@user:token');
+
+  const { user: userState } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const userName =
@@ -18,7 +18,7 @@ export const Header = () => {
       <div>
         <img src={logo} alt='logo' />
       </div>
-      {!userState ? (
+      {!userState?.id ? (
         <nav>
           <button
             onClick={() => {

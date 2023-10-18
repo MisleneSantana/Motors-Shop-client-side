@@ -5,6 +5,7 @@ import { Home } from '../pages/Home';
 import { NotFound } from '../pages/NotFound';
 import { SellerDashboard } from '../pages/SellerDashboard';
 import { BuyerDashboard } from '../pages/BuyerDashboard';
+import { ResetPassword } from '../pages/ResetPassword';
 
 export const RoutesMain = () => {
   return (
@@ -12,6 +13,7 @@ export const RoutesMain = () => {
       <Route path='/' element={<Home />}></Route>
       <Route path='/login' element={<Login />}></Route>
       <Route path='/register' element={<Register />}></Route>
+      <Route path='/resetPassword' element={<ResetPassword />}></Route>
 
       {/* <Route element={<RoutesProtected />}> */}
       <Route path='/buyerHome' element={<BuyerDashboard />} />

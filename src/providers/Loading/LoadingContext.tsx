@@ -11,7 +11,7 @@ export interface ILoadingContext {
 export const LoadingContext = createContext({} as ILoadingContext);
 
 export const LoadingProvider = ({ children }: ILoadingProviderProps) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   return (
     <LoadingContext.Provider value={{ loading, setLoading }}>

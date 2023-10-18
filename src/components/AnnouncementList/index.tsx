@@ -8,7 +8,7 @@ export const AnnouncementList = () => {
   return (
     <div>
       <ul>
-        {announcements?.data.map((announcement) => {
+        {announcements?.map((announcement) => {
           return (
             <AnnouncementCard
               key={announcement.id}

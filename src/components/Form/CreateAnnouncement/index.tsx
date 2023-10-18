@@ -44,6 +44,7 @@ export const CreateAnnouncement = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<TAnnouncementValidator>({
     resolver: zodResolver(announcementValidator),
@@ -52,6 +53,16 @@ export const CreateAnnouncement = () => {
   const submit: SubmitHandler<TAnnouncementRequest> = (formData) => {
     createAnnouncement(formData);
     openModal();
+    setValue('brand', '');
+    setValue('model', '');
+    setValue('year', '');
+    setValue('fuel', '');
+    setValue('km', Number(''));
+    setValue('color', '');
+    setValue('table_price', Number(''));
+    setValue('price', Number(''));
+    setValue('description', '');
+    setValue('cover_image_url', '');
   };
 
   return (

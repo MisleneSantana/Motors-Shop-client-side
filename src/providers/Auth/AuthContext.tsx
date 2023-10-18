@@ -19,21 +19,14 @@ export interface IAuthContextValues {
   logout: () => void;
 }
 
-export const AuthContext = createContext({} as IAuthContextValues);
+export const AuthContext = createContext<IAuthContextValues>(
+  {} as IAuthContextValues
+);
 
 export const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [user, setUser] = useState<TUser | undefined>({} as TUser);
-  const navigate = useNavigate();
   const { setLoading } = useContext(LoadingContext);
-
-  // useEffect(() => {
-  //   const userToken = localStorage.getItem('@user:token');
-
-  //   if (!userToken) setLoading(false);
-
-  //   api.defaults.headers.common.authorization = `Bearer ${userToken}`;
-  //   setLoading(false);
-  // }, []);
+  const navigate = useNavigate();
 
   // 1. Login (entrar)
   const login = async (formData: TUserLogin) => {
@@ -42,14 +35,19 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
       const { data } = await api.post<TUserLoginReturn>('/login', formData);
       const { token } = data;
 
-      api.defaults.headers.common.authorization = `Bearer ${token}`;
-      localStorage.setItem('@user:token', data.token);
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      localStorage.setItem('@user:token', token);
       localStorage.setItem('@user:id', data.user.id);
 
       toast.success('Login realizado com sucesso', {
         autoClose: 2000,
       });
-      navigate('');
+      data.user.account_type.toLocaleLowerCase() === 'seller'
+        ? navigate('/sellerHome')
+        : navigate('/');
+      data.user.account_type.toLocaleLowerCase() === 'buyer'
+        ? navigate('/sellerHome')
+        : navigate('/');
     } catch (error) {
       toast.error('Algo deu errado', {
         autoClose: 2000,
@@ -60,40 +58,40 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
   };
 
   // 2. Auto-login
-  useEffect(() => {
-    const token = localStorage.getItem('@user:token');
-    const userId = localStorage.getItem('@user:id');
+  // useEffect(() => {
+  //   const token = localStorage.getItem('@user:token');
+  //   const userId = localStorage.getItem('@user:id');
 
-    const autoLogin = async () => {
-      try {
-        if (token) {
-          const response = await api.get<TUser>(`/users/${userId}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setUser(response.data);
+  //   const autoLogin = async () => {
+  //     try {
+  //       if (token) {
+  //         const response = await api.get<TUser>(`/users/${userId}`, {
+  //           headers: { Authorization: `Bearer ${token}` },
+  //         });
+  //         setUser(response.data);
 
-          response.data.account_type.toLocaleLowerCase() === 'seller'
-            ? navigate('/sellerHome')
-            : navigate('/');
+  //         response.data.account_type.toLocaleLowerCase() === 'seller'
+  //           ? navigate('/sellerHome')
+  //           : navigate('/');
 
-          response.data.account_type.toLocaleLowerCase() === 'buyer'
-            ? navigate('/buyerHome')
-            : navigate('/');
-        }
-      } catch (error) {
-        toast.error('Algo deu errado', {
-          autoClose: 2000,
-        });
+  //         response.data.account_type.toLocaleLowerCase() === 'buyer'
+  //           ? navigate('/buyerHome')
+  //           : navigate('/');
+  //       }
+  //     } catch (error) {
+  //       toast.error('Algo deu errado', {
+  //         autoClose: 2000,
+  //       });
 
-        const keysToRemove = ['@user:token', '@user:id'];
-        keysToRemove.forEach((key) => localStorage.removeItem(key));
-      }
-    };
+  //       const keysToRemove = ['@user:token', '@user:id'];
+  //       keysToRemove.forEach((key) => localStorage.removeItem(key));
+  //     }
+  //   };
 
-    if (token && userId) {
-      autoLogin();
-    }
-  }, []);
+  //   if (token && userId) {
+  //     autoLogin();
+  //   }
+  // }, []);
 
   // 3. Logout
   const logout = () => {

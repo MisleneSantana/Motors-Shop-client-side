@@ -13,13 +13,17 @@ export const TextArea = ({
   value,
   placeholder,
   register,
+  label,
 }: iTextAreaProps) => {
   return (
-    <textarea
-      id={id}
-      value={value}
-      placeholder={placeholder}
-      {...register}
-    ></textarea>
+    <div>
+      {label ? <label htmlFor={id}>{label}</label> : null}
+      <textarea
+        id={id}
+        value={value}
+        placeholder={placeholder}
+        {...register}
+      ></textarea>
+    </div>
   );
 };
