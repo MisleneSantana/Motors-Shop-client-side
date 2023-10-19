@@ -1,25 +1,21 @@
+import { useLocation } from 'react-router-dom';
 import { TAnnouncementResponse } from '../../../interfaces/announcement.interfaces';
+import { useContext } from 'react';
+import { AuthContext } from '../../../providers/Auth/AuthContext';
+import { ModalContext } from '../../../providers/Modal/ModalContext';
 
-interface IAnnouncementCartProps {
+interface IAnnouncementProps {
   announcement: TAnnouncementResponse;
 }
 
-export const AnnouncementCard = ({ announcement }: IAnnouncementCartProps) => {
-  const userFullName = announcement.user?.name
-    .trim()
-    .split(' ')
-    .map((userName: string, index: number) => {
-      if (
-        index === announcement.user?.name.split(' ').length - 1 ||
-        index === 0
-      ) {
-        return userName[0].toUpperCase();
-      }
-    })
-    .join('');
+export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
+  const route = useLocation();
+  const location = `${route.pathname}`;
+  const { user } = useContext(AuthContext);
+  const { setIsEditOrDeleteAdsModalOpen } = useContext(ModalContext);
 
-  const username =
-    announcement?.user.name &&
+  const userFullName = announcement.user?.name;
+  announcement?.user.name &&
     announcement?.user.name[0].toUpperCase() +
       announcement?.user.name.substring(1);
 
@@ -27,14 +23,16 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementCartProps) => {
     <>
       <li>
         <img src={announcement?.cover_image_url} alt={announcement?.brand} />
-        <h3>
+        <h4>
           {announcement?.brand} - {announcement?.model}
-        </h3>
-        <p>{announcement?.description}</p>
-        <div>
-          <span>{username}</span>
-          <p>{userFullName}</p>
-        </div>
+        </h4>
+        <textarea>{announcement?.description}</textarea>
+        {location === '/' || location === '/buyerHome' ? (
+          <div>
+            <span>{announcement.user.name.charAt(0)}</span>
+            <p>{userFullName}</p>
+          </div>
+        ) : null}
         <div>
           <div>
             <p>{announcement.km} KM</p>
@@ -43,9 +41,22 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementCartProps) => {
           <p>
             R${' '}
             {announcement.price.toLocaleString('pt-br', {
+              style: 'currency',
+              currency: 'BRL',
               minimumFractionDigits: 2,
             })}
           </p>
+        </div>
+        <div>
+          {location === '/sellerHome' &&
+          user?.account_type.toLocaleLowerCase() === 'seller' ? (
+            <div>
+              <button onClick={() => setIsEditOrDeleteAdsModalOpen(true)}>
+                Editar
+              </button>
+              <button type='submit'>Ver detalhes</button>
+            </div>
+          ) : null}
         </div>
       </li>
     </>

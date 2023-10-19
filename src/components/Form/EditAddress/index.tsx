@@ -14,7 +14,7 @@ import { Input } from '../../Input';
 export const EditAddress = () => {
   const { user } = useContext(AuthContext);
   const { updateUserProfileOrAddress } = useContext(UserContext);
-  const { closeModal } = useContext(ModalContext);
+  const { setIsEditUserAddressModalOpen } = useContext(ModalContext);
 
   const {
     register,
@@ -27,20 +27,20 @@ export const EditAddress = () => {
   const submit: SubmitHandler<TRegisterRequestValidator> = (formData) => {
     const data = editUserSchema.parse(formData);
     if (user) updateUserProfileOrAddress(data, user.id);
-    closeModal();
+    setIsEditUserAddressModalOpen(false);
   };
 
   return (
-    <div>
+    <>
       <nav>
         <h2>Editar endereço</h2>
-        <button onClick={() => closeModal()}>X</button>
+        <button onClick={() => setIsEditUserAddressModalOpen(false)}>X</button>
       </nav>
       <form onSubmit={handleSubmit(submit)}>
         <h4>Informações pessoais</h4>
         <section>
           <Input
-            type='cep'
+            type='text'
             label='CEP'
             value={user?.address.cep}
             id='cep'
@@ -50,7 +50,7 @@ export const EditAddress = () => {
           />
           <div>
             <Input
-              type='state'
+              type='text'
               label='Estado'
               value={user?.address.state}
               id='state'
@@ -59,7 +59,7 @@ export const EditAddress = () => {
               error={errors.address?.state}
             />
             <Input
-              type='city'
+              type='text'
               label='Cidade'
               value={user?.address.city}
               id='city'
@@ -69,7 +69,7 @@ export const EditAddress = () => {
             />
           </div>
           <Input
-            type='street'
+            type='text'
             label='Rua'
             value={user?.address.street}
             id='street'
@@ -79,7 +79,7 @@ export const EditAddress = () => {
           />
           <div>
             <Input
-              type='number'
+              type='text'
               label='Número'
               value={user?.address.number}
               id='number'
@@ -88,7 +88,7 @@ export const EditAddress = () => {
               error={errors.address?.number}
             />
             <Input
-              type='complement'
+              type='text'
               label='Complemento'
               value={user?.address.complement}
               id='complement'
@@ -99,10 +99,12 @@ export const EditAddress = () => {
           </div>
         </section>
         <section>
-          <button onClick={() => closeModal()}>Cancelar</button>
+          <button onClick={() => setIsEditUserAddressModalOpen(false)}>
+            Cancelar
+          </button>
           <button type='submit'>Salvar alterações</button>
         </section>
       </form>
-    </div>
+    </>
   );
 };

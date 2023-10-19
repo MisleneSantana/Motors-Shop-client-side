@@ -5,28 +5,59 @@ export interface IModalProviderProps {
 }
 
 export interface IModalContext {
-  showModal: boolean;
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  openModal: () => void;
-  closeModal: () => void;
+  isSuccessModalOpen: boolean;
+  setIsSuccessModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isCreateAdsModalOpen: boolean;
+  setIsCreateAdsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditOrDeleteAdsModalOpen: boolean;
+  setIsEditOrDeleteAdsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isConfirmDeleteAdModalOpen: boolean;
+  setIsConfirmDeleteAdModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isCreateAccountModalOpen: boolean;
+  setIsCreateAccountModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditOrDeleteProfileModalOpen: boolean;
+  setIsEditOrDeleteProfileModalOpen: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
+  isEditUserAddressModalOpen: boolean;
+  setIsEditUserAddressModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const ModalContext = createContext({} as IModalContext);
 
 export const ModalProvider = ({ children }: IModalProviderProps) => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-
-  const openModal = () => {
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  const [isCreateAdsModalOpen, setIsCreateAdsModalOpen] =
+    useState<boolean>(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false);
+  const [isEditOrDeleteAdsModalOpen, setIsEditOrDeleteAdsModalOpen] =
+    useState<boolean>(false);
+  const [isConfirmDeleteAdModalOpen, setIsConfirmDeleteAdModalOpen] =
+    useState<boolean>(false);
+  const [isCreateAccountModalOpen, setIsCreateAccountModalOpen] =
+    useState<boolean>(false);
+  const [isEditOrDeleteProfileModalOpen, setIsEditOrDeleteProfileModalOpen] =
+    useState<boolean>(false);
+  const [isEditUserAddressModalOpen, setIsEditUserAddressModalOpen] =
+    useState<boolean>(false);
 
   return (
     <ModalContext.Provider
-      value={{ showModal, setShowModal, openModal, closeModal }}
+      value={{
+        isSuccessModalOpen,
+        setIsSuccessModalOpen,
+        isCreateAdsModalOpen,
+        setIsCreateAdsModalOpen,
+        isEditOrDeleteAdsModalOpen,
+        setIsEditOrDeleteAdsModalOpen,
+        isConfirmDeleteAdModalOpen,
+        setIsConfirmDeleteAdModalOpen,
+        isCreateAccountModalOpen,
+        setIsCreateAccountModalOpen,
+        isEditOrDeleteProfileModalOpen,
+        setIsEditOrDeleteProfileModalOpen,
+        isEditUserAddressModalOpen,
+        setIsEditUserAddressModalOpen,
+      }}
     >
       {children}
     </ModalContext.Provider>

@@ -3,17 +3,23 @@ import { LoadingProvider } from './providers/Loading/LoadingContext';
 import { UserProvider } from './providers/User/UserContext';
 import { RoutesMain } from './routes';
 import { AuthProvider } from './providers/Auth/AuthContext';
+import { ModalProvider } from './providers/Modal/ModalContext';
+import { AnnouncementProvider } from './providers/Announcement/AnnouncementContext';
 
 const App = () => {
   return (
     <>
       <GlobalStyle />
       <LoadingProvider>
-        <UserProvider>
-          <AuthProvider>
-            <RoutesMain />
-          </AuthProvider>
-        </UserProvider>
+        <ModalProvider>
+          <AnnouncementProvider>
+            <AuthProvider>
+              <UserProvider>
+                <RoutesMain />
+              </UserProvider>
+            </AuthProvider>
+          </AnnouncementProvider>
+        </ModalProvider>
       </LoadingProvider>
     </>
   );

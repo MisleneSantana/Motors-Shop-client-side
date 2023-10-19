@@ -9,9 +9,9 @@ import {
 } from '../../interfaces/user.interfaces';
 import { toast } from 'react-toastify';
 import { LoadingContext } from '../Loading/LoadingContext';
-import { useNavigate } from 'react-router-dom';
 import { userUpdateSchema } from '../../schemas/user.schema';
 import { AuthContext } from '../Auth/AuthContext';
+import { ModalContext } from '../Modal/ModalContext';
 
 export interface IUserProviderProps {
   children: React.ReactNode;
@@ -32,7 +32,7 @@ export const UserContext = createContext({} as IUserContextValues);
 export const UserProvider = ({ children }: IUserProviderProps) => {
   const { setLoading } = useContext(LoadingContext);
   const { setUser, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { setIsCreateAccountModalOpen } = useContext(ModalContext);
 
   // 1. Cadastrar (users)
   const registerUser = async (formData: TUserRegisterRequest) => {
@@ -41,13 +41,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
       await api
         .post<TUserResponse>('/users', formData)
         .then(() => {
-          // createAccountModal(!createAccountModal);
-          toast.success('Cadastro realizado com sucesso!', {
-            autoClose: 2000,
-          });
-          setTimeout(() => {
-            navigate('/login');
-          }, 2000);
+          setIsCreateAccountModalOpen(true);
         })
         .catch((error) => {
           if (error.response.status == 409) {

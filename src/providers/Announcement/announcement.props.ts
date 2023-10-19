@@ -15,7 +15,7 @@ export interface IAnnouncementProviderValues {
   singleAnnouncement: TAnnouncement | undefined;
   sellerAnnouncement: TAnnouncement[];
   loading: boolean;
-  getAnnouncements: () => Promise<void>;
+  getAnnouncements: () => Promise<void>
   createAnnouncement: (
     formData: TAnnouncementRequest
   ) => Promise<AxiosResponse<TAnnouncementResponse> | undefined>;

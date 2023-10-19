@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import {
+  announcementReadSchema,
   announcementRequestSchema,
   announcementResponseSchema,
   announcementSchema,
@@ -9,6 +10,7 @@ import {
 export type TAnnouncement = z.infer<typeof announcementSchema>;
 export type TAnnouncementRequest = z.infer<typeof announcementRequestSchema>;
 export type TAnnouncementResponse = z.infer<typeof announcementResponseSchema>;
+export type TAnnouncementRead = z.infer<typeof announcementReadSchema>;
 export type TAnnouncementUpdate = z.infer<typeof announcementUpdate>;
 
 export interface IPaginationAnnouncements {

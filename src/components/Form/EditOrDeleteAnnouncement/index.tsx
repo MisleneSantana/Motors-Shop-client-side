@@ -9,15 +9,15 @@ import {
 } from '../CreateAnnouncement/announcement.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TAnnouncementUpdate } from '../../../interfaces/announcement.interfaces';
-import { TextArea } from '../../Textarea';
 import { LoadingContext } from '../../../providers/Loading/LoadingContext';
+import { Label } from '../../Label';
 
 export const EditOrDeleteAnnouncement = () => {
   const [inputImage, setInputImage] = useState(2);
-  const { openModal, closeModal } = useContext(ModalContext);
   const { loading } = useContext(LoadingContext);
-  const { singleAnnouncement } = useContext(AnnouncementContext);
-  const { updateAnnouncement, deleteAnnouncement } =
+  const { setIsEditOrDeleteAdsModalOpen, setIsConfirmDeleteAdModalOpen } =
+    useContext(ModalContext);
+  const { singleAnnouncement, updateAnnouncement } =
     useContext(AnnouncementContext);
 
   const renderImageInputs = () => {
@@ -52,19 +52,14 @@ export const EditOrDeleteAnnouncement = () => {
 
   const submit: SubmitHandler<TAnnouncementUpdate> = (formData) => {
     if (singleAnnouncement) updateAnnouncement(formData, singleAnnouncement.id);
-    openModal();
-  };
-
-  const destroyAnnouncement = () => {
-    if (singleAnnouncement) deleteAnnouncement(singleAnnouncement.id);
-    closeModal();
+    setIsEditOrDeleteAdsModalOpen(false);
   };
 
   return (
-    <div>
+    <div role='dialog'>
       <nav>
         <h2>Editar anúncio</h2>
-        <button onClick={() => closeModal()}>X</button>
+        <button onClick={() => setIsEditOrDeleteAdsModalOpen(false)}>X</button>
       </nav>
       <form onSubmit={handleSubmit(submit)}>
         <h3>Informações do veículo</h3>
@@ -139,8 +134,8 @@ export const EditOrDeleteAnnouncement = () => {
           />
         </div>
         <div>
-          <TextArea
-            label='Descrição'
+          <Label htmlFor='description' name='Descrição' />
+          <textarea
             id='description'
             placeholder='Descrição do carro'
             {...register('description')}
@@ -160,7 +155,9 @@ export const EditOrDeleteAnnouncement = () => {
         <button type='button' onClick={() => setInputImage(inputImage + 1)}>
           'Adicionar campo para imagem da galeria'
         </button>
-        <button onClick={() => destroyAnnouncement()}>Excluir anúncio</button>
+        <button onClick={() => setIsConfirmDeleteAdModalOpen(true)}>
+          Excluir anúncio
+        </button>
         <button type='submit'>
           {loading ? 'Salvando' : 'Salvar as alterações'}
         </button>

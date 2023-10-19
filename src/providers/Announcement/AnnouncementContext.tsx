@@ -3,6 +3,7 @@ import { api } from '../../services/api';
 import { toast } from 'react-toastify';
 import { ModalContext } from '../Modal/ModalContext';
 import {
+  IPaginationAnnouncements,
   TAnnouncement,
   TAnnouncementRequest,
   TAnnouncementResponse,
@@ -29,13 +30,14 @@ export const AnnouncementProvider = ({
   );
 
   const { loading, setLoading } = useContext(LoadingContext);
-  const { closeModal } = useContext(ModalContext);
 
   // 1. Leitura de anúncios:
   const getAnnouncements = async () => {
     try {
-      const response = await api.get<TAnnouncement[]>('/announcements');
-      setAnnouncements(response.data);
+      const { data } = await api.get<IPaginationAnnouncements>(
+        '/announcements'
+      );
+      setAnnouncements(data.data);
     } catch (error) {
       toast.error('Não foi possível concluir sua solicitação.', {
         autoClose: 2000,
@@ -59,6 +61,7 @@ export const AnnouncementProvider = ({
           headers: { Authorization: `Bearer ${userToken}` },
         }
       );
+      // return response;
       setAnnouncements([...announcements, response.data]);
       toast.success('Anúncio criado com sucesso', {
         autoClose: 2000,
@@ -134,7 +137,6 @@ export const AnnouncementProvider = ({
 
       setSellerAnnouncement(listWithoutAnnouncement);
       setAnnouncements(listWithoutAnnouncement);
-      closeModal();
       toast.success('Anúncio deletado com sucesso');
     } catch (error) {
       toast.error('Não foi possível concluir sua solicitação.', {

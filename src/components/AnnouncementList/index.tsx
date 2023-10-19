@@ -1,12 +1,17 @@
 import { useContext } from 'react';
 import { AnnouncementContext } from '../../providers/Announcement/AnnouncementContext';
 import { AnnouncementCard } from './AnnouncementCard';
+import { TAnnouncementResponse } from '../../interfaces/announcement.interfaces';
+
+interface IAnnouncementProps {
+  announcements: TAnnouncementResponse[];
+}
 
 export const AnnouncementList = () => {
-  const { announcements } = useContext(AnnouncementContext);
+  const { announcements }: IAnnouncementProps = useContext(AnnouncementContext);
 
   return (
-    <div>
+    <section>
       <ul>
         {announcements?.map((announcement) => {
           return (
@@ -17,6 +22,6 @@ export const AnnouncementList = () => {
           );
         })}
       </ul>
-    </div>
+    </section>
   );
 };

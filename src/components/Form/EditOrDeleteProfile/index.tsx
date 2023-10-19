@@ -9,12 +9,12 @@ import {
 } from '../RegisterForm/register.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../../Input';
-import { TextArea } from '../../Textarea';
+import { Label } from '../../Label';
 
 export const EditOrDeleteProfile = () => {
   const { user } = useContext(AuthContext);
   const { updateUserProfileOrAddress, deleteUser } = useContext(UserContext);
-  const { closeModal } = useContext(ModalContext);
+  const { setIsEditOrDeleteProfileModalOpen } = useContext(ModalContext);
 
   const {
     register,
@@ -27,19 +27,21 @@ export const EditOrDeleteProfile = () => {
   const submit: SubmitHandler<TRegisterRequestValidator> = (formData) => {
     const data = editUserSchema.parse(formData);
     if (user) updateUserProfileOrAddress(data, user.id);
-    closeModal();
+    setIsEditOrDeleteProfileModalOpen(false);
   };
 
   const destroyProfile = () => {
     if (user) deleteUser(user.id);
-    closeModal();
+    setIsEditOrDeleteProfileModalOpen(false);
   };
 
   return (
-    <div>
+    <>
       <nav>
         <h2>Editar perfil</h2>
-        <button onClick={() => closeModal()}>X</button>
+        <button onClick={() => setIsEditOrDeleteProfileModalOpen(false)}>
+          X
+        </button>
       </nav>
       <form onSubmit={handleSubmit(submit)}>
         <h4>Informações pessoais</h4>
@@ -62,7 +64,7 @@ export const EditOrDeleteProfile = () => {
           error={errors.email}
         />
         <Input
-          type='cpf'
+          type='text'
           label='CPF'
           value={user?.cpf}
           id='cpf'
@@ -71,7 +73,7 @@ export const EditOrDeleteProfile = () => {
           error={errors.cpf}
         />
         <Input
-          type='phone_number'
+          type='text'
           label='Celular'
           value={user?.phone_number}
           id='phone_number'
@@ -80,7 +82,7 @@ export const EditOrDeleteProfile = () => {
           error={errors.phone_number}
         />
         <Input
-          type='birth_date'
+          type='text'
           label='Data de nascimento'
           value={user?.birth_date}
           id='birth_date'
@@ -88,16 +90,21 @@ export const EditOrDeleteProfile = () => {
           {...register('birth_date')}
           error={errors.birth_date}
         />
-        <TextArea
-          id='description'
-          label='Descrição'
-          value={user?.description}
-          placeholder={user?.description}
-          {...register('description')}
-        />
-        {errors.description?.message && <p>{errors.description?.message}</p>}
         <div>
-          <button type='button' onClick={() => closeModal()}>
+          <Label htmlFor='description' name='Descrição' />
+          <textarea
+            id='description'
+            value={user?.description}
+            placeholder={user?.description}
+            {...register('description')}
+          />
+          {errors.description?.message && <p>{errors.description?.message}</p>}
+        </div>
+        <div>
+          <button
+            type='button'
+            onClick={() => setIsEditOrDeleteProfileModalOpen(false)}
+          >
             Cancelar
           </button>
           <button type='button' onClick={() => destroyProfile()}>
@@ -106,6 +113,6 @@ export const EditOrDeleteProfile = () => {
           <button type='submit'>Salvar alterações</button>
         </div>
       </form>
-    </div>
+    </>
   );
 };

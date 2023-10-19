@@ -9,25 +9,26 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { Input } from '../../Input';
-import { TextArea } from '../../Textarea';
 import { TAnnouncementRequest } from '../../../interfaces/announcement.interfaces';
+import { Label } from '../../Label';
 
 export const CreateAnnouncement = () => {
-  const [inputImage, setInputImage] = useState(2);
   const { createAnnouncement } = useContext(AnnouncementContext);
-  const { openModal, closeModal } = useContext(ModalContext);
+  const { setIsCreateAdsModalOpen, setIsSuccessModalOpen } =
+    useContext(ModalContext);
   const { loading } = useContext(LoadingContext);
+  const [inputImage, setInputImage] = useState(2);
 
   const renderImageInputs = () => {
-    const inputsImages: React.JSX.Element[] = [];
+    const inputs: React.JSX.Element[] = [];
     for (let i = 1; i <= inputImage; i++) {
-      inputsImages.push(
+      inputs.push(
         <section key={i}>
           <Input
             type='text'
-            label={`${i} Imagem da galeria`}
+            label={`${i}º Imagem da galeria`}
+            id='images'
             placeholder='https://image.com'
-            id='image_url'
             {...register('images')}
             error={
               errors?.images?.[i] && (
@@ -38,7 +39,7 @@ export const CreateAnnouncement = () => {
         </section>
       );
     }
-    return inputsImages;
+    return inputs;
   };
 
   const {
@@ -52,7 +53,8 @@ export const CreateAnnouncement = () => {
 
   const submit: SubmitHandler<TAnnouncementRequest> = (formData) => {
     createAnnouncement(formData);
-    openModal();
+    setIsCreateAdsModalOpen(false);
+
     setValue('brand', '');
     setValue('model', '');
     setValue('year', '');
@@ -63,13 +65,15 @@ export const CreateAnnouncement = () => {
     setValue('price', Number(''));
     setValue('description', '');
     setValue('cover_image_url', '');
+
+    setIsSuccessModalOpen(true);
   };
 
   return (
-    <div>
+    <div role='dialog'>
       <nav>
         <h2>Criar anúncio</h2>
-        <button onClick={() => closeModal()}>X</button>
+        <button onClick={() => setIsCreateAdsModalOpen(false)}>X</button>
       </nav>
       <form onSubmit={handleSubmit(submit)}>
         <h3>Informações do veículo</h3>
@@ -130,7 +134,7 @@ export const CreateAnnouncement = () => {
             type='text'
             label='Preço tabela FIPE'
             id='table_price'
-            placeholder='48.000,00'
+            placeholder='R$ 48.000,00'
             {...register('table_price')}
             error={errors.table_price}
           />
@@ -138,14 +142,14 @@ export const CreateAnnouncement = () => {
             type='text'
             label='Preço'
             id='price'
-            placeholder='50.000,00'
+            placeholder='R$ 50.000,00'
             {...register('price')}
             error={errors.price}
           />
         </div>
         <div>
-          <TextArea
-            label='Descrição'
+          <Label htmlFor='description' name='Descrição' />
+          <textarea
             id='description'
             placeholder='Descrição do carro'
             {...register('description')}
@@ -165,7 +169,7 @@ export const CreateAnnouncement = () => {
         <button type='button' onClick={() => setInputImage(inputImage + 1)}>
           'Adicionar campo para imagem da galeria'
         </button>
-        <button onClick={() => closeModal()}>Cancelar</button>
+        <button onClick={() => setIsCreateAdsModalOpen(false)}>Cancelar</button>
         <button type='submit'>
           {loading ? 'Carregando' : 'Criar anúncio'}
         </button>

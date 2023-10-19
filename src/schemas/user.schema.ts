@@ -27,21 +27,18 @@ export const userRegisterSchema = userSchema.omit({
   createdAt: true,
 });
 
-export const userResponseSchema = z
-  .object({
-    id: z.string(),
-    name: z.string(),
-    email: z.string().email(),
-    cpf: z.string(),
-    phone_number: z.string(),
-    birth_date: z.string(),
-    description: z.string().optional(),
-    account_type: z.string(),
-    password: z.string(),
-    createdAt: z.string(),
-    address: userAddressUpdateSchema,
-  })
-  .omit({ password: true, reset_password: true, code_expire: true });
+export const userResponseSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  cpf: z.string(),
+  phone_number: z.string(),
+  birth_date: z.string(),
+  description: z.string().optional(),
+  account_type: z.string(),
+  createdAt: z.string(),
+  address: userAddressUpdateSchema,
+});
 
 export const userReadSchema = userResponseSchema.array();
 

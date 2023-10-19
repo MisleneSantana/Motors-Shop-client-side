@@ -7,7 +7,7 @@ import { Input } from '../../Input';
 import { UserContext } from '../../../providers/User/UserContext';
 import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 import { TUserRegisterRequest } from '../../../interfaces/user.interfaces';
-import { TextArea } from '../../Textarea';
+import { Label } from '../../Label';
 
 export const RegisterForm = () => {
   const { loading } = useContext(LoadingContext);
@@ -75,13 +75,15 @@ export const RegisterForm = () => {
           {...register('birth_date')}
           error={errors.birth_date}
         />
-        <TextArea
-          label='Descrição'
-          placeholder='Digitar descrição'
-          id='description'
-          disabled={loading}
-          {...register('description')}
-        />
+        <div>
+          <Label htmlFor='description' name='Descrição' />
+          <textarea
+            placeholder='Digitar descrição'
+            id='description'
+            disabled={loading}
+            {...register('description')}
+          />
+        </div>
         <h3>Informações de endereço</h3>
         <Input
           type='text'
@@ -148,14 +150,14 @@ export const RegisterForm = () => {
               type='radio'
               id='buyer'
               label='Comprador'
-              value={0}
+              value={'buyer'}
               {...register('account_type')}
             />
             <RadioInput
               type='radio'
               id='seller'
               label='Anunciante'
-              value={1}
+              value={'seller'}
               {...register('account_type')}
             />
           </div>

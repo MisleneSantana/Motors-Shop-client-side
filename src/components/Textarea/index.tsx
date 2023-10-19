@@ -1,27 +1,25 @@
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-interface iTextAreaProps {
+interface ITextAreaProps {
   id: string;
-  label: string;
   placeholder: string | undefined;
   value?: string;
-  register?: UseFormRegisterReturn<string> | undefined;
+  register?: UseFormRegisterReturn<string>;
 }
 
 export const TextArea = ({
   id,
-  value,
   placeholder,
+  value,
   register,
-  label,
-}: iTextAreaProps) => {
+}: ITextAreaProps) => {
   return (
     <div>
-      {label ? <label htmlFor={id}>{label}</label> : null}
       <textarea
+        name=''
         id={id}
-        value={value}
         placeholder={placeholder}
+        defaultValue={value}
         {...register}
       ></textarea>
     </div>
