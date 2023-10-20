@@ -26,7 +26,7 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
         <h4>
           {announcement?.brand} - {announcement?.model}
         </h4>
-        <textarea>{announcement?.description}</textarea>
+        <p>{announcement?.description}</p>
         {location === '/' || location === '/buyerHome' ? (
           <div>
             <span>{announcement.user.name.charAt(0)}</span>

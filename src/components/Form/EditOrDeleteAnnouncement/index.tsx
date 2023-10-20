@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { AnnouncementContext } from '../../../providers/Announcement/AnnouncementContext';
+import { AnnouncementContext } from '../../../providers/Ad/AdContext';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { Input } from '../../Input';
 import { SubmitHandler, useForm } from 'react-hook-form';

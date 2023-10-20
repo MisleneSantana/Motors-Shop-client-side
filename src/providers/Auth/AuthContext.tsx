@@ -8,16 +8,7 @@ import {
   TUserLoginReturn,
 } from '../../interfaces/user.interfaces';
 import { api } from '../../services/api';
-
-export interface IAuthProviderProps {
-  children: React.ReactNode;
-}
-export interface IAuthContextValues {
-  user: TUser | undefined;
-  setUser: React.Dispatch<React.SetStateAction<TUser | undefined>>;
-  login: (formData: TUserLogin) => Promise<void>;
-  logout: () => void;
-}
+import { IAuthContextValues, IAuthProviderProps } from './auth.props';
 
 export const AuthContext = createContext<IAuthContextValues>(
   {} as IAuthContextValues

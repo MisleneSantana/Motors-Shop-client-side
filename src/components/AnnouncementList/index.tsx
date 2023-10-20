@@ -1,19 +1,14 @@
 import { useContext } from 'react';
-import { AnnouncementContext } from '../../providers/Announcement/AnnouncementContext';
+import { AnnouncementContext } from '../../providers/Ad/AdContext';
 import { AnnouncementCard } from './AnnouncementCard';
-import { TAnnouncementResponse } from '../../interfaces/announcement.interfaces';
-
-interface IAnnouncementProps {
-  announcements: TAnnouncementResponse[];
-}
 
 export const AnnouncementList = () => {
-  const { announcements }: IAnnouncementProps = useContext(AnnouncementContext);
+  const { adsPagination } = useContext(AnnouncementContext);
 
   return (
     <section>
       <ul>
-        {announcements?.map((announcement) => {
+        {adsPagination.data?.map((announcement) => {
           return (
             <AnnouncementCard
               key={announcement.id}

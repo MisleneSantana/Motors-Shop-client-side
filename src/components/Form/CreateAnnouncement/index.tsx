@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { AnnouncementContext } from '../../../providers/Announcement/AnnouncementContext';
+import { AnnouncementContext } from '../../../providers/Ad/AdContext';
 import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 import {
   TAnnouncementValidator,

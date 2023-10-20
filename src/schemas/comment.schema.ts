@@ -37,3 +37,4 @@ export const commentResponseSchema = z.object({
 });
 
 export const commentReadSchema = commentResponseSchema.array();
+export const commentUpdateSchema = commentRequestSchema.partial();

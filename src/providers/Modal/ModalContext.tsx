@@ -1,27 +1,5 @@
 import { createContext, useState } from 'react';
-
-export interface IModalProviderProps {
-  children: React.ReactNode;
-}
-
-export interface IModalContext {
-  isSuccessModalOpen: boolean;
-  setIsSuccessModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isCreateAdsModalOpen: boolean;
-  setIsCreateAdsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isEditOrDeleteAdsModalOpen: boolean;
-  setIsEditOrDeleteAdsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isConfirmDeleteAdModalOpen: boolean;
-  setIsConfirmDeleteAdModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isCreateAccountModalOpen: boolean;
-  setIsCreateAccountModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isEditOrDeleteProfileModalOpen: boolean;
-  setIsEditOrDeleteProfileModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
-  isEditUserAddressModalOpen: boolean;
-  setIsEditUserAddressModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { IModalContext, IModalProviderProps } from './modal.props';
 
 export const ModalContext = createContext({} as IModalContext);
 
@@ -38,6 +16,10 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
   const [isEditOrDeleteProfileModalOpen, setIsEditOrDeleteProfileModalOpen] =
     useState<boolean>(false);
   const [isEditUserAddressModalOpen, setIsEditUserAddressModalOpen] =
+    useState<boolean>(false);
+  const [isConfirmDeleteCommentModalOpen, setIsConfirmDeleteCommentModalOpen] =
+    useState<boolean>(false);
+  const [isEditCommentModalOpen, setIsEditCommentModalOpen] =
     useState<boolean>(false);
 
   return (
@@ -57,6 +39,10 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         setIsEditOrDeleteProfileModalOpen,
         isEditUserAddressModalOpen,
         setIsEditUserAddressModalOpen,
+        isConfirmDeleteCommentModalOpen,
+        setIsConfirmDeleteCommentModalOpen,
+        isEditCommentModalOpen,
+        setIsEditCommentModalOpen,
       }}
     >
       {children}

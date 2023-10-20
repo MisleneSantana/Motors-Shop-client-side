@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
-import { AnnouncementContext } from '../../../providers/Announcement/AnnouncementContext';
+import { AnnouncementContext } from '../../../providers/Ad/AdContext';
 
 export const DeleteAdModal = () => {
   const { setIsConfirmDeleteAdModalOpen } = useContext(ModalContext);
