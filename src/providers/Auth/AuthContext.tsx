@@ -19,6 +19,15 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
   const { setLoading } = useContext(LoadingContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('@user:token');
+
+    if (!token) return setLoading(false);
+
+    api.defaults.headers.common.authorization = `Bearer ${token}`;
+    setLoading(false);
+  }, []);
+
   // 1. Login (entrar)
   const login = async (formData: TUserLogin) => {
     try {
@@ -28,60 +37,45 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       localStorage.setItem('@user:token', token);
-      localStorage.setItem('@user:id', data.user.id);
 
       toast.success('Login realizado com sucesso', {
         autoClose: 2000,
       });
-      data.user.account_type.toLocaleLowerCase() === 'seller'
-        ? navigate('/sellerHome')
-        : navigate('/');
-      data.user.account_type.toLocaleLowerCase() === 'buyer'
-        ? navigate('/sellerBuyer')
-        : navigate('/');
+
+      await autoLogin();
     } catch (error) {
       toast.error('Algo deu errado', {
         autoClose: 2000,
       });
+      console.log(error);
     } finally {
       setLoading(false);
     }
   };
 
   // 2. Auto-login
-  useEffect(() => {
-    const token = localStorage.getItem('@user:token');
-    const userId = localStorage.getItem('@user:id');
+  const autoLogin = async () => {
+    try {
+      if (api.defaults.headers.common.authorization) {
+        const { data } = await api.get<TUser>(`/users/logged`);
+        localStorage.setItem('@user:id', data.id);
+        setUser(data);
 
-    const autoLogin = async () => {
-      try {
-        if (token) {
-          const response = await api.get<TUser>(`/users/${userId}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          setUser(response.data);
-
-          response.data.account_type.toLocaleLowerCase() === 'seller'
-            ? navigate('/sellerHome')
-            : navigate('/');
-
-          response.data.account_type.toLocaleLowerCase() === 'buyer'
-            ? navigate('/buyerHome')
-            : navigate('/');
-        }
-      } catch (error) {
-        toast.error('Algo deu errado', {
-          autoClose: 2000,
-        });
-
-        const keysToRemove = ['@user:token', '@user:id'];
-        keysToRemove.forEach((key) => localStorage.removeItem(key));
+        data.account_type.toLocaleLowerCase() === 'seller'
+          ? navigate('/sellerHome')
+          : navigate('/buyerHome');
+      } else {
+        navigate('/');
       }
-    };
-
-    if (token && userId) {
-      autoLogin();
+    } catch (error) {
+      toast.error('Algo deu errado', {
+        autoClose: 2000,
+      });
     }
+  };
+
+  useEffect(() => {
+    autoLogin();
   }, []);
 
   // 3. Logout

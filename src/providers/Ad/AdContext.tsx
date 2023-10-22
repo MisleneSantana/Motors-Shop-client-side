@@ -17,6 +17,8 @@ import {
   TCommentRequest,
   TCommentResponse,
 } from '../../interfaces/comment.interfaces';
+import { Toast } from '../../components/Toast';
+import { ModalContext } from '../Modal/ModalContext';
 
 export const AnnouncementContext = createContext<IAnnouncementProviderValues>(
   {} as IAnnouncementProviderValues
@@ -38,6 +40,7 @@ export const AnnouncementProvider = ({
   const [comments, setComments] = useState<TCommentResponse[]>([]);
 
   const { setLoading } = useContext(LoadingContext);
+  const { setIsSuccessModalOpen } = useContext(ModalContext);
 
   // 1. Leitura de todos os anúncios:
   const getAnnouncements = async () => {
@@ -48,9 +51,7 @@ export const AnnouncementProvider = ({
       setAdsPagination(data);
       setAnnouncements(data.data);
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -58,7 +59,6 @@ export const AnnouncementProvider = ({
   const createAnnouncement = async (formData: TAnnouncementRequest) => {
     try {
       const userToken = localStorage.getItem('@user:token');
-
       const response = await api.post<TAnnouncementResponse>(
         `/announcements`,
         formData,
@@ -67,16 +67,15 @@ export const AnnouncementProvider = ({
         }
       );
       setAnnouncements((announcements) => [...announcements, response.data]);
-      toast.success('Anúncio criado com sucesso', {
-        autoClose: 2000,
-      });
+      setIsSuccessModalOpen(true);
 
       await getAnnouncements();
       return response;
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
+      Toast({
+        message: 'Não foi possível concluir sua solicitação.',
       });
+      console.log(error);
     } finally {
       setLoading(false);
     }

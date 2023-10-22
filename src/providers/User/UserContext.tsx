@@ -13,6 +13,7 @@ import { userUpdateSchema } from '../../schemas/user.schema';
 import { AuthContext } from '../Auth/AuthContext';
 import { ModalContext } from '../Modal/ModalContext';
 import { IUserContextValues, IUserProviderProps } from './user.props';
+import { Toast } from '../../components/Toast';
 
 export const UserContext = createContext({} as IUserContextValues);
 
@@ -25,19 +26,25 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
   const registerUser = async (formData: TUserRegisterRequest) => {
     try {
       setLoading(true);
-      await api
+      const response = await api
         .post<TUserResponse>('/users', formData)
-        .then(() => {
+        .then((res) => {
+          const data = res.data;
           setIsCreateAccountModalOpen(true);
+          return data;
         })
         .catch((error) => {
           if (error.response.status == 409) {
-            toast.error('Este e-mail já possui cadastro.');
+            Toast({
+              message: 'Este e-mail já possui cadastro.',
+              successful: true,
+            });
           }
         });
+      return response;
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
+      Toast({
+        message: 'Não foi possível concluir sua solicitação.',
       });
     } finally {
       setLoading(false);

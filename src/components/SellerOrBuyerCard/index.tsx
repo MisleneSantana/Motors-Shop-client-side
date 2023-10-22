@@ -7,7 +7,8 @@ export const SellerOrBuyerCard = () => {
   const { setIsCreateAdsModalOpen } = useContext(ModalContext);
 
   const userFullName = user?.name;
-  user?.name && user?.name[0].toUpperCase() + user?.name.substring(1);
+  user?.name &&
+    user?.name[0].toUpperCase() + user?.name.substring(1).toLowerCase();
 
   return (
     <section>

@@ -27,7 +27,7 @@ export const EditOrDeleteAnnouncement = () => {
         <section key={i}>
           <Input
             type='text'
-            label={`${i} Imagem da galeria`}
+            label={`${i}º Imagem da galeria`}
             placeholder='https://image.com'
             id='image_url'
             error={

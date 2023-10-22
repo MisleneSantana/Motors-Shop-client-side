@@ -14,8 +14,7 @@ import { Label } from '../../Label';
 
 export const CreateAnnouncement = () => {
   const { createAnnouncement } = useContext(AnnouncementContext);
-  const { setIsCreateAdsModalOpen, setIsSuccessModalOpen } =
-    useContext(ModalContext);
+  const { setIsCreateAdsModalOpen } = useContext(ModalContext);
   const { loading } = useContext(LoadingContext);
   const [inputImage, setInputImage] = useState(2);
 
@@ -29,6 +28,7 @@ export const CreateAnnouncement = () => {
             label={`${i}º Imagem da galeria`}
             id='images'
             placeholder='https://image.com'
+            // onChange={(e) => e.target.value}
             {...register('images')}
             error={
               errors?.images?.[i] && (
@@ -52,6 +52,7 @@ export const CreateAnnouncement = () => {
   });
 
   const submit: SubmitHandler<TAnnouncementRequest> = (formData) => {
+    // const newAd = { ...formData, km: Number(formData.km) };
     createAnnouncement(formData);
     setIsCreateAdsModalOpen(false);
 
@@ -65,8 +66,6 @@ export const CreateAnnouncement = () => {
     setValue('price', Number(''));
     setValue('description', '');
     setValue('cover_image_url', '');
-
-    setIsSuccessModalOpen(true);
   };
 
   return (
@@ -169,10 +168,15 @@ export const CreateAnnouncement = () => {
         <button type='button' onClick={() => setInputImage(inputImage + 1)}>
           'Adicionar campo para imagem da galeria'
         </button>
-        <button onClick={() => setIsCreateAdsModalOpen(false)}>Cancelar</button>
-        <button type='submit'>
-          {loading ? 'Carregando' : 'Criar anúncio'}
-        </button>
+
+        <section>
+          <button onClick={() => setIsCreateAdsModalOpen(false)}>
+            Cancelar
+          </button>
+          <button type='submit'>
+            {loading ? 'Carregando' : 'Criar anúncio'}
+          </button>
+        </section>
       </form>
     </div>
   );

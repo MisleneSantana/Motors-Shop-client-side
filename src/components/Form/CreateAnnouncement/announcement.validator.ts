@@ -8,15 +8,15 @@ export const announcementValidator = z.object({
     .nonempty({ message: 'Campo obrigatório' })
     .min(4, 'Ano completo'),
   fuel: z.string().nonempty({ message: 'Campo obrigatório' }),
-  km: z.number(),
+  km: z.any().transform((data) => Number(data)),
   color: z.string().nonempty({ message: 'Campo obrigatório' }),
-  table_price: z.number(),
-  price: z.number(),
+  table_price: z.any().transform((data) => Number(data)),
+  price: z.any().transform((data) => Number(data)),
   description: z.string().optional(),
   cover_image_url: z.string().nonempty({ message: 'Imagem obrigatória' }),
   images: z
     .object({
-      image_url: z.string().url('Insira uma URL válida.'),
+      image_url: z.string(),
     })
     .array(),
 });

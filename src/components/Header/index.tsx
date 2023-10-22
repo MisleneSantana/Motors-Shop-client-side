@@ -4,21 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../providers/Auth/AuthContext';
 
 export const Header = () => {
-  // const userToken = localStorage.getItem('@user:token');
-
-  const { user: userState } = useContext(AuthContext);
+  const { user: userLogged } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const userName =
-    userState?.name &&
-    userState?.name[0].toUpperCase() + userState?.name.substring(1);
-
+  const formatUserName = (userName: string) => {
+    userName
+      .split('')
+      .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+      .join('');
+    return userName;
+  };
   return (
     <header>
       <div>
         <img src={logo} alt='logo' />
       </div>
-      {!userState?.id ? (
+      {!userLogged?.id ? (
         <nav>
           <button
             onClick={() => {
@@ -37,8 +38,8 @@ export const Header = () => {
         </nav>
       ) : (
         <nav>
-          <button>{userName}</button>
-          <h2>{userName}</h2>
+          <button>{userLogged ? userLogged.name?.charAt(0) : undefined}</button>
+          <h2>{formatUserName(userLogged.name)}</h2>
         </nav>
       )}
     </header>

@@ -17,8 +17,16 @@ export const announcementSchema = z.object({
   fuel: z.string(),
   km: z.number(),
   color: z.string(),
-  table_price: z.number(),
-  price: z.number(),
+  table_price: z
+    .number()
+    .positive()
+    .default(() => 0)
+    .or(z.string()),
+  price: z
+    .number()
+    .positive()
+    .default(() => 0)
+    .or(z.string()),
   description: z.string().optional(),
   cover_image_url: z.string(),
   images: z.array(imageSchema),
@@ -31,8 +39,8 @@ export const announcementRequestSchema = z.object({
   fuel: z.string(),
   km: z.number(),
   color: z.string(),
-  table_price: z.number(),
-  price: z.number(),
+  table_price: z.number().or(z.string()),
+  price: z.number().or(z.string()),
   description: z.string().optional(),
   cover_image_url: z.string(),
   images: z.array(imageRequestSchema),
