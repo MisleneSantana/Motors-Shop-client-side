@@ -8,6 +8,7 @@ import { UserContext } from '../../../providers/User/UserContext';
 import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 import { TUserRegisterRequest } from '../../../interfaces/user.interfaces';
 import { Label } from '../../Label';
+import { Button } from '../../Button';
 
 export const RegisterForm = () => {
   const { loading } = useContext(LoadingContext);
@@ -51,7 +52,7 @@ export const RegisterForm = () => {
         <Input
           type='text'
           label='CPF'
-          placeholder='000.000.000-00'
+          placeholder='123.456.789-00'
           id='cpf'
           disabled={loading}
           {...register('cpf')}
@@ -67,9 +68,10 @@ export const RegisterForm = () => {
           error={errors.phone_number}
         />
         <Input
-          type='text'
+          type='date'
           label='Data de nascimento'
-          placeholder='00/00/00'
+          placeholder='00/00/0000'
+          pattern='\d{4}-\d{2}-\d{2}'
           id='birth_date'
           disabled={loading}
           {...register('birth_date')}
@@ -84,11 +86,12 @@ export const RegisterForm = () => {
             {...register('description')}
           />
         </div>
+
         <h3>Informações de endereço</h3>
         <Input
           type='text'
           label='CEP'
-          placeholder='00000.000'
+          placeholder='12345.678'
           id='cep'
           disabled={loading}
           {...register('address.cep')}
@@ -180,7 +183,11 @@ export const RegisterForm = () => {
           {...register('confirmPassword')}
           error={errors.confirmPassword}
         />
-        <button type='submit'>Finalizar cadastro</button>
+        <Button
+          type={'submit'}
+          disabled={loading}
+          text={loading ? 'Cadastrando...' : 'Finalizar cadastro'}
+        />
       </form>
     </div>
   );

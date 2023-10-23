@@ -46,6 +46,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
       Toast({
         message: 'Não foi possível concluir sua solicitação.',
       });
+      console.log(error);
     } finally {
       setLoading(false);
     }

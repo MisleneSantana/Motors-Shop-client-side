@@ -4,9 +4,10 @@ import { ForwardedRef, InputHTMLAttributes, forwardRef } from 'react';
 export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   id: string;
-  type: 'text' | 'email' | 'password';
+  type: 'text' | 'email' | 'password' | 'date';
   error?: FieldError;
   placeholder?: string;
+  pattern?: string;
   value?: string;
   disabled?: boolean;
 }
@@ -19,6 +20,7 @@ export const Input = forwardRef(
       type,
       error,
       placeholder,
+      pattern,
       value,
       disabled,
       ...rest
@@ -31,6 +33,7 @@ export const Input = forwardRef(
         <input
           ref={ref}
           placeholder={placeholder}
+          pattern={pattern}
           id={id}
           type={type}
           value={value}
