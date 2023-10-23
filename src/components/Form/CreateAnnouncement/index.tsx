@@ -11,35 +11,18 @@ import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { Input } from '../../Input';
 import { TAnnouncementRequest } from '../../../interfaces/announcement.interfaces';
 import { Label } from '../../Label';
+import { Button } from '../../Button';
 
 export const CreateAnnouncement = () => {
   const { createAnnouncement } = useContext(AnnouncementContext);
   const { setIsCreateAdsModalOpen } = useContext(ModalContext);
   const { loading } = useContext(LoadingContext);
-  const [inputImage, setInputImage] = useState(2);
+  const [inputImage, setInputImage] = useState([1, 2]);
 
-  const renderImageInputs = () => {
-    const inputs: React.JSX.Element[] = [];
-    for (let i = 1; i <= inputImage; i++) {
-      inputs.push(
-        <section key={i}>
-          <Input
-            type='text'
-            label={`${i}º Imagem da galeria`}
-            id='images'
-            placeholder='https://image.com'
-            // onChange={(e) => e.target.value}
-            {...register('images')}
-            error={
-              errors?.images?.[i] && (
-                <p>{`* ${errors.images[i]?.image_url?.message}`}</p>
-              )
-            }
-          />
-        </section>
-      );
+  const addInputImage = () => {
+    if (inputImage.length < 6) {
+      setInputImage([...inputImage, inputImage.length + 1]);
     }
-    return inputs;
   };
 
   const {
@@ -164,18 +147,39 @@ export const CreateAnnouncement = () => {
           error={errors.cover_image_url}
         />
         {/* Renderizar inputs (imagem da galeria) de forma dinâmica */}
-        {renderImageInputs()}
-        <button type='button' onClick={() => setInputImage(inputImage + 1)}>
-          'Adicionar campo para imagem da galeria'
-        </button>
+        {inputImage.map((input) => (
+          <Input
+            key={input}
+            id={`images${input}`}
+            label={`${input}ª Imagem da Galeria`}
+            type='text'
+            placeholder={'https://image.com'}
+            {...register('images')}
+            error={
+              errors?.images?.[input] && (
+                <p>{`* ${errors.images[input]?.image_url?.message}`}</p>
+              )
+            }
+          />
+        ))}
+
+        <Button
+          onClick={addInputImage}
+          type='button'
+          disabled={inputImage.length == 6 ? true : false}
+          text='Adicionar campo para imagem da galeria'
+        />
 
         <section>
-          <button onClick={() => setIsCreateAdsModalOpen(false)}>
-            Cancelar
-          </button>
-          <button type='submit'>
-            {loading ? 'Carregando' : 'Criar anúncio'}
-          </button>
+          <Button
+            type='button'
+            onClick={() => setIsCreateAdsModalOpen(false)}
+            text=' Cancelar'
+          />
+          <Button
+            type='submit'
+            text={loading ? 'Carregando' : 'Criar anúncio'}
+          />
         </section>
       </form>
     </div>
