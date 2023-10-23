@@ -9,6 +9,7 @@ import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 import { TUserRegisterRequest } from '../../../interfaces/user.interfaces';
 import { Label } from '../../Label';
 import { Button } from '../../Button';
+import { validateCPF } from './validateCPF';
 
 export const RegisterForm = () => {
   const { loading } = useContext(LoadingContext);
@@ -23,7 +24,17 @@ export const RegisterForm = () => {
   });
 
   const submit: SubmitHandler<TUserRegisterRequest> = (formData) => {
-    registerUser(formData);
+    const validatedCPF: boolean = validateCPF(formData.cpf);
+    if (validatedCPF) {
+      const replaceCPF = formData.cpf
+        .replace('.', '')
+        .replace('-', '')
+        .replace(/\D/g, '')
+        .trim();
+      const newObjUser = { ...formData, cpf: replaceCPF };
+      registerUser(newObjUser);
+    }
+    return 'CPF invalido';
   };
 
   return (
@@ -52,10 +63,13 @@ export const RegisterForm = () => {
         <Input
           type='text'
           label='CPF'
-          placeholder='123.456.789-00'
+          placeholder='123.456.789-01'
           id='cpf'
           disabled={loading}
           {...register('cpf')}
+          // {...register("cpf", {
+          //   validate: (value) => validateCPF(value) || "CPF inválido",
+          // })}
           error={errors.cpf}
         />
         <Input
@@ -70,7 +84,7 @@ export const RegisterForm = () => {
         <Input
           type='date'
           label='Data de nascimento'
-          placeholder='00/00/0000'
+          placeholder='DD/MM/AAAA'
           pattern='\d{4}-\d{2}-\d{2}'
           id='birth_date'
           disabled={loading}

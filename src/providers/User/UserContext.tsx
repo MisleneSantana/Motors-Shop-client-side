@@ -26,6 +26,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
   const registerUser = async (formData: TUserRegisterRequest) => {
     try {
       setLoading(true);
+
       const response = await api
         .post<TUserResponse>('/users', formData)
         .then((res) => {
