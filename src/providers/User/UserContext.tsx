@@ -7,7 +7,6 @@ import {
   TUserResponse,
   TUserUpdate,
 } from '../../interfaces/user.interfaces';
-import { toast } from 'react-toastify';
 import { LoadingContext } from '../Loading/LoadingContext';
 import { userUpdateSchema } from '../../schemas/user.schema';
 import { AuthContext } from '../Auth/AuthContext';
@@ -38,7 +37,6 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
           if (error.response.status == 409) {
             Toast({
               message: 'Este e-mail já possui cadastro.',
-              successful: true,
             });
           }
         });
@@ -47,7 +45,6 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
       Toast({
         message: 'Não foi possível concluir sua solicitação.',
       });
-      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -59,9 +56,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
       const { data } = await api.get<TUserRead>(`/users`);
       return data;
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -71,9 +66,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
       const { data } = await api.get<TUser>(`/users/${userId}`);
       return data;
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -92,17 +85,14 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
         }
       );
       data.name
-        ? toast.success('Perfil atualizado com sucesso!', {
-            autoClose: 2000,
-          })
-        : toast.success('Endereço atualizado com sucesso!', {
-            autoClose: 2000,
+        ? Toast({ message: 'Perfil atualizado com sucesso!', successful: true })
+        : Toast({
+            message: 'Endereço atualizado com sucesso!',
+            successful: true,
           });
       setUser(data);
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -113,13 +103,14 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
       await api.delete(`/users/${userId}`, {
         headers: { Authorization: `Bearer ${userToken}` },
       });
-      toast.success('Conta excluída com sucesso!', {
-        autoClose: 2000,
+      Toast({
+        message: 'Conta excluída com sucesso!',
+        successful: true,
       });
       logout();
     } catch (err) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
+      Toast({
+        message: 'Não foi possível concluir sua solicitação!',
       });
     }
   };

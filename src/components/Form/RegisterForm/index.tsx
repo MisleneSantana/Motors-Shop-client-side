@@ -10,6 +10,7 @@ import { TUserRegisterRequest } from '../../../interfaces/user.interfaces';
 import { Label } from '../../Label';
 import { Button } from '../../Button';
 import { validateCPF } from './validateCPF';
+import { Toast } from '../../Toast';
 
 export const RegisterForm = () => {
   const { loading } = useContext(LoadingContext);
@@ -24,17 +25,23 @@ export const RegisterForm = () => {
   });
 
   const submit: SubmitHandler<TUserRegisterRequest> = (formData) => {
-    const validatedCPF: boolean = validateCPF(formData.cpf);
-    if (validatedCPF) {
-      const replaceCPF = formData.cpf
-        .replace('.', '')
-        .replace('-', '')
-        .replace(/\D/g, '')
-        .trim();
-      const newObjUser = { ...formData, cpf: replaceCPF };
-      registerUser(newObjUser);
+    try {
+      const validatedCPF: boolean = validateCPF(formData.cpf);
+      if (validatedCPF) {
+        const replaceCPF = formData.cpf
+          .replace('.', '')
+          .replace('-', '')
+          .replace(/\D/g, '')
+          .trim();
+        const newObjUser = { ...formData, cpf: replaceCPF };
+        registerUser(newObjUser);
+      }
+    } catch (error) {
+      registerUser(formData);
+      Toast({
+        message: 'CPF inválido.',
+      });
     }
-    return 'CPF invalido';
   };
 
   return (

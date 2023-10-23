@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { api } from '../../services/api';
-import { toast } from 'react-toastify';
 import {
   IPaginationAnnouncements,
   TAnnouncement,
@@ -89,9 +88,7 @@ export const AnnouncementProvider = ({
       );
       setSingleAnnouncement(data);
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -103,9 +100,7 @@ export const AnnouncementProvider = ({
       );
       setSellerAnnouncements(data);
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -134,11 +129,9 @@ export const AnnouncementProvider = ({
 
       setSingleAnnouncement(data);
       await getAnnouncements();
-      toast.success('Anúncio atualizado com sucesso');
+      Toast({ message: 'Anúncio atualizado com sucesso', successful: true });
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -153,11 +146,9 @@ export const AnnouncementProvider = ({
 
       setAnnouncements(listWithoutAd);
       setSellerAnnouncements(listWithoutAd);
-      toast.success('Anúncio deletado com sucesso');
+      Toast({ message: 'Anúncio deletado com sucesso', successful: true });
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -179,15 +170,11 @@ export const AnnouncementProvider = ({
       setComments((comments) => [...comments, data]);
 
       await getComments(announcementId);
-      toast.success('Comentário criado com sucesso', {
-        autoClose: 2000,
-      });
 
+      Toast({ message: 'Comentário criado com sucesso', successful: true });
       return data;
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     } finally {
       setLoading(false);
     }
@@ -205,14 +192,13 @@ export const AnnouncementProvider = ({
       );
 
       data.length === 0
-        ? toast.error('Este anúncio não possui comentários', {
-            autoClose: 2000,
+        ? Toast({
+            message: 'Este anúncio não possui comentários',
+            successful: true,
           })
         : setComments(data);
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -233,14 +219,9 @@ export const AnnouncementProvider = ({
         );
         return updateComment;
       });
-
-      toast.success('Comentário atualizado com sucesso', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Comentário atualizado com sucesso', successful: true });
     } catch {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -257,13 +238,9 @@ export const AnnouncementProvider = ({
       );
 
       setComments(listWithoutComment);
-      toast.success('Comentário deletado com sucesso', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Comentário deletado com sucesso', successful: true });
     } catch (error) {
-      toast.error('Não foi possível concluir sua solicitação.', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 

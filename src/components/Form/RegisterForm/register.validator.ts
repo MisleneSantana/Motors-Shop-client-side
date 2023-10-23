@@ -9,7 +9,12 @@ export const registerValidator = z
         return name
           .trim()
           .split('')
-          .map((word) => word[0].toLocaleUpperCase().concat(word.substring(1)))
+          .map((word) =>
+            word[0]
+              .toLocaleUpperCase()
+              .concat(word.substring(1))
+              .toLocaleLowerCase()
+          )
           .join('');
       }),
     email: z
@@ -51,7 +56,12 @@ export const registerRequestValidator = z.object({
       return name
         .trim()
         .split('')
-        .map((word) => word[0].toLocaleUpperCase().concat(word.substring(1)))
+        .map((word) =>
+          word[0]
+            .toLocaleUpperCase()
+            .concat(word.substring(1))
+            .toLocaleLowerCase()
+        )
         .join('');
     }),
   email: z

@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { LoadingContext } from '../Loading/LoadingContext';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import {
   TUser,
   TUserLogin,
@@ -9,6 +8,7 @@ import {
 } from '../../interfaces/user.interfaces';
 import { api } from '../../services/api';
 import { IAuthContextValues, IAuthProviderProps } from './auth.props';
+import { Toast } from '../../components/Toast';
 
 export const AuthContext = createContext<IAuthContextValues>(
   {} as IAuthContextValues
@@ -38,16 +38,10 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
       localStorage.setItem('@user:token', token);
 
-      toast.success('Login realizado com sucesso', {
-        autoClose: 2000,
-      });
-
+      Toast({ message: 'Login realizado com sucesso', successful: true });
       await autoLogin();
     } catch (error) {
-      toast.error('Algo deu errado', {
-        autoClose: 2000,
-      });
-      console.log(error);
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     } finally {
       setLoading(false);
     }
@@ -55,8 +49,9 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   // 2. Auto-login
   const autoLogin = async () => {
+    const token = localStorage.getItem('@user:token');
     try {
-      if (api.defaults.headers.common.authorization) {
+      if (token) {
         const { data } = await api.get<TUser>(`/users/logged`);
         localStorage.setItem('@user:id', data.id);
         setUser(data);
@@ -68,9 +63,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         navigate('/');
       }
     } catch (error) {
-      toast.error('Algo deu errado', {
-        autoClose: 2000,
-      });
+      Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };
 
@@ -82,9 +75,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
   const logout = () => {
     const keysToRemove = ['@user:token', '@user:id'];
     keysToRemove.forEach((key) => localStorage.removeItem(key));
-    toast.success('Logout realizado com sucesso!', {
-      autoClose: 2000,
-    });
+    Toast({ message: 'Logout realizado com sucesso', successful: true });
     setTimeout(() => {
       setUser(undefined);
       navigate('/');

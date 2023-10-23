@@ -6,7 +6,6 @@ export const validateCPF = (cpf: string): boolean => {
     .replace('-', '')
     .replace(/\D/g, '')
     .trim();
-  console.log(replaceCPF);
   if (
     replaceCPF === '' ||
     replaceCPF.length !== 11 ||
