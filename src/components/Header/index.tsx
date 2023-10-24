@@ -18,7 +18,7 @@ export const Header = () => {
   return (
     <HeaderStyle>
       <DivStyle>
-        <img src={logo} alt='logo' />
+        <img src={logo} alt='logo'/>
       </DivStyle>
       {!userLogged?.id ? (
         <NavBarStyle>

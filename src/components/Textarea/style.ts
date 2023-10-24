@@ -7,7 +7,10 @@ export const TextareaStyle = styled.textarea`
   padding: 0.75rem 1rem;
 
   resize: none;
-  word-wrap: break-word;
+  word-break: break-all;
+  // word-wrap: break-word;
+  white-space: normal;
+  line-height: 1.25rem;
 
   border-radius: 0.25rem;
   border: 1.5px solid ${({ theme }) => theme.colors.grey7};
@@ -18,5 +21,9 @@ export const TextareaStyle = styled.textarea`
     font-weight: 400;
     font-size: 1rem;
     font-family: Inter;
+  }
+
+  :focus {
+    border: 1.5px solid ${({ theme }) => theme.colors.brand2};
   }
 `;
