@@ -16,8 +16,8 @@ export const registerValidator = z
       }),
     email: z
       .string()
-      .email('E-mail inválido')
-      .nonempty({ message: 'Campo obrigatório' }),
+      .nonempty({ message: 'Campo obrigatório' })
+      .email('E-mail inválido'),
     cpf: z.string().nonempty({ message: 'Campo obrigatório' }),
     phone_number: z.string().nonempty({ message: 'Campo obrigatório' }),
     birth_date: z.string().nonempty({ message: 'Campo obrigatório' }),
@@ -34,10 +34,10 @@ export const registerValidator = z
     password: z
       .string()
       .min(7, 'Mínimo de 7 caracteres')
-      .regex(/(?=.*?[A-Z])/, 'Necessário ao menos uma letra maiuscula')
-      .regex(/(?=.*?[a-z])/, 'Necessário ao menos uma letra minúscula ')
-      .regex(/(?=.*?[0-9])/, 'Necessário conter ao menos um número')
-      .regex(/(?=.*?[\W])/, 'Necessário conter ao menos um caracter especial'),
+      .regex(/(?=.*?[A-Z])/, 'Deve conter ao menos uma letra maiuscula')
+      .regex(/(?=.*?[a-z])/, 'Deve conter ao menos uma letra minúscula ')
+      .regex(/(?=.*?[0-9])/, 'Deve conter conter ao menos um número')
+      .regex(/(?=.*?[\W])/, 'Deve conter conter ao menos um caracter especial'),
     confirmPassword: z.string().nonempty('Por favor, confirme sua senha'),
   })
   .refine(({ password, confirmPassword }) => confirmPassword === password, {

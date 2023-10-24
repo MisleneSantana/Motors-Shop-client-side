@@ -32,6 +32,7 @@ time, mark, audio, video, button, input, body {
 	vertical-align: baseline;
   	box-sizing: border-box;
   	outline: none;
+	text-decoration: none;
 }
 
 

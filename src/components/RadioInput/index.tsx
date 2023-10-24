@@ -1,5 +1,6 @@
 import { ForwardedRef, forwardRef } from 'react';
 import { InputHTMLAttributes } from 'react';
+import { FieldError } from 'react-hook-form';
 
 export interface IRadioButtonProps
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,11 +8,12 @@ export interface IRadioButtonProps
   id: string;
   value: string;
   defaultChecked?: boolean;
+  error?: FieldError;
 }
 
 export const RadioInput = forwardRef(
   (
-    { label, id, value, defaultChecked, ...rest }: IRadioButtonProps,
+    { label, id, value, defaultChecked, error, ...rest }: IRadioButtonProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     return (
@@ -25,6 +27,7 @@ export const RadioInput = forwardRef(
           {...rest}
         />
         {label ? <label htmlFor={id}>{label}</label> : null}
+        {error ? <p>{'Selecione o perfil da conta'}</p> : null}
       </>
     );
   }

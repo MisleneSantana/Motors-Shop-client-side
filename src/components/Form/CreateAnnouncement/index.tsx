@@ -19,7 +19,7 @@ export const CreateAnnouncement = () => {
   const { loading } = useContext(LoadingContext);
   const [inputImage, setInputImage] = useState([1, 2]);
 
-  const handleInputImage = () => {
+  const createInputImage = () => {
     if (inputImage.length < 6) {
       setInputImage([...inputImage, inputImage.length + 1]);
     }
@@ -164,7 +164,7 @@ export const CreateAnnouncement = () => {
         ))}
 
         <Button
-          onClick={handleInputImage}
+          onClick={createInputImage}
           type='button'
           disabled={inputImage.length == 6 ? true : false}
           text='Adicionar campo para imagem da galeria'

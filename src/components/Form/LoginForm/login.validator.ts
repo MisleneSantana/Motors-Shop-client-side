@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const LoginFormSchema = z.object({
-  email: z.string().email('E-mail inválido').nonempty('Campo obrigatório'),
+  email: z.string().nonempty('Campo obrigatório').email('E-mail inválido'),
   password: z.string().nonempty('Campo obrigatório'),
 });
 

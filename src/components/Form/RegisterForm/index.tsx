@@ -14,6 +14,7 @@ import { DivFormStyle } from './style';
 import { ModelForm } from '../ModelForm';
 import { StyledTexts } from '../../../styles/typography';
 import { TextareaStyle } from '../../Textarea/style';
+import { RadioButtonDivStyles } from '../../RadioInput/style';
 
 export const RegisterForm = () => {
   const { loading } = useContext(LoadingContext);
@@ -22,6 +23,7 @@ export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<TRegisterValidator>({
     resolver: zodResolver(registerValidator),
@@ -35,8 +37,24 @@ export const RegisterForm = () => {
         .replace('-', '')
         .replace(/\D/g, '')
         .trim();
+
       const newObjUser = { ...formData, cpf: replaceCPF };
       registerUser(newObjUser);
+
+      setValue('name', '');
+      setValue('email', '');
+      setValue('cpf', '');
+      setValue('phone_number', '');
+      setValue('birth_date', '');
+      setValue('description', '');
+      setValue('account_type', '');
+      setValue('password', '');
+      setValue('address.number', '');
+      setValue('address.cep', '');
+      setValue('address.state', '');
+      setValue('address.city', '');
+      setValue('address.street', '');
+      setValue('address.complement', '');
     }
   };
 
@@ -167,7 +185,7 @@ export const RegisterForm = () => {
           <StyledTexts tag='h3' $fontSize='heading_500_16' className='form__h3'>
             Tipo de conta
           </StyledTexts>
-          <div>
+          <RadioButtonDivStyles>
             <RadioInput
               type='radio'
               id='buyer'
@@ -181,8 +199,9 @@ export const RegisterForm = () => {
               label='Anunciante'
               value={'seller'}
               {...register('account_type')}
+              error={errors.account_type}
             />
-          </div>
+          </RadioButtonDivStyles>
         </>
         <Input
           type='password'

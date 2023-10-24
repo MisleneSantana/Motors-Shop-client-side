@@ -1,15 +1,16 @@
 import { Footer } from '../../components/Footer';
 import { LoginForm } from '../../components/Form/LoginForm';
 import { Header } from '../../components/Header';
+import { LoginDivStyle, LoginMainStyle } from './style';
 
 export const Login = () => {
   return (
-    <div>
+    <LoginDivStyle>
       <Header />
-      <main>
+      <LoginMainStyle>
         <LoginForm />
-      </main>
+      </LoginMainStyle>
       <Footer />
-    </div>
+    </LoginDivStyle>
   );
 };
