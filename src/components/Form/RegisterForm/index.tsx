@@ -10,7 +10,6 @@ import { TUserRegisterRequest } from '../../../interfaces/user.interfaces';
 import { Label } from '../../Label';
 import { Button } from '../../Button';
 import { validateCPF } from './validateCPF';
-import { Toast } from '../../Toast';
 
 export const RegisterForm = () => {
   const { loading } = useContext(LoadingContext);
@@ -25,22 +24,15 @@ export const RegisterForm = () => {
   });
 
   const submit: SubmitHandler<TUserRegisterRequest> = (formData) => {
-    try {
-      const validatedCPF: boolean = validateCPF(formData.cpf);
-      if (validatedCPF) {
-        const replaceCPF = formData.cpf
-          .replace('.', '')
-          .replace('-', '')
-          .replace(/\D/g, '')
-          .trim();
-        const newObjUser = { ...formData, cpf: replaceCPF };
-        registerUser(newObjUser);
-      }
-    } catch (error) {
-      registerUser(formData);
-      Toast({
-        message: 'CPF inválido.',
-      });
+    const validatedCPF: boolean = validateCPF(formData.cpf);
+    if (validatedCPF) {
+      const replaceCPF = formData.cpf
+        .replace('.', '')
+        .replace('-', '')
+        .replace(/\D/g, '')
+        .trim();
+      const newObjUser = { ...formData, cpf: replaceCPF };
+      registerUser(newObjUser);
     }
   };
 
@@ -74,9 +66,6 @@ export const RegisterForm = () => {
           id='cpf'
           disabled={loading}
           {...register('cpf')}
-          // {...register("cpf", {
-          //   validate: (value) => validateCPF(value) || "CPF inválido",
-          // })}
           error={errors.cpf}
         />
         <Input
@@ -112,7 +101,7 @@ export const RegisterForm = () => {
         <Input
           type='text'
           label='CEP'
-          placeholder='12345.678'
+          placeholder='12345-678'
           id='cep'
           disabled={loading}
           {...register('address.cep')}

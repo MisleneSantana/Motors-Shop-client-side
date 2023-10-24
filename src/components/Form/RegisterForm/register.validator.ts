@@ -10,10 +10,7 @@ export const registerValidator = z
           .trim()
           .split('')
           .map((word) =>
-            word[0]
-              .toLocaleUpperCase()
-              .concat(word.substring(1))
-              .toLocaleLowerCase()
+            word[0].toUpperCase().concat(word.substring(1)).toLowerCase()
           )
           .join('');
       }),
@@ -57,10 +54,7 @@ export const registerRequestValidator = z.object({
         .trim()
         .split('')
         .map((word) =>
-          word[0]
-            .toLocaleUpperCase()
-            .concat(word.substring(1))
-            .toLocaleLowerCase()
+          word[0].toUpperCase().concat(word.substring(1)).toLowerCase()
         )
         .join('');
     }),

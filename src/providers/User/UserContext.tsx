@@ -39,6 +39,11 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
               message: 'Este e-mail já possui cadastro.',
             });
           }
+          if (error.response.status == 400) {
+            Toast({
+              message: 'CPF inválido.',
+            });
+          }
         });
       return response;
     } catch (error) {
