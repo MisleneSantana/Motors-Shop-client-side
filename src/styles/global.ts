@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -8,6 +8,10 @@ body{
 	height: 100vh;
 	overflow-x: hidden;
 }
+
+:root {
+    font-family: 'Inter';
+  }
 
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,

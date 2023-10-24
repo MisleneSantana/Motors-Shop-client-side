@@ -10,6 +10,10 @@ import { TUserRegisterRequest } from '../../../interfaces/user.interfaces';
 import { Label } from '../../Label';
 import { Button } from '../../Button';
 import { validateCPF } from './validateCPF';
+import { DivFormStyle } from './style';
+import { ModelForm } from '../ModelForm';
+import { StyledTexts } from '../../../styles/typography';
+import { TextareaStyle } from '../../Textarea/style';
 
 export const RegisterForm = () => {
   const { loading } = useContext(LoadingContext);
@@ -37,10 +41,11 @@ export const RegisterForm = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(submit)}>
-        <h1>Cadastro</h1>
-        <h3>Informações pessoais</h3>
+    <DivFormStyle>
+      <ModelForm titleForm='Cadastro' onSubmit={handleSubmit(submit)}>
+        <StyledTexts tag='h3' $fontSize='heading_500_16' className='form__h3'>
+          Informações pessoais
+        </StyledTexts>
         <Input
           type='text'
           label='Nome'
@@ -87,9 +92,9 @@ export const RegisterForm = () => {
           {...register('birth_date')}
           error={errors.birth_date}
         />
-        <div>
+        <div className='content__textarea'>
           <Label htmlFor='description' name='Descrição' />
-          <textarea
+          <TextareaStyle
             placeholder='Digitar descrição'
             id='description'
             disabled={loading}
@@ -97,7 +102,9 @@ export const RegisterForm = () => {
           />
         </div>
 
-        <h3>Informações de endereço</h3>
+        <StyledTexts tag='h3' $fontSize='heading_500_16' className='form__h3'>
+          Informações de endereço
+        </StyledTexts>
         <Input
           type='text'
           label='CEP'
@@ -107,7 +114,7 @@ export const RegisterForm = () => {
           {...register('address.cep')}
           error={errors.address?.cep}
         />
-        <div>
+        <div className='content__state-city'>
           <Input
             type='text'
             label='Estado'
@@ -136,7 +143,7 @@ export const RegisterForm = () => {
           {...register('address.street')}
           error={errors.address?.street}
         />
-        <div>
+        <div className='content__number-complement'>
           <Input
             type='text'
             label='Número'
@@ -157,7 +164,9 @@ export const RegisterForm = () => {
           />
         </div>
         <>
-          <h3>Tipo de conta</h3>
+          <StyledTexts tag='h3' $fontSize='heading_500_16' className='form__h3'>
+            Tipo de conta
+          </StyledTexts>
           <div>
             <RadioInput
               type='radio'
@@ -198,7 +207,7 @@ export const RegisterForm = () => {
           disabled={loading}
           text={loading ? 'Cadastrando...' : 'Finalizar cadastro'}
         />
-      </form>
-    </div>
+      </ModelForm>
+    </DivFormStyle>
   );
 };

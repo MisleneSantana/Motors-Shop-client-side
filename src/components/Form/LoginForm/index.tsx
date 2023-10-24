@@ -7,6 +7,7 @@ import { Input } from '../../Input';
 import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 import { Button } from '../../Button';
+import { DivFormStyle } from '../RegisterForm/style';
 
 export const LoginForm = () => {
   const route = useLocation();
@@ -29,7 +30,7 @@ export const LoginForm = () => {
   };
   if (location === '/login') {
     return (
-      <div>
+      <DivFormStyle>
         <form onSubmit={handleSubmit(submit)}>
           <h1>Login</h1>
           <label htmlFor='email'>Email</label>
@@ -63,7 +64,7 @@ export const LoginForm = () => {
             <Link to='/register'>Cadastrar</Link>
           </div>
         </form>
-      </div>
+      </DivFormStyle>
     );
   }
   return null;

@@ -4,19 +4,18 @@ import { RegisterForm } from '../../components/Form/RegisterForm';
 import { Header } from '../../components/Header';
 import { ModalContext } from '../../providers/Modal/ModalContext';
 import { AccountCreatedModal } from '../../components/Modal/AccountCreatedModal';
+import { RegisterMainStyle, RegisterDivStyle } from './style';
 
 export const Register = () => {
   const { isCreateAccountModalOpen } = useContext(ModalContext);
   return (
-    <>
-      <div>
-        <Header />
-        <main>
-          <RegisterForm />
-          {isCreateAccountModalOpen ? <AccountCreatedModal /> : null}
-        </main>
-        <Footer />
-      </div>
-    </>
+    <RegisterDivStyle>
+      <Header />
+      <RegisterMainStyle>
+        <RegisterForm />
+        {isCreateAccountModalOpen ? <AccountCreatedModal /> : null}
+      </RegisterMainStyle>
+      <Footer />
+    </RegisterDivStyle>
   );
 };

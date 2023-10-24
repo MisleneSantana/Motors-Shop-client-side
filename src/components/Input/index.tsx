@@ -1,5 +1,6 @@
 import { FieldError } from 'react-hook-form';
 import { ForwardedRef, InputHTMLAttributes, forwardRef } from 'react';
+import { InputStyle } from './style';
 
 export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -28,7 +29,7 @@ export const Input = forwardRef(
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     return (
-      <div>
+      <InputStyle>
         {label ? <label htmlFor={id}>{label}</label> : null}
         <input
           ref={ref}
@@ -41,7 +42,7 @@ export const Input = forwardRef(
           {...rest}
         />
         {error ? <p>{error.message}</p> : null}
-      </div>
+      </InputStyle>
     );
   }
 );

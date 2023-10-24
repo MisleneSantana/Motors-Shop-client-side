@@ -2,7 +2,7 @@ import logo from '../../assets/icons/logo.svg';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../providers/Auth/AuthContext';
-import { ButtonStyle, HeaderStyle } from './style';
+import { ButtonStyle, DivStyle, HeaderStyle, NavBarStyle } from './style';
 
 export const Header = () => {
   const { user: userLogged } = useContext(AuthContext);
@@ -17,12 +17,13 @@ export const Header = () => {
   };
   return (
     <HeaderStyle>
-      <div>
+      <DivStyle>
         <img src={logo} alt='logo' />
-      </div>
+      </DivStyle>
       {!userLogged?.id ? (
-        <nav>
+        <NavBarStyle>
           <ButtonStyle
+            className='login__button'
             onClick={() => {
               navigate('/login');
             }}
@@ -30,18 +31,21 @@ export const Header = () => {
             Fazer Login
           </ButtonStyle>
           <ButtonStyle
+            className='register__button'
             onClick={() => {
               navigate('/register');
             }}
           >
             Cadastrar
           </ButtonStyle>
-        </nav>
+        </NavBarStyle>
       ) : (
-        <nav>
-          <button>{userLogged ? userLogged.name?.charAt(0) : undefined}</button>
+        <NavBarStyle>
+          <ButtonStyle>
+            {userLogged ? userLogged.name?.charAt(0) : undefined}
+          </ButtonStyle>
           <h2>{formatUserName(userLogged.name)}</h2>
-        </nav>
+        </NavBarStyle>
       )}
     </HeaderStyle>
   );
