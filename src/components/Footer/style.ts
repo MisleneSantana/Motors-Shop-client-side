@@ -8,7 +8,7 @@ export const FooterStyle = styled.footer`
 
   gap: 1rem;
 
-  width: 100%;
+  width: 100vw;
 
   height: 8.75rem;
   padding: 2.8125rem 3.6875rem;
@@ -36,12 +36,6 @@ export const FooterStyle = styled.footer`
     flex-direction: column;
     gap: 3.75rem;
   }
-`;
-
-export const DivStyle = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
 `;
 
 export const ImageStyle = styled.img`

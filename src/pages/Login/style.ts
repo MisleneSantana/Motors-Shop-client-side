@@ -10,6 +10,7 @@ export const LoginDivStyle = styled.div`
 export const LoginMainStyle = styled.main`
   margin-top: 80px;
   width: 100vw;
+  height: 100%;
 
   display: flex;
   justify-content: center;

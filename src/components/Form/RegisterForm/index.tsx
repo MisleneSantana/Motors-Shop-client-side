@@ -49,6 +49,7 @@ export const RegisterForm = () => {
       setValue('description', '');
       setValue('account_type', '');
       setValue('password', '');
+      setValue('confirmPassword', '');
       setValue('address.number', '');
       setValue('address.cep', '');
       setValue('address.state', '');
