@@ -11,6 +11,7 @@ import { DeleteAdModal } from '../../components/Modal/DeleteAdModal';
 import { EditOrDeleteProfileModal } from '../../components/Modal/EditOrDeleteProfileModal';
 import { EditAddressModal } from '../../components/Modal/EditAddressModal';
 import { SpanBackgroundStyle } from '../BuyerDashboard/style';
+import { SellerDashboardDivStyle, SellerDashboardMainStyle } from './style';
 
 export const SellerDashboard = () => {
   const {
@@ -24,19 +25,21 @@ export const SellerDashboard = () => {
 
   return (
     <>
-      <Header />
-      {isEditOrDeleteProfileModalOpen ? <EditOrDeleteProfileModal /> : null}
-      {isEditUserAddressModalOpen ? <EditAddressModal /> : null}
-      <SpanBackgroundStyle></SpanBackgroundStyle>
-      <main>
-        <SellerOrBuyerCard />
-        {isCreateAdsModalOpen ? <CreateAnnouncement /> : null}
-        {isSuccessModalOpen ? <AdCreatedModal /> : null}
-        <AnnouncementList />
-        {isEditOrDeleteAdsModalOpen ? <EditOrDeleteAnnouncement /> : null}
-        {isConfirmDeleteAdModalOpen ? <DeleteAdModal /> : null}
-      </main>
-      <Footer />
+      <SellerDashboardDivStyle>
+        <Header />
+        {isEditOrDeleteProfileModalOpen ? <EditOrDeleteProfileModal /> : null}
+        {isEditUserAddressModalOpen ? <EditAddressModal /> : null}
+        <SpanBackgroundStyle></SpanBackgroundStyle>
+        <SellerDashboardMainStyle>
+          <SellerOrBuyerCard />
+          {isCreateAdsModalOpen ? <CreateAnnouncement /> : null}
+          {isSuccessModalOpen ? <AdCreatedModal /> : null}
+          <AnnouncementList />
+          {isEditOrDeleteAdsModalOpen ? <EditOrDeleteAnnouncement /> : null}
+          {isConfirmDeleteAdModalOpen ? <DeleteAdModal /> : null}
+        </SellerDashboardMainStyle>
+        <Footer />
+      </SellerDashboardDivStyle>
     </>
   );
 };

@@ -3,6 +3,6 @@ export interface IFormProps {
   padding?: string;
   width?: string;
   children: React.ReactNode;
-  onSubmit?: React.FormEventHandler<HTMLFormElement>;
+  onSubmit?: React.FormEventHandler<HTMLFormElement> | undefined
   titleForm: string;
 }

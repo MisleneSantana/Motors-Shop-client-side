@@ -12,6 +12,10 @@ import { TAnnouncementUpdate } from '../../../interfaces/announcement.interfaces
 import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 import { Label } from '../../Label';
 import { Button } from '../../Button';
+import { ModelForm } from '../ModelForm';
+import { StyledTexts } from '../../../styles/typography';
+import { TextareaStyle } from '../../Textarea/style';
+import { DivModalStyle } from '../CreateAnnouncement/style';
 
 export const EditOrDeleteAnnouncement = () => {
   const [inputImage, setInputImage] = useState([1, 2]);
@@ -20,28 +24,6 @@ export const EditOrDeleteAnnouncement = () => {
     useContext(ModalContext);
   const { singleAnnouncement, updateAnnouncement } =
     useContext(AnnouncementContext);
-
-  // const renderImageInputs = () => {
-  //   const inputsImages: React.JSX.Element[] = [];
-  //   for (let i = 1; i <= inputImage; i++) {
-  //     inputsImages.push(
-  //       <section key={i}>
-  //         <Input
-  //           type='text'
-  //           label={`${i}º Imagem da galeria`}
-  //           placeholder='https://image.com'
-  //           id='image_url'
-  //           error={
-  //             errors?.images?.[i] && (
-  //               <p>{`* ${errors.images[i]?.image_url?.message}`}</p>
-  //             )
-  //           }
-  //         />
-  //       </section>
-  //     );
-  //   }
-  //   return inputsImages;
-  // };
 
   const createInputImage = () => {
     if (inputImage.length < 6) {
@@ -53,7 +35,7 @@ export const EditOrDeleteAnnouncement = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TAnnouncementValidator>({
+  } = useForm <TAnnouncementValidator>({
     resolver: zodResolver(announcementValidator),
   });
 
@@ -63,13 +45,16 @@ export const EditOrDeleteAnnouncement = () => {
   };
 
   return (
-    <div role='dialog'>
-      <nav>
-        <h2>Editar anúncio</h2>
-        <button onClick={() => setIsEditOrDeleteAdsModalOpen(false)}>X</button>
-      </nav>
-      <form onSubmit={handleSubmit(submit)}>
-        <h3>Informações do veículo</h3>
+    <DivModalStyle role='dialog'>
+      <ModelForm titleForm='Editar anúncio' onSubmit={handleSubmit(submit)}>
+        <nav>
+          <button onClick={() => setIsEditOrDeleteAdsModalOpen(false)}>
+            X
+          </button>
+        </nav>
+        <StyledTexts tag='h3' $fontSize='heading_500_16' className='form__h3'>
+          Informações do veículo
+        </StyledTexts>
         <Input
           type='text'
           label='Marca'
@@ -86,7 +71,7 @@ export const EditOrDeleteAnnouncement = () => {
           {...register('model')}
           error={errors.model}
         />
-        <div>
+        <div className='content__year-fuel'>
           <Input
             type='text'
             label='Ano'
@@ -104,7 +89,7 @@ export const EditOrDeleteAnnouncement = () => {
             error={errors.fuel}
           />
         </div>
-        <div>
+        <div className='content__km-color'>
           <Input
             type='text'
             label='Quilometragem'
@@ -122,7 +107,7 @@ export const EditOrDeleteAnnouncement = () => {
             error={errors.color}
           />
         </div>
-        <div>
+        <div className='content__table_price-price'>
           <Input
             type='text'
             label='Preço tabela FIPE'
@@ -140,14 +125,14 @@ export const EditOrDeleteAnnouncement = () => {
             error={errors.price}
           />
         </div>
-        <div>
+        <div className='content__textarea'>
           <Label htmlFor='description' name='Descrição' />
-          <textarea
+          <TextareaStyle
             id='description'
             placeholder='Descrição do carro'
+            disabled={loading}
             {...register('description')}
           />
-          {errors.description?.message && <p>{errors.description?.message}</p>}
         </div>
         <Input
           type='text'
@@ -158,40 +143,45 @@ export const EditOrDeleteAnnouncement = () => {
           error={errors.cover_image_url}
         />
         {/* Renderizar inputs (imagem da galeria) de forma dinâmica */}
-        {inputImage.map((input) => (
+        {inputImage.map((input, index) => (
           <Input
             key={input}
             id={`images${input}`}
             label={`${input}ª Imagem da Galeria`}
             type='text'
             placeholder={'https://image.com'}
-            {...register('images')}
+            {...register(`images.${index}.image_url`)}
             error={
-              errors?.images?.[input] && (
-                <p>{`* ${errors.images[input]?.image_url?.message}`}</p>
+              errors?.images?.[index] && (
+                <p>{`* ${errors.images[index]?.image_url?.message}`}</p>
               )
             }
           />
         ))}
 
         <Button
-          onClick={createInputImage}
-          type='button'
-          disabled={inputImage.length == 6 ? true : false}
+          className={'button__add-gallery-image'}
+          type={'button'}
           text='Adicionar campo para imagem da galeria'
+          onClick={createInputImage}
+          disabled={inputImage.length == 6 ? true : false}
         />
 
-        <section>
+        <section className='buttons__section'>
           <Button
-            text=' Excluir anúncio'
+            className={'delete__button'}
+            type={'button'}
             onClick={() => setIsConfirmDeleteAdModalOpen(true)}
+            text=' Excluir anúncio'
           />
           <Button
+            className={'create-ad__button'}
             type='submit'
             text={loading ? 'Salvando' : 'Salvar as alterações'}
           />
         </section>
-      </form>
-    </div>
+      </ModelForm>
+    </DivModalStyle>
   );
 };
+

@@ -12,7 +12,7 @@ interface IAnnouncementProps {
 export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
   const route = useLocation();
   const location = `${route.pathname}`;
-  const { id } = useParams();
+  const userId = localStorage.getItem('@user:id');
   const { user } = useContext(AuthContext);
   const { setIsEditOrDeleteAdsModalOpen } = useContext(ModalContext);
   const { getAnnouncement } = useContext(AnnouncementContext);
@@ -52,8 +52,8 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
         </div>
         <div>
           {location === '/sellerHome' &&
-          user?.account_type.toLocaleLowerCase() === 'seller' &&
-          user?.id === id ? (
+          user?.account_type.toLowerCase() === 'seller' &&
+          user?.id === userId ? (
             <div>
               <button onClick={() => setIsEditOrDeleteAdsModalOpen(true)}>
                 Editar

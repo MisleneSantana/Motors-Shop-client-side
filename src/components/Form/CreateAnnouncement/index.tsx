@@ -6,7 +6,7 @@ import {
   announcementValidator,
 } from './announcement.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { Input } from '../../Input';
 import { TAnnouncementRequest } from '../../../interfaces/announcement.interfaces';
@@ -23,12 +23,6 @@ export const CreateAnnouncement = () => {
   const { loading } = useContext(LoadingContext);
   const [inputImage, setInputImage] = useState([1, 2]);
 
-  const createInputImage = () => {
-    if (inputImage.length < 6) {
-      setInputImage([...inputImage, inputImage.length + 1]);
-    }
-  };
-
   const {
     register,
     handleSubmit,
@@ -39,8 +33,6 @@ export const CreateAnnouncement = () => {
   });
 
   const submit: SubmitHandler<TAnnouncementRequest> = (formData) => {
-    // const newAd = { ...formData, km: Number(formData.km) };
-    console.log(formData);
     createAnnouncement(formData);
     setIsCreateAdsModalOpen(false);
 
@@ -48,12 +40,15 @@ export const CreateAnnouncement = () => {
     setValue('model', '');
     setValue('year', '');
     setValue('fuel', '');
-    setValue('km', Number(''));
     setValue('color', '');
-    setValue('table_price', Number(''));
-    setValue('price', Number(''));
     setValue('description', '');
     setValue('cover_image_url', '');
+  };
+
+  const createInputImage = () => {
+    if (inputImage.length < 6) {
+      setInputImage([...inputImage, inputImage.length + 1]);
+    }
   };
 
   return (
@@ -161,17 +156,17 @@ export const CreateAnnouncement = () => {
           error={errors.cover_image_url}
         />
         {/* Renderizar inputs (imagem da galeria) de forma dinâmica */}
-        {inputImage.map((input) => (
+        {inputImage.map((input, index) => (
           <Input
             key={input}
             id={`images${input}`}
             label={`${input}ª Imagem da Galeria`}
             type='text'
             placeholder={'https://image.com'}
-            {...register('images')}
+            {...register(`images.${index}.image_url`)}
             error={
-              errors?.images?.[input] && (
-                <p>{`* ${errors.images[input]?.image_url?.message}`}</p>
+              errors?.images?.[index] && (
+                <p>{`* ${errors.images[index]?.image_url?.message}`}</p>
               )
             }
           />
@@ -194,7 +189,6 @@ export const CreateAnnouncement = () => {
           <Button
             className={'create-ad__button'}
             type={'submit'}
-            disabled={loading}
             text={loading ? 'Carregando' : 'Criar anúncio'}
           />
         </section>
