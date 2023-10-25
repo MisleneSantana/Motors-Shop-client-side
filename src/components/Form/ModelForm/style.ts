@@ -48,7 +48,10 @@ export const FormStyle = styled.form<IFormStyleProps>`
   }
 
   & > .content__state-city,
-  .content__number-complement {
+  .content__number-complement,
+  .content__year-fuel,
+  .content__km-color,
+  .content__table_price-price {
     display: flex;
     gap: 1rem;
   }

@@ -5,6 +5,7 @@ interface IButtonProps {
   value?: any;
   onClick?: () => void;
   disabled?: boolean;
+  className?: string;
 }
 
 export const Button = ({
@@ -14,6 +15,7 @@ export const Button = ({
   value,
   onClick,
   disabled,
+  className,
 }: IButtonProps) => {
   return (
     <button
@@ -22,6 +24,7 @@ export const Button = ({
       value={value}
       onClick={onClick}
       disabled={disabled}
+      className={className}
     >
       {text}
     </button>

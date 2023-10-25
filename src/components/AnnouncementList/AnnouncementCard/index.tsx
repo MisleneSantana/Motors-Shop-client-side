@@ -1,8 +1,9 @@
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { TAnnouncementResponse } from '../../../interfaces/announcement.interfaces';
 import { useContext } from 'react';
 import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
+import { AnnouncementContext } from '../../../providers/Ad/AdContext';
 
 interface IAnnouncementProps {
   announcement: TAnnouncementResponse;
@@ -11,8 +12,10 @@ interface IAnnouncementProps {
 export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
   const route = useLocation();
   const location = `${route.pathname}`;
+  const { id } = useParams();
   const { user } = useContext(AuthContext);
   const { setIsEditOrDeleteAdsModalOpen } = useContext(ModalContext);
+  const { getAnnouncement } = useContext(AnnouncementContext);
 
   const userFullName = announcement.user?.name;
   announcement?.user.name &&
@@ -49,12 +52,19 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
         </div>
         <div>
           {location === '/sellerHome' &&
-          user?.account_type.toLocaleLowerCase() === 'seller' ? (
+          user?.account_type.toLocaleLowerCase() === 'seller' &&
+          user?.id === id ? (
             <div>
               <button onClick={() => setIsEditOrDeleteAdsModalOpen(true)}>
                 Editar
               </button>
-              <button type='submit'>Ver detalhes</button>
+              {/* <button type='submit'>Ver detalhes</button> */}
+              <Link
+                to='/product'
+                onClick={() => getAnnouncement(announcement.id)}
+              >
+                Ver detalhes
+              </Link>
             </div>
           ) : null}
         </div>

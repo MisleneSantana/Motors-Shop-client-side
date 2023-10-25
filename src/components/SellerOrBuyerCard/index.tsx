@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/Auth/AuthContext';
 import { ModalContext } from '../../providers/Modal/ModalContext';
+import { DivUserAvatarStyle, DivUsernameStyle, SectionStyle } from './style';
 
 export const SellerOrBuyerCard = () => {
   const { user } = useContext(AuthContext);
@@ -11,21 +12,21 @@ export const SellerOrBuyerCard = () => {
     user?.name[0].toUpperCase() + user?.name.substring(1).toLowerCase();
 
   return (
-    <section>
-      <div>
-        <h1>{user ? user.name?.charAt(0) : undefined}</h1>
-      </div>
+    <SectionStyle>
+      <DivUserAvatarStyle>
+        <p>{user ? user.name?.charAt(0) : undefined}</p>
+      </DivUserAvatarStyle>
 
-      <div>
-        <h3>{user ? userFullName : undefined}</h3>
-        <div>
+      <DivUsernameStyle>
+        <p>{user ? userFullName : undefined}</p>
+        <span>
           {user
             ? user.account_type === 'seller'
               ? 'Anunciante'
               : 'Comprador'
             : undefined}
-        </div>
-      </div>
+        </span>
+      </DivUsernameStyle>
 
       <p>{user ? (user.description ? user.description : null) : undefined}</p>
 
@@ -36,6 +37,6 @@ export const SellerOrBuyerCard = () => {
           </button>
         ) : null
       ) : undefined}
-    </section>
+    </SectionStyle>
   );
 };

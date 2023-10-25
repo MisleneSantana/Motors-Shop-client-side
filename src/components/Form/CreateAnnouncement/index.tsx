@@ -12,6 +12,10 @@ import { Input } from '../../Input';
 import { TAnnouncementRequest } from '../../../interfaces/announcement.interfaces';
 import { Label } from '../../Label';
 import { Button } from '../../Button';
+import { ModelForm } from '../ModelForm';
+import { StyledTexts } from '../../../styles/typography';
+import { TextareaStyle } from '../../Textarea/style';
+import { DivModalStyle } from './style';
 
 export const CreateAnnouncement = () => {
   const { createAnnouncement } = useContext(AnnouncementContext);
@@ -36,6 +40,7 @@ export const CreateAnnouncement = () => {
 
   const submit: SubmitHandler<TAnnouncementRequest> = (formData) => {
     // const newAd = { ...formData, km: Number(formData.km) };
+    console.log(formData);
     createAnnouncement(formData);
     setIsCreateAdsModalOpen(false);
 
@@ -52,17 +57,19 @@ export const CreateAnnouncement = () => {
   };
 
   return (
-    <div role='dialog'>
-      <nav>
-        <h2>Criar anúncio</h2>
-        <button onClick={() => setIsCreateAdsModalOpen(false)}>X</button>
-      </nav>
-      <form onSubmit={handleSubmit(submit)}>
-        <h3>Informações do veículo</h3>
+    <DivModalStyle role='dialog'>
+      <ModelForm titleForm='Criar anúncio' onSubmit={handleSubmit(submit)}>
+        <nav>
+          <button onClick={() => setIsCreateAdsModalOpen(false)}>X</button>
+        </nav>
+        <StyledTexts tag='h3' $fontSize='heading_500_16' className='form__h3'>
+          Informações do veículo
+        </StyledTexts>
         <Input
           type='text'
           label='Marca'
           id='brand'
+          disabled={loading}
           placeholder='Chevrolet'
           {...register('brand')}
           error={errors.brand}
@@ -71,15 +78,17 @@ export const CreateAnnouncement = () => {
           type='text'
           label='Modelo'
           id='model'
+          disabled={loading}
           placeholder='Camaro'
           {...register('model')}
           error={errors.model}
         />
-        <div>
+        <div className='content__year-fuel'>
           <Input
             type='text'
             label='Ano'
             id='year'
+            disabled={loading}
             placeholder='2018'
             {...register('year')}
             error={errors.year}
@@ -88,16 +97,18 @@ export const CreateAnnouncement = () => {
             type='text'
             label='Combustível'
             id='fuel'
+            disabled={loading}
             placeholder='Gasolina / Etanol'
             {...register('fuel')}
             error={errors.fuel}
           />
         </div>
-        <div>
+        <div className='content__km-color'>
           <Input
             type='text'
             label='Quilometragem'
             id='km'
+            disabled={loading}
             placeholder='30.000'
             {...register('km')}
             error={errors.km}
@@ -106,16 +117,18 @@ export const CreateAnnouncement = () => {
             type='text'
             label='Cor'
             id='color'
+            disabled={loading}
             placeholder='Branco'
             {...register('color')}
             error={errors.color}
           />
         </div>
-        <div>
+        <div className='content__table_price-price'>
           <Input
             type='text'
             label='Preço tabela FIPE'
             id='table_price'
+            disabled={loading}
             placeholder='R$ 48.000,00'
             {...register('table_price')}
             error={errors.table_price}
@@ -124,19 +137,20 @@ export const CreateAnnouncement = () => {
             type='text'
             label='Preço'
             id='price'
+            disabled={loading}
             placeholder='R$ 50.000,00'
             {...register('price')}
             error={errors.price}
           />
         </div>
-        <div>
+        <div className='content__textarea'>
           <Label htmlFor='description' name='Descrição' />
-          <textarea
-            id='description'
+          <TextareaStyle
             placeholder='Descrição do carro'
+            id='description'
+            disabled={loading}
             {...register('description')}
           />
-          {errors.description?.message && <p>{errors.description?.message}</p>}
         </div>
         <Input
           type='text'
@@ -164,24 +178,27 @@ export const CreateAnnouncement = () => {
         ))}
 
         <Button
-          onClick={createInputImage}
-          type='button'
-          disabled={inputImage.length == 6 ? true : false}
+          className={'button__add-gallery-image'}
+          type={'button'}
           text='Adicionar campo para imagem da galeria'
+          onClick={createInputImage}
+          disabled={inputImage.length == 6 ? true : false}
         />
-
-        <section>
+        <section className='buttons__section'>
           <Button
-            type='button'
+            className={'cancel__button'}
+            type={'button'}
             onClick={() => setIsCreateAdsModalOpen(false)}
-            text=' Cancelar'
+            text={' Cancelar'}
           />
           <Button
-            type='submit'
+            className={'create-ad__button'}
+            type={'submit'}
+            disabled={loading}
             text={loading ? 'Carregando' : 'Criar anúncio'}
           />
         </section>
-      </form>
-    </div>
+      </ModelForm>
+    </DivModalStyle>
   );
 };

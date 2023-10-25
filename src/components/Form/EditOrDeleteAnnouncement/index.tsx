@@ -11,35 +11,42 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { TAnnouncementUpdate } from '../../../interfaces/announcement.interfaces';
 import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 import { Label } from '../../Label';
+import { Button } from '../../Button';
 
 export const EditOrDeleteAnnouncement = () => {
-  const [inputImage, setInputImage] = useState(2);
+  const [inputImage, setInputImage] = useState([1, 2]);
   const { loading } = useContext(LoadingContext);
   const { setIsEditOrDeleteAdsModalOpen, setIsConfirmDeleteAdModalOpen } =
     useContext(ModalContext);
   const { singleAnnouncement, updateAnnouncement } =
     useContext(AnnouncementContext);
 
-  const renderImageInputs = () => {
-    const inputsImages: React.JSX.Element[] = [];
-    for (let i = 1; i <= inputImage; i++) {
-      inputsImages.push(
-        <section key={i}>
-          <Input
-            type='text'
-            label={`${i}º Imagem da galeria`}
-            placeholder='https://image.com'
-            id='image_url'
-            error={
-              errors?.images?.[i] && (
-                <p>{`* ${errors.images[i]?.image_url?.message}`}</p>
-              )
-            }
-          />
-        </section>
-      );
+  // const renderImageInputs = () => {
+  //   const inputsImages: React.JSX.Element[] = [];
+  //   for (let i = 1; i <= inputImage; i++) {
+  //     inputsImages.push(
+  //       <section key={i}>
+  //         <Input
+  //           type='text'
+  //           label={`${i}º Imagem da galeria`}
+  //           placeholder='https://image.com'
+  //           id='image_url'
+  //           error={
+  //             errors?.images?.[i] && (
+  //               <p>{`* ${errors.images[i]?.image_url?.message}`}</p>
+  //             )
+  //           }
+  //         />
+  //       </section>
+  //     );
+  //   }
+  //   return inputsImages;
+  // };
+
+  const createInputImage = () => {
+    if (inputImage.length < 6) {
+      setInputImage([...inputImage, inputImage.length + 1]);
     }
-    return inputsImages;
   };
 
   const {
@@ -151,16 +158,39 @@ export const EditOrDeleteAnnouncement = () => {
           error={errors.cover_image_url}
         />
         {/* Renderizar inputs (imagem da galeria) de forma dinâmica */}
-        {renderImageInputs()}
-        <button type='button' onClick={() => setInputImage(inputImage + 1)}>
-          'Adicionar campo para imagem da galeria'
-        </button>
-        <button onClick={() => setIsConfirmDeleteAdModalOpen(true)}>
-          Excluir anúncio
-        </button>
-        <button type='submit'>
-          {loading ? 'Salvando' : 'Salvar as alterações'}
-        </button>
+        {inputImage.map((input) => (
+          <Input
+            key={input}
+            id={`images${input}`}
+            label={`${input}ª Imagem da Galeria`}
+            type='text'
+            placeholder={'https://image.com'}
+            {...register('images')}
+            error={
+              errors?.images?.[input] && (
+                <p>{`* ${errors.images[input]?.image_url?.message}`}</p>
+              )
+            }
+          />
+        ))}
+
+        <Button
+          onClick={createInputImage}
+          type='button'
+          disabled={inputImage.length == 6 ? true : false}
+          text='Adicionar campo para imagem da galeria'
+        />
+
+        <section>
+          <Button
+            text=' Excluir anúncio'
+            onClick={() => setIsConfirmDeleteAdModalOpen(true)}
+          />
+          <Button
+            type='submit'
+            text={loading ? 'Salvando' : 'Salvar as alterações'}
+          />
+        </section>
       </form>
     </div>
   );

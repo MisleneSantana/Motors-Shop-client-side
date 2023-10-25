@@ -38,21 +38,36 @@ export const AnnouncementProvider = ({
   >([]);
   const [comments, setComments] = useState<TCommentResponse[]>([]);
 
-  const { setLoading } = useContext(LoadingContext);
+  const { loading, setLoading } = useContext(LoadingContext);
   const { setIsSuccessModalOpen } = useContext(ModalContext);
 
   // 1. Leitura de todos os anúncios:
-  const getAnnouncements = async () => {
-    try {
-      const { data } = await api.get<IPaginationAnnouncements>(
-        '/announcements'
-      );
-      setAdsPagination(data);
-      setAnnouncements(data.data);
-    } catch (error) {
-      Toast({ message: 'Não foi possível concluir sua solicitação.' });
-    }
-  };
+  useEffect(() => {
+    const getAnnouncements = async () => {
+      try {
+        const { data } = await api.get<IPaginationAnnouncements>(
+          '/announcements'
+        );
+        setAdsPagination(data);
+        setAnnouncements(data.data);
+      } catch (error) {
+        Toast({ message: 'Não foi possível concluir sua solicitação.' });
+      }
+    };
+    getAnnouncements();
+  }, [loading]);
+
+  // const getAnnouncements = async () => {
+  //   try {
+  //     const { data } = await api.get<IPaginationAnnouncements>(
+  //       '/announcements'
+  //     );
+  //     setAdsPagination(data);
+  //     setAnnouncements(data.data);
+  //   } catch (error) {
+  //     Toast({ message: 'Não foi possível concluir sua solicitação.' });
+  //   }
+  // };
 
   // 2. Cria um novo anúncio:
   const createAnnouncement = async (formData: TAnnouncementRequest) => {
@@ -68,7 +83,7 @@ export const AnnouncementProvider = ({
       setAnnouncements((announcements) => [...announcements, response.data]);
       setIsSuccessModalOpen(true);
 
-      await getAnnouncements();
+      // await getAnnouncements();
       return response;
     } catch (error) {
       Toast({
@@ -128,7 +143,7 @@ export const AnnouncementProvider = ({
       });
 
       setSingleAnnouncement(data);
-      await getAnnouncements();
+      // await getAnnouncements();
       Toast({ message: 'Anúncio atualizado com sucesso', successful: true });
     } catch (error) {
       Toast({ message: 'Não foi possível concluir sua solicitação.' });
@@ -138,7 +153,10 @@ export const AnnouncementProvider = ({
   // 6. Deletar um anúncio:
   const deleteAnnouncement = async (announcementId: string) => {
     try {
-      await api.delete(`announcements/${announcementId}`);
+      const token = localStorage.getItem('@user:token');
+      await api.delete(`announcements/${announcementId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       const listWithoutAd = announcements.filter(
         (announcement) => announcement.id !== announcementId
@@ -244,13 +262,13 @@ export const AnnouncementProvider = ({
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem('@user:token');
-    (async () => {
-      api.defaults.headers.common.authorization = `Bearer ${token}`;
-      await getAnnouncements();
-    })();
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem('@user:token');
+  //   (async () => {
+  //     api.defaults.headers.common.authorization = `Bearer ${token}`;
+  //     await getAnnouncements();
+  //   })();
+  // }, []);
 
   useEffect(() => {
     if (singleAnnouncement && singleAnnouncement.id) {
@@ -267,7 +285,7 @@ export const AnnouncementProvider = ({
         setAdsPagination,
         singleAnnouncement,
         sellerAnnouncements,
-        getAnnouncements,
+        // getAnnouncements,
         createAnnouncement,
         getAnnouncement,
         getAnnouncementsBySeller,

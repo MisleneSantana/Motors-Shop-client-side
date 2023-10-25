@@ -10,6 +10,7 @@ import { AdCreatedModal } from '../../components/Modal/AdCreatedModal';
 import { DeleteAdModal } from '../../components/Modal/DeleteAdModal';
 import { EditOrDeleteProfileModal } from '../../components/Modal/EditOrDeleteProfileModal';
 import { EditAddressModal } from '../../components/Modal/EditAddressModal';
+import { SpanBackgroundStyle } from '../BuyerDashboard/style';
 
 export const SellerDashboard = () => {
   const {
@@ -26,6 +27,7 @@ export const SellerDashboard = () => {
       <Header />
       {isEditOrDeleteProfileModalOpen ? <EditOrDeleteProfileModal /> : null}
       {isEditUserAddressModalOpen ? <EditAddressModal /> : null}
+      <SpanBackgroundStyle></SpanBackgroundStyle>
       <main>
         <SellerOrBuyerCard />
         {isCreateAdsModalOpen ? <CreateAnnouncement /> : null}
