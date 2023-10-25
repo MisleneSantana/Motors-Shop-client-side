@@ -1,11 +1,12 @@
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { TAnnouncementResponse } from '../../../interfaces/announcement.interfaces';
 import { useContext } from 'react';
 import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { AnnouncementContext } from '../../../providers/Ad/AdContext';
+import { EditOrDeleteAnnouncement } from '../../Form/EditOrDeleteAnnouncement';
 
-interface IAnnouncementProps {
+export interface IAnnouncementProps {
   announcement: TAnnouncementResponse;
 }
 
@@ -14,7 +15,8 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
   const location = `${route.pathname}`;
   const userId = localStorage.getItem('@user:id');
   const { user } = useContext(AuthContext);
-  const { setIsEditOrDeleteAdsModalOpen } = useContext(ModalContext);
+  const { isEditOrDeleteAdsModalOpen, setIsEditOrDeleteAdsModalOpen } =
+    useContext(ModalContext);
   const { getAnnouncement } = useContext(AnnouncementContext);
 
   const userFullName = announcement.user?.name;
@@ -58,7 +60,9 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
               <button onClick={() => setIsEditOrDeleteAdsModalOpen(true)}>
                 Editar
               </button>
-              {/* <button type='submit'>Ver detalhes</button> */}
+              {isEditOrDeleteAdsModalOpen ? (
+                <EditOrDeleteAnnouncement announcement={announcement} />
+              ) : null}
               <Link
                 to='/product'
                 onClick={() => getAnnouncement(announcement.id)}

@@ -16,14 +16,16 @@ import { ModelForm } from '../ModelForm';
 import { StyledTexts } from '../../../styles/typography';
 import { TextareaStyle } from '../../Textarea/style';
 import { DivModalStyle } from '../CreateAnnouncement/style';
+import { IAnnouncementProps } from '../../AnnouncementList/AnnouncementCard';
 
-export const EditOrDeleteAnnouncement = () => {
+export const EditOrDeleteAnnouncement = ({
+  announcement,
+}: IAnnouncementProps) => {
   const [inputImage, setInputImage] = useState([1, 2]);
   const { loading } = useContext(LoadingContext);
   const { setIsEditOrDeleteAdsModalOpen, setIsConfirmDeleteAdModalOpen } =
     useContext(ModalContext);
-  const { singleAnnouncement, updateAnnouncement } =
-    useContext(AnnouncementContext);
+  const { updateAnnouncement } = useContext(AnnouncementContext);
 
   const createInputImage = () => {
     if (inputImage.length < 6) {
@@ -35,12 +37,20 @@ export const EditOrDeleteAnnouncement = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm <TAnnouncementValidator>({
+  } = useForm<TAnnouncementValidator>({
     resolver: zodResolver(announcementValidator),
   });
 
   const submit: SubmitHandler<TAnnouncementUpdate> = (formData) => {
-    if (singleAnnouncement) updateAnnouncement(formData, singleAnnouncement.id);
+    updateAnnouncement(formData, announcement.id);
+
+    // for (const key in formData) {
+    //   if (formData[key as keyof TAnnouncementUpdate] === '') {
+    //     formData[key as keyof TAnnouncementUpdate] = announcement[
+    //       key as keyof IAnnouncementProps
+    //     ] as string;
+    //   }
+    // }
     setIsEditOrDeleteAdsModalOpen(false);
   };
 
@@ -184,4 +194,3 @@ export const EditOrDeleteAnnouncement = () => {
     </DivModalStyle>
   );
 };
-

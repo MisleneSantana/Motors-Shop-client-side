@@ -19,7 +19,7 @@ export const SellerDashboard = () => {
     isEditUserAddressModalOpen,
     isCreateAdsModalOpen,
     isSuccessModalOpen,
-    isEditOrDeleteAdsModalOpen,
+    // isEditOrDeleteAdsModalOpen,
     isConfirmDeleteAdModalOpen,
   } = useContext(ModalContext);
 
@@ -35,7 +35,7 @@ export const SellerDashboard = () => {
           {isCreateAdsModalOpen ? <CreateAnnouncement /> : null}
           {isSuccessModalOpen ? <AdCreatedModal /> : null}
           <AnnouncementList />
-          {isEditOrDeleteAdsModalOpen ? <EditOrDeleteAnnouncement /> : null}
+          {/* {isEditOrDeleteAdsModalOpen ? <EditOrDeleteAnnouncement /> : null} */}
           {isConfirmDeleteAdModalOpen ? <DeleteAdModal /> : null}
         </SellerDashboardMainStyle>
         <Footer />
