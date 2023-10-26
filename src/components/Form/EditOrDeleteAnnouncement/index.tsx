@@ -1,14 +1,13 @@
 import { useContext, useState } from 'react';
 import { AnnouncementContext } from '../../../providers/Ad/AdContext';
-import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { Input } from '../../Input';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import {
-  TAnnouncementValidator,
-  announcementValidator,
-} from '../CreateAnnouncement/announcement.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TAnnouncementUpdate } from '../../../interfaces/announcement.interfaces';
+import {
+  TAnnouncement,
+  TAnnouncementRequest,
+  TAnnouncementUpdate,
+} from '../../../interfaces/announcement.interfaces';
 import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 import { Label } from '../../Label';
 import { Button } from '../../Button';
@@ -16,16 +15,24 @@ import { ModelForm } from '../ModelForm';
 import { StyledTexts } from '../../../styles/typography';
 import { TextareaStyle } from '../../Textarea/style';
 import { DivModalStyle } from '../CreateAnnouncement/style';
-import { IAnnouncementProps } from '../../AnnouncementList/AnnouncementCard';
+import {
+  TAnnouncementUpdateValidator,
+  announcementUpdateValidator,
+} from './announcement.validator';
 
 export const EditOrDeleteAnnouncement = ({
   announcement,
-}: IAnnouncementProps) => {
+  setIsEditOrDeleteAdsModalOpen,
+  setIsConfirmDeleteAdModalOpen,
+}: {
+  announcement: TAnnouncement;
+  setIsEditOrDeleteAdsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsConfirmDeleteAdModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [inputImage, setInputImage] = useState([1, 2]);
   const { loading } = useContext(LoadingContext);
-  const { setIsEditOrDeleteAdsModalOpen, setIsConfirmDeleteAdModalOpen } =
-    useContext(ModalContext);
   const { updateAnnouncement } = useContext(AnnouncementContext);
+  const announcementId = announcement.id;
 
   const createInputImage = () => {
     if (inputImage.length < 6) {
@@ -37,20 +44,33 @@ export const EditOrDeleteAnnouncement = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TAnnouncementValidator>({
-    resolver: zodResolver(announcementValidator),
+  } = useForm<TAnnouncementUpdateValidator>({
+    resolver: zodResolver(announcementUpdateValidator),
   });
 
-  const submit: SubmitHandler<TAnnouncementUpdate> = (formData) => {
-    updateAnnouncement(formData, announcement.id);
+  const submit: SubmitHandler<TAnnouncementUpdate> = (
+    formData: Partial<TAnnouncementRequest>
+  ) => {
+    for (const key in formData) {
+      if (formData[key as keyof TAnnouncementUpdate] === '') {
+        formData[key as keyof TAnnouncementUpdate] = announcement[
+          key as keyof TAnnouncement
+        ] as undefined;
+      }
+    }
 
-    // for (const key in formData) {
-    //   if (formData[key as keyof TAnnouncementUpdate] === '') {
-    //     formData[key as keyof TAnnouncementUpdate] = announcement[
-    //       key as keyof IAnnouncementProps
-    //     ] as string;
-    //   }
-    // }
+    {
+      formData.km
+        ? (formData.km = Number(formData.km))
+        : (formData.km = Number(announcement.km));
+    }
+
+    updateAnnouncement(formData, announcementId);
+    setIsEditOrDeleteAdsModalOpen(false);
+  };
+
+  const destroyAnnouncement = () => {
+    setIsConfirmDeleteAdModalOpen(true);
     setIsEditOrDeleteAdsModalOpen(false);
   };
 
@@ -69,7 +89,7 @@ export const EditOrDeleteAnnouncement = ({
           type='text'
           label='Marca'
           id='brand'
-          placeholder='Chevrolet'
+          placeholder={announcement.brand}
           {...register('brand')}
           error={errors.brand}
         />
@@ -77,7 +97,7 @@ export const EditOrDeleteAnnouncement = ({
           type='text'
           label='Modelo'
           id='model'
-          placeholder='Camaro'
+          placeholder={announcement.model}
           {...register('model')}
           error={errors.model}
         />
@@ -86,7 +106,7 @@ export const EditOrDeleteAnnouncement = ({
             type='text'
             label='Ano'
             id='year'
-            placeholder='2018'
+            placeholder={announcement.year}
             {...register('year')}
             error={errors.year}
           />
@@ -94,7 +114,7 @@ export const EditOrDeleteAnnouncement = ({
             type='text'
             label='Combustível'
             id='fuel'
-            placeholder='Gasolina / Etanol'
+            placeholder={announcement.fuel}
             {...register('fuel')}
             error={errors.fuel}
           />
@@ -104,7 +124,7 @@ export const EditOrDeleteAnnouncement = ({
             type='text'
             label='Quilometragem'
             id='km'
-            placeholder='30.000'
+            placeholder={announcement.km.toString()}
             {...register('km')}
             error={errors.km}
           />
@@ -112,7 +132,7 @@ export const EditOrDeleteAnnouncement = ({
             type='text'
             label='Cor'
             id='color'
-            placeholder='Branco'
+            placeholder={announcement.color}
             {...register('color')}
             error={errors.color}
           />
@@ -122,7 +142,7 @@ export const EditOrDeleteAnnouncement = ({
             type='text'
             label='Preço tabela FIPE'
             id='table_price'
-            placeholder='48.000,00'
+            placeholder={announcement.table_price.toString()}
             {...register('table_price')}
             error={errors.table_price}
           />
@@ -130,7 +150,7 @@ export const EditOrDeleteAnnouncement = ({
             type='text'
             label='Preço'
             id='price'
-            placeholder='50.000,00'
+            placeholder={announcement.price.toString()}
             {...register('price')}
             error={errors.price}
           />
@@ -139,7 +159,7 @@ export const EditOrDeleteAnnouncement = ({
           <Label htmlFor='description' name='Descrição' />
           <TextareaStyle
             id='description'
-            placeholder='Descrição do carro'
+            placeholder={announcement.description}
             disabled={loading}
             {...register('description')}
           />
@@ -148,7 +168,7 @@ export const EditOrDeleteAnnouncement = ({
           type='text'
           label='Imagem de capa'
           id='cover_image_url'
-          placeholder='https://image.com'
+          placeholder={announcement.cover_image_url}
           {...register('cover_image_url')}
           error={errors.cover_image_url}
         />
@@ -159,7 +179,7 @@ export const EditOrDeleteAnnouncement = ({
             id={`images${input}`}
             label={`${input}ª Imagem da Galeria`}
             type='text'
-            placeholder={'https://image.com'}
+            placeholder={announcement.images[index].image_url}
             {...register(`images.${index}.image_url`)}
             error={
               errors?.images?.[index] && (
@@ -181,7 +201,7 @@ export const EditOrDeleteAnnouncement = ({
           <Button
             className={'delete__button'}
             type={'button'}
-            onClick={() => setIsConfirmDeleteAdModalOpen(true)}
+            onClick={() => destroyAnnouncement()}
             text=' Excluir anúncio'
           />
           <Button

@@ -1,6 +1,4 @@
-import { AxiosResponse } from 'axios';
 import {
-  IPaginationAnnouncements,
   TAnnouncement,
   TAnnouncementRequest,
   TAnnouncementResponse,
@@ -15,18 +13,18 @@ export interface IAnnouncementProviderProps {
 }
 
 export interface IAnnouncementProviderValues {
-  announcements: TAnnouncement[];
-  setAnnouncements: React.Dispatch<React.SetStateAction<TAnnouncement[]>>;
-  adsPagination: IPaginationAnnouncements;
-  setAdsPagination: React.Dispatch<
-    React.SetStateAction<IPaginationAnnouncements>
+  announcements: TAnnouncementResponse[];
+  setAnnouncements: React.Dispatch<
+    React.SetStateAction<TAnnouncementResponse[]>
   >;
+
+  // announcements: TAnnouncement[];
+  // setAnnouncements: React.Dispatch<React.SetStateAction<TAnnouncement[]>>;
+
   singleAnnouncement: TAnnouncement | undefined;
   sellerAnnouncements: TAnnouncement[];
   getAnnouncements: () => Promise<void>;
-  createAnnouncement: (
-    formData: TAnnouncementRequest
-  ) => Promise<AxiosResponse<TAnnouncementResponse> | undefined>;
+  createAnnouncement: (formData: TAnnouncementRequest) => Promise<void>;
   getAnnouncement: (announcementId: string | undefined) => Promise<void>;
   getAnnouncementsBySeller: (userId: string | undefined) => Promise<void>;
   updateAnnouncement: (

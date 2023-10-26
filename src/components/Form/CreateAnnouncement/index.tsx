@@ -6,7 +6,7 @@ import {
   announcementValidator,
 } from './announcement.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { Input } from '../../Input';
 import { TAnnouncementRequest } from '../../../interfaces/announcement.interfaces';

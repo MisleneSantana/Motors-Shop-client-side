@@ -7,10 +7,6 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
   const [isCreateAdsModalOpen, setIsCreateAdsModalOpen] =
     useState<boolean>(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState<boolean>(false);
-  const [isEditOrDeleteAdsModalOpen, setIsEditOrDeleteAdsModalOpen] =
-    useState<boolean>(false);
-  const [isConfirmDeleteAdModalOpen, setIsConfirmDeleteAdModalOpen] =
-    useState<boolean>(false);
   const [isCreateAccountModalOpen, setIsCreateAccountModalOpen] =
     useState<boolean>(false);
   const [isEditOrDeleteProfileModalOpen, setIsEditOrDeleteProfileModalOpen] =
@@ -29,10 +25,6 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         setIsSuccessModalOpen,
         isCreateAdsModalOpen,
         setIsCreateAdsModalOpen,
-        isEditOrDeleteAdsModalOpen,
-        setIsEditOrDeleteAdsModalOpen,
-        isConfirmDeleteAdModalOpen,
-        setIsConfirmDeleteAdModalOpen,
         isCreateAccountModalOpen,
         setIsCreateAccountModalOpen,
         isEditOrDeleteProfileModalOpen,

@@ -1,10 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
-import { TAnnouncementResponse } from '../../../interfaces/announcement.interfaces';
+import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../providers/Auth/AuthContext';
-import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { AnnouncementContext } from '../../../providers/Ad/AdContext';
 import { EditOrDeleteAnnouncement } from '../../Form/EditOrDeleteAnnouncement';
+import { TAnnouncementResponse } from '../../../interfaces/announcement.interfaces';
+import { DeleteAdModal } from '../../Modal/DeleteAdModal';
 
 export interface IAnnouncementProps {
   announcement: TAnnouncementResponse;
@@ -15,14 +16,12 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
   const location = `${route.pathname}`;
   const userId = localStorage.getItem('@user:id');
   const { user } = useContext(AuthContext);
-  const { isEditOrDeleteAdsModalOpen, setIsEditOrDeleteAdsModalOpen } =
-    useContext(ModalContext);
   const { getAnnouncement } = useContext(AnnouncementContext);
 
-  const userFullName = announcement.user?.name;
-  announcement?.user.name &&
-    announcement?.user.name[0].toUpperCase() +
-      announcement?.user.name.substring(1);
+  const [isEditOrDeleteAdsModalOpen, setIsEditOrDeleteAdsModalOpen] =
+    useState(false);
+  const [isConfirmDeleteAdModalOpen, setIsConfirmDeleteAdModalOpen] =
+    useState(false);
 
   return (
     <>
@@ -34,8 +33,8 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
         <p>{announcement?.description}</p>
         {location === '/' || location === '/buyerHome' ? (
           <div>
-            <span>{announcement.user.name.charAt(0)}</span>
-            <p>{userFullName}</p>
+            <span>{announcement.user?.name.charAt(0)}</span>
+            <p>{announcement.user?.name}</p>
           </div>
         ) : null}
         <div>
@@ -45,7 +44,7 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
           </div>
           <p>
             R${' '}
-            {announcement.price.toLocaleString('pt-br', {
+            {announcement.price?.toLocaleString('pt-br', {
               style: 'currency',
               currency: 'BRL',
               minimumFractionDigits: 2,
@@ -54,22 +53,46 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
         </div>
         <div>
           {location === '/sellerHome' &&
-          user?.account_type.toLowerCase() === 'seller' &&
+          user?.account_type?.toLowerCase() === 'seller' &&
           user?.id === userId ? (
-            <div>
-              <button onClick={() => setIsEditOrDeleteAdsModalOpen(true)}>
-                Editar
-              </button>
-              {isEditOrDeleteAdsModalOpen ? (
-                <EditOrDeleteAnnouncement announcement={announcement} />
-              ) : null}
-              <Link
-                to='/product'
-                onClick={() => getAnnouncement(announcement.id)}
-              >
-                Ver detalhes
-              </Link>
-            </div>
+            <>
+              <div>
+                <button onClick={() => setIsEditOrDeleteAdsModalOpen(true)}>
+                  Editar
+                </button>
+                {isEditOrDeleteAdsModalOpen ? (
+                  <>
+                    <div>
+                      <EditOrDeleteAnnouncement
+                        announcement={announcement}
+                        setIsEditOrDeleteAdsModalOpen={
+                          setIsEditOrDeleteAdsModalOpen
+                        }
+                        setIsConfirmDeleteAdModalOpen={
+                          setIsConfirmDeleteAdModalOpen
+                        }
+                      />
+                    </div>
+                  </>
+                ) : null}
+                <Link
+                  to='/product'
+                  onClick={() => getAnnouncement(announcement.id)}
+                >
+                  Ver detalhes
+                </Link>
+              </div>
+              <div>
+                {isConfirmDeleteAdModalOpen ? (
+                  <DeleteAdModal
+                    announcement={announcement}
+                    setIsConfirmDeleteAdModalOpen={
+                      setIsConfirmDeleteAdModalOpen
+                    }
+                  />
+                ) : null}
+              </div>
+            </>
           ) : null}
         </div>
       </li>

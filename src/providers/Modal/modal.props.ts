@@ -7,10 +7,6 @@ export interface IModalContext {
   setIsSuccessModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isCreateAdsModalOpen: boolean;
   setIsCreateAdsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isEditOrDeleteAdsModalOpen: boolean;
-  setIsEditOrDeleteAdsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isConfirmDeleteAdModalOpen: boolean;
-  setIsConfirmDeleteAdModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isCreateAccountModalOpen: boolean;
   setIsCreateAccountModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isEditOrDeleteProfileModalOpen: boolean;
