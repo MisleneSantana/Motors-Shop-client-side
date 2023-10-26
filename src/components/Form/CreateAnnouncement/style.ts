@@ -16,6 +16,7 @@ export const DivModalStyle = styled.div`
     position: relative;
     margin: 0 auto;
     top: 80px;
+    width: 32.5rem;
 
     border-radius: 8px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
@@ -59,8 +60,8 @@ export const DivModalStyle = styled.div`
         color: ${({ theme }) => theme.colors.grey2};
       }
 
-      & .delete__button{
-        width:50%;
+      & .delete__button {
+        width: 50%;
       }
 
       & > .create-ad__button {

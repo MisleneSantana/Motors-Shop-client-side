@@ -65,6 +65,7 @@ export const EditOrDeleteAnnouncement = ({
         : (formData.km = Number(announcement.km));
     }
 
+    // const newObj = { ...formData, announcement_is_active: Boolean(formData) };
     updateAnnouncement(formData, announcementId);
     setIsEditOrDeleteAdsModalOpen(false);
   };
@@ -142,7 +143,7 @@ export const EditOrDeleteAnnouncement = ({
             type='text'
             label='Preço tabela FIPE'
             id='table_price'
-            placeholder={announcement.table_price.toString()}
+            placeholder={`R$ ${announcement.table_price.toString()}`}
             {...register('table_price')}
             error={errors.table_price}
           />
@@ -150,7 +151,7 @@ export const EditOrDeleteAnnouncement = ({
             type='text'
             label='Preço'
             id='price'
-            placeholder={announcement.price.toString()}
+            placeholder={`R$ ${announcement.price.toString()}`}
             {...register('price')}
             error={errors.price}
           />
@@ -164,6 +165,30 @@ export const EditOrDeleteAnnouncement = ({
             {...register('description')}
           />
         </div>
+
+        {/* <>
+          <StyledTexts tag='h3' $fontSize='heading_500_16' className='form__h3'>
+            Publicado
+          </StyledTexts>
+          <RadioButtonDivStyles>
+            <RadioInput
+              type='radio'
+              id='true'
+              label='Sim'
+              value={true}
+              defaultChecked={true}
+              {...register('announcement_is_active')}
+            />
+            <RadioInput
+              type='radio'
+              id='false'
+              label='Não'
+              value={false}
+              {...register('announcement_is_active')}
+            />
+          </RadioButtonDivStyles>
+        </> */}
+
         <Input
           type='text'
           label='Imagem de capa'

@@ -64,37 +64,6 @@ export const announcementResponseSchema = announcementSchema.extend({
     .array(),
 });
 
-// export const announcementReadSchema = z
-//   .object({
-//     id: z.string(),
-//     createdAt: z.string(),
-//     announcement_is_active: z.boolean(),
-//     brand: z.string(),
-//     model: z.string(),
-//     description: z.string().optional(),
-//     km: z.number(),
-//     year: z.string(),
-//     price: z
-//       .number()
-//       .positive()
-//       .default(() => 0)
-//       .or(z.string()),
-//     user: z
-//       .object({
-//         id: z.string(),
-//         name: z.string(),
-//       })
-//       .optional(),
-//     cover_image_url: z.string(),
-//     images: z
-//       .object({
-//         id: z.string(),
-//         image_url: z.string(),
-//       })
-//       .array(),
-//   })
-//   .array();
-
 export const announcementReadSchema = announcementResponseSchema.array();
 
 export const singleAnnouncementReadSchema = z.object({

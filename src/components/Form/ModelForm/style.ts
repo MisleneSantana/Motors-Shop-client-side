@@ -16,7 +16,7 @@ export const FormStyle = styled.form<IFormStyleProps>`
   justify-content: center;
   align-items: flex-start;
   height: max-content;
-  width: 32.5rem;
+  width: 25.6875rem;
   padding: 2.75rem;
   background-color: ${({ theme }) => theme.colors.grey10};
   color: ${({ theme }) => theme.colors.grey0};
