@@ -2,9 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { Button } from '../../Button';
 
-export const ModalUserForms = ({
-  openModalUserForms,
-}: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const ModalNavBar = ({ openModalNavBar }) => {
   const userId = localStorage.getItem('@user:id');
   const { user: userLogged } = useContext(AuthContext);
 

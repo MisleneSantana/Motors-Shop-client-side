@@ -3,10 +3,10 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../providers/Auth/AuthContext';
 import { ButtonStyle, DivStyle, HeaderStyle, NavBarStyle } from './style';
-import { ModalUserForms } from '../Modal/ModalUserForms';
+import { ModalNavBar } from '../Modal/ModalNavBar';
 
 export const Header = () => {
-  const [openModalUserForms, setOpenModalUserForms] = useState(false);
+  const [openModalNavBar, setOpenModalNavBar] = useState(false);
   const { user: userLogged } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -48,12 +48,14 @@ export const Header = () => {
           </ButtonStyle>
           <ButtonStyle
             onClick={() => {
-              setOpenModalUserForms(true);
+              setOpenModalNavBar(true);
             }}
           >
             {userLogged ? userLogged.name : undefined}
           </ButtonStyle>
-          {openModalUserForms? <ModalUserForms openModalUserForms={openModalUserForms}/>: null}
+          {openModalNavBar ? (
+            <ModalNavBar openModalNavBar={openModalNavBar} />
+          ) : null}
         </NavBarStyle>
       )}
     </HeaderStyle>
