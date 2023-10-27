@@ -3,7 +3,10 @@ import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { UserContext } from '../../../providers/User/UserContext';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { TRegisterValidator } from '../RegisterForm/register.validator';
+import {
+  TRegisterValidator,
+  editUserSchema,
+} from '../RegisterForm/register.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../../Input';
 import { Label } from '../../Label';
@@ -15,7 +18,7 @@ import {
   TUserRegisterRequest,
   TUserUpdate,
 } from '../../../interfaces/user.interfaces';
-import { userUpdateSchema } from '../../../schemas/user.schema';
+// import { userUpdateSchema } from '../../../schemas/user.schema';
 
 export const EditOrDeleteProfile = () => {
   const userToken = localStorage.getItem('@user:token');
@@ -29,12 +32,15 @@ export const EditOrDeleteProfile = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<TRegisterValidator>({
-    resolver: zodResolver(userUpdateSchema),
+    // resolver: zodResolver(userUpdateSchema),
+    resolver: zodResolver(editUserSchema),
   });
 
   const submit: SubmitHandler<TUserRegisterRequest> = (
     formData: TUserUpdate
   ) => {
+    const data = editUserSchema.parse(formData);
+
     if (user && userToken && user.id === userId) {
       {
         formData.name === '' ? (formData.name = user.name) : formData.name;
@@ -58,7 +64,7 @@ export const EditOrDeleteProfile = () => {
           : formData.description;
       }
 
-      updateUserProfileOrAddress(formData, user.id);
+      updateUserProfileOrAddress(data, user.id);
       setIsEditOrDeleteProfileModalOpen(false);
     }
   };

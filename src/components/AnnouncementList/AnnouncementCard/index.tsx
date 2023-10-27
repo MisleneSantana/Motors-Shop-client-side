@@ -6,6 +6,7 @@ import { AnnouncementContext } from '../../../providers/Ad/AdContext';
 import { EditOrDeleteAnnouncement } from '../../Form/EditOrDeleteAnnouncement';
 import { TAnnouncementResponse } from '../../../interfaces/announcement.interfaces';
 import { DeleteAdModal } from '../../Modal/DeleteAdModal';
+import { StyleAdButtons, StyleAnnouncementCard, StyleImageAd, StyleInfosAd, StyleUserNameBox } from './style';
 
 export interface IAnnouncementProps {
   announcement: TAnnouncementResponse;
@@ -25,21 +26,28 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
 
   return (
     <>
-      <li>
-        <img src={announcement?.cover_image_url} alt={announcement?.brand} />
+      <StyleAnnouncementCard>
+        <StyleImageAd>
+          <img src={announcement?.cover_image_url} alt={announcement?.brand} />
+        </StyleImageAd>
         <h4>
           {announcement?.brand} - {announcement?.model}
         </h4>
         <p>{announcement?.description}</p>
         {location === '/' || location === '/buyerHome' ? (
-          <div>
+          <StyleUserNameBox>
             <span>{announcement.user?.name.charAt(0)}</span>
             <p>{announcement.user?.name}</p>
-          </div>
+          </StyleUserNameBox>
         ) : null}
-        <div>
+        <StyleInfosAd>
           <div>
-            <p>{announcement.km} KM</p>
+            <p>
+              {announcement.km.toLocaleString('pt-br', {
+                currency: 'BRL',
+              })}{' '}
+              KM
+            </p>
             <p>{announcement.year}</p>
           </div>
           <p>
@@ -50,13 +58,13 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
               minimumFractionDigits: 2,
             })}
           </p>
-        </div>
+        </StyleInfosAd>
         <div>
           {location === '/sellerHome' &&
           user?.account_type?.toLowerCase() === 'seller' &&
           user?.id === userId ? (
             <>
-              <div>
+              <StyleAdButtons>
                 <button onClick={() => setIsEditOrDeleteAdsModalOpen(true)}>
                   Editar
                 </button>
@@ -81,7 +89,7 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
                 >
                   Ver detalhes
                 </Link>
-              </div>
+              </StyleAdButtons>
               <div>
                 {isConfirmDeleteAdModalOpen ? (
                   <DeleteAdModal
@@ -95,7 +103,7 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
             </>
           ) : null}
         </div>
-      </li>
+      </StyleAnnouncementCard>
     </>
   );
 };

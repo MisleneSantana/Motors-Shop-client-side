@@ -32,14 +32,28 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
   const login = async (formData: TUserLogin) => {
     try {
       setLoading(true);
-      const { data } = await api.post<TUserLoginReturn>('/login', formData);
-      const { token } = data;
+      const response = await api
+        .post<TUserLoginReturn>('/login', formData)
+        .then((res) => {
+          const data = res.data;
 
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      localStorage.setItem('@user:token', token);
+          const { token } = data;
 
-      Toast({ message: 'Login realizado com sucesso', successful: true });
+          api.defaults.headers.common.Authorization = `Bearer ${token}`;
+          localStorage.setItem('@user:token', token);
+
+          Toast({ message: 'Login realizado com sucesso', successful: true });
+        })
+        .catch((error) => {
+          if (error.response.status == 401) {
+            Toast({
+              message: 'Credenciais inválidas.',
+            });
+          }
+        });
+
       await autoLogin();
+      return response;
     } catch (error) {
       Toast({ message: 'Não foi possível concluir sua solicitação.' });
     } finally {

@@ -1,9 +1,10 @@
+import { DivModalStyle } from '../../Form/CreateAnnouncement/style';
 import { EditAddress } from '../../Form/EditAddress';
 
 export const EditAddressModal = () => {
   return (
-    <div role='dialog'>
+    <DivModalStyle role='dialog'>
       <EditAddress />
-    </div>
+    </DivModalStyle>
   );
 };

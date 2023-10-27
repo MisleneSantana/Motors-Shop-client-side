@@ -37,8 +37,8 @@ export const SectionStyle = styled.section`
 `;
 
 export const DivUserAvatarStyle = styled.div`
-  height: 120px;
-  width: 90px;
+  height: 104px;
+  width: 104px;
 
   display: flex;
   align-items: center;
@@ -49,7 +49,7 @@ export const DivUserAvatarStyle = styled.div`
   color: ${({ theme }) => theme.colors.white};
   background-color: ${({ theme }) => theme.colors.brand1};
   border: 1px solid ${({ theme }) => theme.colors.brand1};
-  border-radius: 100%;
+  border-radius: 150px;
 `;
 
 export const DivUsernameStyle = styled.div`

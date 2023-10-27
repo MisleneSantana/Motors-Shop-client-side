@@ -3,13 +3,12 @@ import styled from 'styled-components';
 export const FooterStyle = styled.footer`
   display: flex;
   align-items: center;
-  position: relative;
   justify-content: space-between;
-
   gap: 1rem;
 
-  width: 100vw;
+  position: relative;
 
+  width: 100vw;
   height: 8.75rem;
   padding: 2.8125rem 3.6875rem;
 

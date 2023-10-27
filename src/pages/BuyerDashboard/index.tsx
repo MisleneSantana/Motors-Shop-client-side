@@ -19,15 +19,15 @@ export const BuyerDashboard = () => {
     <>
       <BuyerDashboardDivStyle>
         <Header />
-        <SpanBackgroundStyle></SpanBackgroundStyle>
         <BuyerDashboardMainStyle>
+          <SpanBackgroundStyle></SpanBackgroundStyle>
           {isEditOrDeleteProfileModalOpen ? <EditOrDeleteProfileModal /> : null}
           {isEditUserAddressModalOpen ? <EditAddressModal /> : null}
           <SellerOrBuyerCard />
-          <section>
-            <h3>Anúncios</h3>
+          {/* <section> */}
+            {/* <h3>Anúncios</h3> */}
             <AnnouncementList />
-          </section>
+          {/* </section> */}
         </BuyerDashboardMainStyle>
         <Footer />
       </BuyerDashboardDivStyle>

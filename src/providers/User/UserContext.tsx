@@ -8,11 +8,12 @@ import {
   TUserUpdate,
 } from '../../interfaces/user.interfaces';
 import { LoadingContext } from '../Loading/LoadingContext';
-import { userUpdateSchema } from '../../schemas/user.schema';
+// import { userUpdateSchema } from '../../schemas/user.schema';
 import { AuthContext } from '../Auth/AuthContext';
 import { ModalContext } from '../Modal/ModalContext';
 import { IUserContextValues, IUserProviderProps } from './user.props';
 import { Toast } from '../../components/Toast';
+import { editUserSchema } from '../../components/Form/RegisterForm/register.validator';
 
 export const UserContext = createContext({} as IUserContextValues);
 
@@ -84,20 +85,18 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     try {
       const { data } = await api.patch<TUser>(
         `/users/${userId}`,
-        userUpdateSchema.parse(formData),
+        editUserSchema.parse(formData),
         {
           headers: { Authorization: `Bearer ${userToken}` },
         }
       );
-      data.name
-        ? Toast({ message: 'Perfil atualizado com sucesso!', successful: true })
-        : Toast({
-            message: 'Endereço atualizado com sucesso!',
-            successful: true,
-          });
+      Toast({
+        message: 'Informações atualizadas com sucesso!',
+        successful: true,
+      });
+
       setUser(data);
     } catch (error) {
-      console.log(error);
       Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };

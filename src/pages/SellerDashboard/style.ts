@@ -9,11 +9,10 @@ export const SellerDashboardDivStyle = styled.div`
 
 export const SellerDashboardMainStyle = styled.main`
   width: 100vw;
-  height: 100%;
+  // height: 100%;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
 
   background-color: ${({ theme }) => theme.colors.grey8};
 `;

@@ -23,8 +23,8 @@ export const SellerDashboard = () => {
     <>
       <SellerDashboardDivStyle>
         <Header />
-        <SpanBackgroundStyle></SpanBackgroundStyle>
         <SellerDashboardMainStyle>
+        <SpanBackgroundStyle></SpanBackgroundStyle>
           {isEditOrDeleteProfileModalOpen ? <EditOrDeleteProfileModal /> : null}
           {isEditUserAddressModalOpen ? <EditAddressModal /> : null}
           <SellerOrBuyerCard />

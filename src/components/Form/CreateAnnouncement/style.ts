@@ -49,6 +49,7 @@ export const DivModalStyle = styled.div`
       gap: 1rem;
       width: 100%;
       justify-content: flex-end;
+      margin-top: 1rem;
 
       & > .cancel__button,
       .delete__button {
@@ -64,13 +65,21 @@ export const DivModalStyle = styled.div`
         width: 50%;
       }
 
-      & > .create-ad__button {
+      & > .create-ad__button,
+      .update-address__button {
         width: 12.0625rem;
         height: 3rem;
         border: 1.5px solid ${({ theme }) => theme.colors.brand3};
         background: ${({ theme }) => theme.colors.brand3};
         border-radius: 0.25rem;
         color: ${({ theme }) => theme.colors.brand4};
+      }
+
+      .update-address__button:hover {
+        border: 1.5px solid ${({ theme }) => theme.colors.brand1};
+        background: ${({ theme }) => theme.colors.brand1};
+        border-radius: 0.25rem;
+        color: ${({ theme }) => theme.colors.white};
       }
     }
   }

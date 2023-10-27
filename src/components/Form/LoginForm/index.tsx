@@ -50,7 +50,7 @@ export const LoginForm = () => {
             disabled={loading}
             placeholder='Digitar senha'
             {...register('password')}
-            error={errors.email}
+            error={errors.password}
           />
           <DivResetPasswordStyle>
             <Link to='/resetPassword'>Esqueci minha senha</Link>

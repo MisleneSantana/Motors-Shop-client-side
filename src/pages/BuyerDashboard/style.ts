@@ -9,7 +9,6 @@ export const BuyerDashboardDivStyle = styled.div`
 
 export const SpanBackgroundStyle = styled.main`
   display: flex;
-  margin-top: 80px;
 
   width: 100vw;
   height: 22.3125rem;
@@ -18,11 +17,10 @@ export const SpanBackgroundStyle = styled.main`
 
 export const BuyerDashboardMainStyle = styled.main`
   width: 100vw;
-  height: 100%;
+  // height: 100%;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
 
   background-color: ${({ theme }) => theme.colors.grey8};
 `;
