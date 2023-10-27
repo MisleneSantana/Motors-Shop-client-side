@@ -1,9 +1,10 @@
 import { EditOrDeleteProfile } from '../../Form/EditOrDeleteProfile';
+import { DivModalStyle } from './style';
 
 export const EditOrDeleteProfileModal = () => {
   return (
-    <div role='dialog'>
+    <DivModalStyle role='dialog'>
       <EditOrDeleteProfile />
-    </div>
+    </DivModalStyle>
   );
 };

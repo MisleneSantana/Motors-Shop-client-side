@@ -53,24 +53,27 @@ export const DivModalStyle = styled.div`
       & > .cancel__button,
       .delete__button {
         height: 3rem;
-        padding: 12px 28px;
+        padding: 0.75rem 1.75rem;
         border: 1.5px solid ${({ theme }) => theme.colors.grey6};
         background: ${({ theme }) => theme.colors.grey6};
-        border-radius: 0.25rem;
+        border-radius: 4px;
         color: ${({ theme }) => theme.colors.grey2};
       }
 
-      & > .delete__button {
-        width: 50%;
+      & > .delete-profile__button {
+        padding: 0.75rem 0.875rem;
+        border-radius: 4px;
+        border: 1.5px solid ${({ theme }) => theme.colors.feedbackAlert2};
+        background: ${({ theme }) => theme.colors.feedbackAlert2};
+        color: ${({ theme }) => theme.colors.feedbackAlert1};
       }
 
-      & > .create-ad__button {
-        width: 12.0625rem;
-        height: 3rem;
-        border: 1.5px solid ${({ theme }) => theme.colors.brand3};
-        background: ${({ theme }) => theme.colors.brand3};
-        border-radius: 0.25rem;
-        color: ${({ theme }) => theme.colors.brand4};
+      & > .update-profile__button {
+        padding: 0.75rem 0.875rem;
+        border-radius: 4px;
+        border: 1.5px solid ${({ theme }) => theme.colors.brand1};
+        background: ${({ theme }) => theme.colors.brand1};
+        color: ${({ theme }) => theme.colors.white};
       }
     }
   }

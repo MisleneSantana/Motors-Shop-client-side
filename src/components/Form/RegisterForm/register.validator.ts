@@ -79,7 +79,7 @@ export const registerRequestValidator = z.object({
 });
 
 export type TRegisterValidator = z.infer<typeof registerValidator>;
-export type TRegisterRequestValidator = z.infer<
+export type TRegisterReqValidator = z.infer<
   typeof registerRequestValidator
 >;
 export const editUserSchema = registerRequestValidator.partial();

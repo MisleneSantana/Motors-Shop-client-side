@@ -97,6 +97,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
           });
       setUser(data);
     } catch (error) {
+      console.log(error);
       Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }
   };

@@ -3,15 +3,23 @@ import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { UserContext } from '../../../providers/User/UserContext';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import {
-  TRegisterRequestValidator,
-  editUserSchema,
-} from '../RegisterForm/register.validator';
+import { TRegisterValidator } from '../RegisterForm/register.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '../../Input';
 import { Label } from '../../Label';
+import { ModelForm } from '../ModelForm';
+import { StyledTexts } from '../../../styles/typography';
+import { TextareaStyle } from '../../Textarea/style';
+import { Button } from '../../Button';
+import {
+  TUserRegisterRequest,
+  TUserUpdate,
+} from '../../../interfaces/user.interfaces';
+import { userUpdateSchema } from '../../../schemas/user.schema';
 
 export const EditOrDeleteProfile = () => {
+  const userToken = localStorage.getItem('@user:token');
+  const userId = localStorage.getItem('@user:id');
   const { user } = useContext(AuthContext);
   const { updateUserProfileOrAddress, deleteUser } = useContext(UserContext);
   const { setIsEditOrDeleteProfileModalOpen } = useContext(ModalContext);
@@ -20,99 +28,134 @@ export const EditOrDeleteProfile = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TRegisterRequestValidator>({
-    resolver: zodResolver(editUserSchema),
+  } = useForm<TRegisterValidator>({
+    resolver: zodResolver(userUpdateSchema),
   });
 
-  const submit: SubmitHandler<TRegisterRequestValidator> = (formData) => {
-    const data = editUserSchema.parse(formData);
-    if (user) updateUserProfileOrAddress(data, user.id);
-    setIsEditOrDeleteProfileModalOpen(false);
+  const submit: SubmitHandler<TUserRegisterRequest> = (
+    formData: TUserUpdate
+  ) => {
+    if (user && userToken && user.id === userId) {
+      {
+        formData.name === '' ? (formData.name = user.name) : formData.name;
+      }
+      {
+        formData.email === '' ? (formData.email = user.email) : formData.email;
+      }
+      {
+        formData.phone_number === ''
+          ? (formData.phone_number = user.phone_number)
+          : formData.phone_number;
+      }
+      {
+        formData.birth_date === ''
+          ? (formData.birth_date = user.birth_date)
+          : formData.birth_date;
+      }
+      {
+        formData.description === ''
+          ? (formData.description = user.description)
+          : formData.description;
+      }
+
+      updateUserProfileOrAddress(formData, user.id);
+      setIsEditOrDeleteProfileModalOpen(false);
+    }
   };
 
   const destroyProfile = () => {
-    if (user) deleteUser(user.id);
+    if (user && userToken && user.id === userId) deleteUser(user.id);
     setIsEditOrDeleteProfileModalOpen(false);
   };
 
   return (
     <>
-      <nav>
-        <h2>Editar perfil</h2>
-        <button onClick={() => setIsEditOrDeleteProfileModalOpen(false)}>
-          X
-        </button>
-      </nav>
-      <form onSubmit={handleSubmit(submit)}>
-        <h4>Informações pessoais</h4>
+      <ModelForm titleForm='Editar perfil' onSubmit={handleSubmit(submit)}>
+        <nav>
+          <button onClick={() => setIsEditOrDeleteProfileModalOpen(false)}>
+            X
+          </button>
+        </nav>
+        <StyledTexts tag='h3' $fontSize='heading_500_16' className='form__h3'>
+          Informações pessoais
+        </StyledTexts>
         <Input
           type='text'
           label='Nome'
-          value={user?.name}
           id='name'
           placeholder={user?.name}
+          defaultValue={user?.name}
           {...register('name')}
           error={errors.name}
         />
         <Input
           type='text'
           label='Email'
-          value={user?.email}
           id='name'
           placeholder={user?.email}
+          defaultValue={user?.email}
           {...register('email')}
           error={errors.email}
         />
         <Input
           type='text'
           label='CPF'
-          value={user?.cpf}
           id='cpf'
           placeholder={user?.cpf}
+          defaultValue={user?.cpf}
+          disabled={true}
           {...register('cpf')}
           error={errors.cpf}
         />
         <Input
           type='text'
           label='Celular'
-          value={user?.phone_number}
           id='phone_number'
           placeholder={user?.phone_number}
+          defaultValue={user?.phone_number}
           {...register('phone_number')}
           error={errors.phone_number}
         />
         <Input
-          type='text'
+          type='date'
           label='Data de nascimento'
-          value={user?.birth_date}
-          id='birth_date'
           placeholder={user?.birth_date}
+          defaultValue={user?.birth_date}
+          pattern='\d{4}-\d{2}-\d{2}'
+          id='birth_date'
           {...register('birth_date')}
           error={errors.birth_date}
         />
-        <div>
+
+        <div className='content__textarea'>
           <Label htmlFor='description' name='Descrição' />
-          <textarea
+          <TextareaStyle
             id='description'
-            value={user?.description}
             placeholder={user?.description}
+            defaultValue={user?.description}
             {...register('description')}
           />
-          {errors.description?.message && <p>{errors.description?.message}</p>}
         </div>
-        <div>
-          <button
+        <section className='buttons__section'>
+          <Button
+            className={'cancel__button'}
+            text={' Cancelar'}
             type='button'
             onClick={() => setIsEditOrDeleteProfileModalOpen(false)}
-          >
-            Cancelar
-          </button>
-          <button type='button' onClick={() => destroyProfile()}>
-            Excluir Perfil
-          </button>
-          <button type='submit'>Salvar alterações</button>
-        </div>
-      </form>
+          />
+          <Button
+            className={'delete-profile__button'}
+            text={'Excluir Perfil'}
+            type='button'
+            onClick={() => destroyProfile()}
+          />
+          <Button
+            className={'update-profile__button'}
+            text={'Salvar alterações'}
+            type='submit'
+          />
+        </section>
+      </ModelForm>
     </>
   );
 };

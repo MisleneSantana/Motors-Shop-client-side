@@ -54,7 +54,7 @@ export const Header = () => {
             {userLogged ? userLogged.name : undefined}
           </ButtonStyle>
           {openModalNavBar ? (
-            <ModalNavBar openModalNavBar={openModalNavBar} />
+            <ModalNavBar setOpenModalNavBar={setOpenModalNavBar} />
           ) : null}
         </NavBarStyle>
       )}

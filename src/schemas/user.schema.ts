@@ -7,7 +7,7 @@ import {
 export const userSchema = z.object({
   id: z.string(),
   name: z.string(),
-  email: z.string().email(),
+  email: z.string(),
   cpf: z.string(),
   phone_number: z.string(),
   birth_date: z.string(),

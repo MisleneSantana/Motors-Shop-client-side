@@ -19,10 +19,10 @@ export const BuyerDashboard = () => {
     <>
       <BuyerDashboardDivStyle>
         <Header />
-        {isEditOrDeleteProfileModalOpen ? <EditOrDeleteProfileModal /> : null}
-        {isEditUserAddressModalOpen ? <EditAddressModal /> : null}
         <SpanBackgroundStyle></SpanBackgroundStyle>
         <BuyerDashboardMainStyle>
+          {isEditOrDeleteProfileModalOpen ? <EditOrDeleteProfileModal /> : null}
+          {isEditUserAddressModalOpen ? <EditAddressModal /> : null}
           <SellerOrBuyerCard />
           <section>
             <h3>Anúncios</h3>
