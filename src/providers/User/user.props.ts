@@ -20,4 +20,5 @@ export interface IUserContextValues {
     userId: string
   ) => Promise<void>;
   deleteUser: (userId: string) => Promise<void>;
+  defineInitialsName: (username: string) => string;
 }

@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
 export const SectionStyle = styled.section`
+  // border: 1px solid red;
+
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 
   position: absolute;
   top: 155px;
   left: 20vw;
 
   width: 60vw;
-  height: 327px;
   padding: 2rem 2rem;
 
   background-color: ${({ theme }) => theme.colors.grey10};
   border-radius: 4px;
-  border: 1px solid red;
 
   & > p {
     font-size: 1rem;

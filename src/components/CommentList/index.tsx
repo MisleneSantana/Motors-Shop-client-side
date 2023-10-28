@@ -1,22 +1,27 @@
 import { useContext } from 'react';
 import { AnnouncementContext } from '../../providers/Ad/AdContext';
 import { CommentCard } from './CommentCard';
+import { CommentsBoxStyle } from './style';
 
 export const CommentList = () => {
   const { comments } = useContext(AnnouncementContext);
 
   return (
-    <section>
-      <h2>Comentários</h2>
-      <ul>
-        {comments.length === 0 ? (
+    <>
+      {comments.length === 0 ? (
+        <div>
           <p>Este anúncio não possui comentários.</p>
-        ) : (
-          comments.map((comment) => (
-            <CommentCard key={comment.id} comment={comment} />
-          ))
-        )}
-      </ul>
-    </section>
+        </div>
+      ) : (
+        <CommentsBoxStyle>
+          <h2>Comentários</h2>
+          <ul>
+            {comments?.map((comment) => {
+              return <CommentCard key={comment.id} comment={comment} />;
+            })}
+          </ul>
+        </CommentsBoxStyle>
+      )}
+    </>
   );
 };

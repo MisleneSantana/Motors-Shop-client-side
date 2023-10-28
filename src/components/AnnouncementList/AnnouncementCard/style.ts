@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
 export const StyleAnnouncementCard = styled.li`
+  cursor: pointer;
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  border: 1.5px solid ${({ theme }) => theme.colors.brand4};
+  border: 1px solid ${({ theme }) => theme.colors.brand4};
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.025) 0px 0px 0px 0.5px;
 
   & > h4 {
     color: ${({ theme }) => theme.colors.grey1};
@@ -38,6 +41,7 @@ export const StyleImageAd = styled.div`
 export const StyleInfosAd = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   & > div {
     display: flex;
@@ -68,10 +72,18 @@ export const StyleAdButtons = styled.div`
     padding: 12px 20px;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
 
     border-radius: 4px;
     border: 1.5px solid ${({ theme }) => theme.colors.grey1};
     color: ${({ theme }) => theme.colors.grey1};
+  }
+
+  & > .disabled__button {
+    background: ${({ theme }) => theme.colors.grey6};
+    border: 1.5px solid ${({ theme }) => theme.colors.grey6};
+    color: ${({ theme }) => theme.colors.grey2};
+    cursor: no-drop;
   }
 `;
 

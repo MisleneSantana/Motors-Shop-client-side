@@ -29,7 +29,6 @@ export const AnnouncementProvider = ({
   const [announcements, setAnnouncements] = useState<TAnnouncementResponse[]>(
     []
   );
-  // const [announcements, setAnnouncements] = useState<TAnnouncement[]>([]);
   const [singleAnnouncement, setSingleAnnouncement] = useState<
     TAnnouncement | undefined
   >({} as TAnnouncement);
@@ -95,10 +94,26 @@ export const AnnouncementProvider = ({
   // 4. Buscar os anúncios de um anunciante:
   const getAnnouncementsBySeller = async (sellerId: string | undefined) => {
     try {
-      const { data } = await api.get<TAnnouncementResponse[]>(
-        `announcements/${sellerId}/seller`
-      );
-      setSellerAnnouncements(data);
+      const response = await api
+        .get<TAnnouncementResponse[]>(`announcements/${sellerId}/seller`)
+        .then((res) => {
+          const data = res.data;
+          // console.log(data);
+          setSellerAnnouncements(data);
+        })
+        .catch((error) => {
+          if (error.response.status == 404) {
+            Toast({
+              message: 'Você não possui anúncios.',
+            });
+          }
+          if (error.response.status == 401) {
+            Toast({
+              message: 'CPF inválido.',
+            });
+          }
+        });
+      return response;
     } catch (error) {
       Toast({ message: 'Não foi possível concluir sua solicitação.' });
     }

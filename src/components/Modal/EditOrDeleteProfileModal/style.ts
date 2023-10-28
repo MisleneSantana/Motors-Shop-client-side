@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
 export const DivModalStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+
   width: 100vw;
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
 
-  position: absolute;
+  // position: absolute;
+  position: fixed;
   inset: 0;
 
   z-index: 999;
@@ -59,6 +63,7 @@ export const DivModalStyle = styled.div`
         border-radius: 4px;
         color: ${({ theme }) => theme.colors.grey2};
       }
+
 
       & > .delete-profile__button {
         padding: 0.75rem 0.875rem;

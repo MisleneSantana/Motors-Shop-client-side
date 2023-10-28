@@ -4,16 +4,16 @@ export const registerValidator = z
   .object({
     name: z
       .string()
-      .nonempty({ message: 'Campo obrigatório' })
-      .transform((name) => {
-        return name
-          .trim()
-          .split('')
-          .map((word) =>
-            word[0].toUpperCase().concat(word.substring(1)).toLowerCase()
-          )
-          .join('');
-      }),
+      .nonempty({ message: 'Campo obrigatório' }),
+      // .transform((name) => {
+      //   return name
+      //     .trim()
+      //     .split('')
+      //     .map((word) =>
+      //       word[0].toUpperCase().concat(word.substring(1)).toLowerCase()
+      //     )
+      //     .join('');
+      // }),
     email: z
       .string()
       .nonempty({ message: 'Campo obrigatório' })

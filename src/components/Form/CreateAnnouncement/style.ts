@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
 export const DivModalStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+
   width: 100vw;
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
 
-  position: absolute;
+  // position: absolute;
+  position: fixed;
   inset: 0;
 
   z-index: 999;
@@ -73,6 +77,12 @@ export const DivModalStyle = styled.div`
         background: ${({ theme }) => theme.colors.brand3};
         border-radius: 0.25rem;
         color: ${({ theme }) => theme.colors.brand4};
+      }
+
+      .create-ad__button:hover {
+        border: 1.5px solid ${({ theme }) => theme.colors.brand1};
+        background: ${({ theme }) => theme.colors.brand1};
+        color: ${({ theme }) => theme.colors.white};
       }
 
       .update-address__button:hover {

@@ -8,7 +8,6 @@ export const TextareaStyle = styled.textarea`
 
   resize: none;
   word-break: break-all;
-  // word-wrap: break-word;
   white-space: normal;
   line-height: 1.25rem;
 

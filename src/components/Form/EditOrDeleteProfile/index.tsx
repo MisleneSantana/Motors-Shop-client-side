@@ -18,7 +18,6 @@ import {
   TUserRegisterRequest,
   TUserUpdate,
 } from '../../../interfaces/user.interfaces';
-// import { userUpdateSchema } from '../../../schemas/user.schema';
 
 export const EditOrDeleteProfile = () => {
   const userToken = localStorage.getItem('@user:token');
@@ -32,7 +31,6 @@ export const EditOrDeleteProfile = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<TRegisterValidator>({
-    // resolver: zodResolver(userUpdateSchema),
     resolver: zodResolver(editUserSchema),
   });
 

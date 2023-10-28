@@ -4,13 +4,14 @@ export const FooterStyle = styled.footer`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
   gap: 1rem;
 
   position: relative;
 
   width: 100vw;
-  height: 8.75rem;
-  padding: 2.8125rem 3.6875rem;
+  height: 10%;
+  padding: 2.5rem 2.5rem;
 
   background-color: ${({ theme }) => theme.colors.grey0};
 
@@ -31,9 +32,10 @@ export const FooterStyle = styled.footer`
   }
 
   @media (max-width: 768px) {
-    height: 19.375rem;
+    height: 12.5rem;
     flex-direction: column;
-    gap: 3.75rem;
+    gap: 1.5rem;
+    padding: 2rem 2rem;
   }
 `;
 

@@ -8,7 +8,6 @@ import {
   TUserUpdate,
 } from '../../interfaces/user.interfaces';
 import { LoadingContext } from '../Loading/LoadingContext';
-// import { userUpdateSchema } from '../../schemas/user.schema';
 import { AuthContext } from '../Auth/AuthContext';
 import { ModalContext } from '../Modal/ModalContext';
 import { IUserContextValues, IUserProviderProps } from './user.props';
@@ -120,6 +119,23 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     }
   };
 
+  // 7. Definir iniciais username:
+  const defineInitialsName = (username: string) => {
+    const initials = username?.includes(' ')
+      ? (
+          username?.split(' ')[0][0] +
+          '' +
+          username?.split(' ')[1][0]
+        ).toUpperCase()
+      : (
+          username?.split(' ')[0][0] +
+          '' +
+          username?.split(' ')[0][1]
+        ).toUpperCase();
+
+    return initials;
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -128,6 +144,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
         getUser,
         updateUserProfileOrAddress,
         deleteUser,
+        defineInitialsName,
       }}
     >
       {children}

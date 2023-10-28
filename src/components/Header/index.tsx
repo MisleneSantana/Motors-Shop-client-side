@@ -2,21 +2,29 @@ import logo from '../../assets/icons/logo.svg';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../providers/Auth/AuthContext';
-import { ButtonStyle, DivStyle, HeaderStyle, NavBarStyle } from './style';
+import { DivStyle, HeaderStyle, NavBarStyle } from './style';
 import { ModalNavBar } from '../Modal/ModalNavBar';
+import { Button } from '../Button';
+import { UserContext } from '../../providers/User/UserContext';
 
 export const Header = () => {
+  const navigate = useNavigate();
   const [openModalNavBar, setOpenModalNavBar] = useState(false);
   const { user: userLogged } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { defineInitialsName } = useContext(UserContext);
 
-  // const formatUserName = (userName: string) => {
-  //   userName
-  //     .split('')
-  //     .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
-  //     .join('');
-  //   return userName;
-  // };
+  const formatUserName = (userName: string) => {
+    userName
+      .split('')
+      .map((letter: string, index: number) => {
+        if (index === 0 || index === userName.split(' ').length - 1) {
+          return letter[0].toUpperCase();
+        }
+      })
+      .join('');
+    return userName;
+  };
+
   return (
     <HeaderStyle>
       <DivStyle>
@@ -24,35 +32,43 @@ export const Header = () => {
       </DivStyle>
       {!userLogged?.id ? (
         <NavBarStyle>
-          <ButtonStyle
+          <Button
+            text={'Fazer Login'}
             className='login__button'
             onClick={() => {
               navigate('/login');
             }}
-          >
-            Fazer Login
-          </ButtonStyle>
-          <ButtonStyle
+          />
+          <Button
+            text={'Cadastrar'}
             className='register__button'
             onClick={() => {
               navigate('/register');
             }}
-          >
-            Cadastrar
-          </ButtonStyle>
+          />
         </NavBarStyle>
       ) : (
         <NavBarStyle>
-          <ButtonStyle>
-            {userLogged ? userLogged.name?.charAt(0) : undefined}
-          </ButtonStyle>
-          <ButtonStyle
-            onClick={() => {
-              setOpenModalNavBar(true);
-            }}
-          >
-            {userLogged ? userLogged.name : undefined}
-          </ButtonStyle>
+          {userLogged ? (
+            <Button
+              text={defineInitialsName(userLogged?.name)}
+              className='avatar-user__button'
+              onClick={() => {
+                setOpenModalNavBar(false);
+              }}
+            />
+          ) : undefined}
+
+          {userLogged ? (
+            <Button
+              text={formatUserName(userLogged?.name)}
+              className='username__button'
+              onClick={() => {
+                setOpenModalNavBar(true);
+              }}
+            />
+          ) : undefined}
+
           {openModalNavBar ? (
             <ModalNavBar setOpenModalNavBar={setOpenModalNavBar} />
           ) : null}

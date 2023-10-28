@@ -6,28 +6,24 @@ import { TCommentRequest } from '../../../interfaces/comment.interfaces';
 import { CommentSchema, TCommentFormSchema } from './comment.validator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AnnouncementContext } from '../../../providers/Ad/AdContext';
-import { useParams } from 'react-router-dom';
+import { UserContext } from '../../../providers/User/UserContext';
+import { TextareaStyle } from '../../Textarea/style';
+import { Button } from '../../Button';
+import { ModelForm } from '../ModelForm';
+import { BoxReactionsStyle, BoxUserInfosStyle, DivFormStyle } from './style';
+import { TAnnouncement } from '../../../interfaces/announcement.interfaces';
 
-export const CreateComment = () => {
-  const { id } = useParams();
+interface ISingleAnnouncementProps {
+  singleAnnouncement: TAnnouncement;
+}
+
+export const CreateComment = ({
+  singleAnnouncement,
+}: ISingleAnnouncementProps) => {
   const { user } = useContext(AuthContext);
+  const { defineInitialsName } = useContext(UserContext);
   const { loading } = useContext(LoadingContext);
   const { createComment } = useContext(AnnouncementContext);
-
-  const formatInitialsLetter = (fullName: string) => {
-    if (fullName) {
-      fullName
-        .split(' ')
-        .map((letter: string, i: number) => {
-          if (i === 0 || i === fullName.split(' ').length - 1) {
-            return letter[0].toUpperCase();
-          }
-        })
-        .join('');
-      return fullName;
-    }
-    return null;
-  };
 
   const {
     register,
@@ -37,49 +33,45 @@ export const CreateComment = () => {
   } = useForm<TCommentFormSchema>({ resolver: zodResolver(CommentSchema) });
 
   const submit = async (formData: TCommentRequest) => {
-    const announcementId: string | undefined = id;
-    if (announcementId) createComment(formData, announcementId);
+    if (singleAnnouncement) createComment(formData, singleAnnouncement.id);
     setValue('comment', '');
   };
 
   return (
-    <div>
+    <DivFormStyle>
       {user ? (
-        <div>
-          <span>{`${formatInitialsLetter(user.name)}`}</span>
+        <BoxUserInfosStyle>
+          <span>{`${defineInitialsName(user?.name)}`}</span>
           <p>{user.name}</p>
-        </div>
+        </BoxUserInfosStyle>
       ) : null}
 
       {user ? (
-        <form onSubmit={handleSubmit(submit)}>
-          <div>
-            <textarea
-              id='comment'
-              placeholder='Digitar comentário'
-              rows={8}
-              disabled={loading}
-              {...register('comment')}
-            ></textarea>
-            {errors.comment?.message && <p>{errors.comment?.message}</p>}
-          </div>
+        <ModelForm titleForm='' onSubmit={handleSubmit(submit)}>
+          <TextareaStyle
+            id='comment'
+            placeholder='Digitar comentário'
+            disabled={loading}
+            {...register('comment')}
+          />
+          {errors.comment?.message && <p>{errors.comment?.message}</p>}
           {user ? (
-            <button type='submit'>{loading ? 'Carregando' : 'Comentar'}</button>
+            <Button text={loading ? 'Carregando' : 'Comentar'} type='submit' />
           ) : (
-            <button type='submit'>Comentar</button>
+            <Button text={'Comentar'} type='submit' />
           )}
-        </form>
+        </ModelForm>
       ) : (
         <p>Para realizar um comentário é necessário estar logado.</p>
       )}
 
       {user ? (
-        <div>
+        <BoxReactionsStyle>
           <span>Gostei muito!</span>
           <span>Incrível!</span>
           <span>Recomendarei para meus amigos!!</span>
-        </div>
+        </BoxReactionsStyle>
       ) : null}
-    </div>
+    </DivFormStyle>
   );
 };

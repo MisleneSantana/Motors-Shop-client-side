@@ -8,7 +8,7 @@ export const ModalNavBarStyle = styled.div`
   width: 100vw;
   height: 100vh;
 
-  top: 80px;
+  top: 5.75rem;
   left: 0;
   align-items: flex-end;
 
@@ -25,7 +25,6 @@ export const ModalNavBarStyle = styled.div`
     gap: 1rem;
 
     width: 12.5rem;
-    // margin-right:4rem;
 
     animation: ${AnimationFadeIn} 1s ease 0s 1 alternate backwards;
 

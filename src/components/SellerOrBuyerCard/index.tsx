@@ -2,9 +2,11 @@ import { useContext } from 'react';
 import { AuthContext } from '../../providers/Auth/AuthContext';
 import { ModalContext } from '../../providers/Modal/ModalContext';
 import { DivUserAvatarStyle, DivUsernameStyle, SectionStyle } from './style';
+import { UserContext } from '../../providers/User/UserContext';
 
 export const SellerOrBuyerCard = () => {
   const { user } = useContext(AuthContext);
+  const { defineInitialsName } = useContext(UserContext);
   const { setIsCreateAdsModalOpen } = useContext(ModalContext);
 
   const userFullName = user?.name;
@@ -14,7 +16,7 @@ export const SellerOrBuyerCard = () => {
   return (
     <SectionStyle>
       <DivUserAvatarStyle>
-        <p>{user ? user.name?.charAt(0) : undefined}</p>
+        <p>{user ? defineInitialsName(user.name) : undefined}</p>
       </DivUserAvatarStyle>
 
       <DivUsernameStyle>

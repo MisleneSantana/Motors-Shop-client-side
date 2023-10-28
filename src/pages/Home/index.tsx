@@ -1,21 +1,24 @@
 import { AnnouncementList } from '../../components/AnnouncementList';
 import { Footer } from '../../components/Footer';
 import { Header } from '../../components/Header';
+import { BoxBackgroundStyle, BoxListStyle, HomeDivStyle, HomeMainStyle } from './style';
 
 export const Home = () => {
   return (
     <>
-      <Header />
-      <main>
-        <section>
-          <h2>Motors Shop</h2>
-          <p>A melhor plataforma de anúncios de carros do país</p>
-        </section>
-        <section>
-          <AnnouncementList />
-        </section>
-      </main>
-      <Footer />
+      <HomeDivStyle>
+        <Header />
+        <HomeMainStyle>
+          <BoxBackgroundStyle>
+            <h1>Motors <strong>Shop</strong></h1>
+            <p>A melhor plataforma de anúncios de carros do país</p>
+          </BoxBackgroundStyle>
+          <BoxListStyle>
+            <AnnouncementList />
+          </BoxListStyle>
+        </HomeMainStyle>
+        <Footer />
+      </HomeDivStyle>
     </>
   );
 };

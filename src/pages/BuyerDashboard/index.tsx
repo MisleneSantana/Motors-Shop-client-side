@@ -24,10 +24,7 @@ export const BuyerDashboard = () => {
           {isEditOrDeleteProfileModalOpen ? <EditOrDeleteProfileModal /> : null}
           {isEditUserAddressModalOpen ? <EditAddressModal /> : null}
           <SellerOrBuyerCard />
-          {/* <section> */}
-            {/* <h3>Anúncios</h3> */}
-            <AnnouncementList />
-          {/* </section> */}
+          <AnnouncementList />
         </BuyerDashboardMainStyle>
         <Footer />
       </BuyerDashboardDivStyle>

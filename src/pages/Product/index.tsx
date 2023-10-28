@@ -1,27 +1,25 @@
-import { CommentList } from '../../components/CommentList';
 import { Footer } from '../../components/Footer';
-import { CreateComment } from '../../components/Form/CreateComment';
 import { Header } from '../../components/Header';
 import { EditCommentModal } from '../../components/Modal/EditCommentModal';
 import { useContext } from 'react';
 import { ModalContext } from '../../providers/Modal/ModalContext';
-import { DeleteAdModal } from '../../components/Modal/DeleteAdModal';
+import { SpanBackgroundStyle } from '../BuyerDashboard/style';
+import { ProductDetails } from '../../components/ProductDetails';
 
 export const Product = () => {
   const { isEditCommentModalOpen, isConfirmDeleteCommentModalOpen } =
     useContext(ModalContext);
+
   return (
     <>
       <Header />
       <aside></aside>
       <main>
+        <SpanBackgroundStyle></SpanBackgroundStyle>
+        <ProductDetails />
         <section>
-          <CommentList />
-        </section>
-        <section>
-          <CreateComment />
           {isEditCommentModalOpen ? <EditCommentModal /> : null}
-          {isConfirmDeleteCommentModalOpen ? <DeleteAdModal /> : null}
+          {/* {isConfirmDeleteCommentModalOpen ? <DeleteAdModal /> : null} */}
         </section>
       </main>
       <Footer />

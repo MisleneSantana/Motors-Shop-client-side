@@ -3,6 +3,7 @@ import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { Button } from '../../Button';
 import { ModalNavBarStyle } from './style';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
+import { AnnouncementContext } from '../../../providers/Ad/AdContext';
 
 export const ModalNavBar = ({
   setOpenModalNavBar,
@@ -11,6 +12,7 @@ export const ModalNavBar = ({
 }) => {
   const userId = localStorage.getItem('@user:id');
   const { user: userLogged, logout } = useContext(AuthContext);
+  const { getAnnouncementsBySeller } = useContext(AnnouncementContext);
   const { setIsEditOrDeleteProfileModalOpen, setIsEditUserAddressModalOpen } =
     useContext(ModalContext);
 
@@ -61,7 +63,12 @@ export const ModalNavBar = ({
                 setOpenModalNavBar(false);
               }}
             />
-            <Button text='Meus Anúncios' />
+            <Button
+              text='Meus Anúncios'
+              onClick={() => {
+                getAnnouncementsBySeller(userId);
+              }}
+            />
             <Button
               text='Sair'
               onClick={() => {
