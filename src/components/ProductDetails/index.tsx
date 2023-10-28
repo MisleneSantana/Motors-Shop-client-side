@@ -49,7 +49,7 @@ export const ProductDetails = () => {
           <h3>Descrição</h3>
           <p>{singleAnnouncement?.description}</p>
         </ProductDescriptionStyle>
-        <CommentList />
+        <CommentList/>
         {singleAnnouncement ? (
           <CreateComment singleAnnouncement={singleAnnouncement} />
         ) : null}

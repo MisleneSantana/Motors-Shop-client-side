@@ -13,7 +13,7 @@ import { ModelForm } from '../ModelForm';
 import { BoxReactionsStyle, BoxUserInfosStyle, DivFormStyle } from './style';
 import { TAnnouncement } from '../../../interfaces/announcement.interfaces';
 
-interface ISingleAnnouncementProps {
+export interface ISingleAnnouncementProps {
   singleAnnouncement: TAnnouncement;
 }
 
@@ -48,13 +48,15 @@ export const CreateComment = ({
 
       {user ? (
         <ModelForm titleForm='' onSubmit={handleSubmit(submit)}>
-          <TextareaStyle
-            id='comment'
-            placeholder='Digitar comentário'
-            disabled={loading}
-            {...register('comment')}
-          />
-          {errors.comment?.message && <p>{errors.comment?.message}</p>}
+          <div className='content__textarea'>
+            <TextareaStyle
+              id='comment'
+              placeholder='Digitar comentário'
+              disabled={loading}
+              {...register('comment')}
+            />
+            {errors.comment?.message && <p>{errors.comment?.message}</p>}
+          </div>
           {user ? (
             <Button text={loading ? 'Carregando' : 'Comentar'} type='submit' />
           ) : (

@@ -15,8 +15,6 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
     useState<boolean>(false);
   const [isConfirmDeleteCommentModalOpen, setIsConfirmDeleteCommentModalOpen] =
     useState<boolean>(false);
-  const [isEditCommentModalOpen, setIsEditCommentModalOpen] =
-    useState<boolean>(false);
 
   return (
     <ModalContext.Provider
@@ -33,8 +31,6 @@ export const ModalProvider = ({ children }: IModalProviderProps) => {
         setIsEditUserAddressModalOpen,
         isConfirmDeleteCommentModalOpen,
         setIsConfirmDeleteCommentModalOpen,
-        isEditCommentModalOpen,
-        setIsEditCommentModalOpen,
       }}
     >
       {children}

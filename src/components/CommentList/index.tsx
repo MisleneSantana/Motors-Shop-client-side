@@ -17,7 +17,9 @@ export const CommentList = () => {
           <h2>Comentários</h2>
           <ul>
             {comments?.map((comment) => {
-              return <CommentCard key={comment.id} comment={comment} />;
+              return (
+                <CommentCard key={comment.id} comment={comment}/>
+              );
             })}
           </ul>
         </CommentsBoxStyle>

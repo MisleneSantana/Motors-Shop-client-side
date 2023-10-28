@@ -98,7 +98,6 @@ export const AnnouncementProvider = ({
         .get<TAnnouncementResponse[]>(`announcements/${sellerId}/seller`)
         .then((res) => {
           const data = res.data;
-          // console.log(data);
           setSellerAnnouncements(data);
         })
         .catch((error) => {
@@ -234,6 +233,7 @@ export const AnnouncementProvider = ({
         );
         return updateComment;
       });
+
       Toast({ message: 'Comentário atualizado com sucesso', successful: true });
     } catch {
       Toast({ message: 'Não foi possível concluir sua solicitação.' });
@@ -267,11 +267,11 @@ export const AnnouncementProvider = ({
     })();
   }, [announcements]);
 
-  // useEffect(() => {
-  //   if (singleAnnouncement && singleAnnouncement.id) {
-  //     getComments(singleAnnouncement!.id);
-  //   }
-  // }, [singleAnnouncement]);
+  useEffect(() => {
+    if (comments && singleAnnouncement && singleAnnouncement.id) {
+      getComments(singleAnnouncement!.id);
+    }
+  });
 
   return (
     <AnnouncementContext.Provider

@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { LoadingContext } from '../../../providers/Loading/LoadingContext';
 import { AnnouncementContext } from '../../../providers/Ad/AdContext';
@@ -9,66 +8,69 @@ import {
 } from '../CreateComment/comment.validator';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TCommentRequest } from '../../../interfaces/comment.interfaces';
-import { ModalContext } from '../../../providers/Modal/ModalContext';
+import {
+  TComment,
+  TCommentRequest,
+} from '../../../interfaces/comment.interfaces';
+import { ModelForm } from '../ModelForm';
+import { DivModalStyle } from '../CreateAnnouncement/style';
+import { TextareaStyle } from '../../Textarea/style';
 
-export const EditComment = () => {
-  const { id } = useParams();
+export const EditComment = ({
+  comment,
+  setIsEditCommentModalOpen,
+}: {
+  comment: TComment;
+  setIsEditCommentModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { user } = useContext(AuthContext);
   const { loading } = useContext(LoadingContext);
   const { updateComment } = useContext(AnnouncementContext);
-  const { setIsEditCommentModalOpen } = useContext(ModalContext);
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<TCommentFormSchema>({ resolver: zodResolver(CommentSchema) });
+  const { register, handleSubmit, setValue } = useForm<TCommentFormSchema>({
+    resolver: zodResolver(CommentSchema),
+  });
 
   const submit: SubmitHandler<TCommentRequest> = (
     formData: TCommentRequest
   ) => {
-    const commentId: string | undefined = id;
-    if (commentId) updateComment(formData.comment, commentId);
+    if (comment) updateComment(formData, comment.id);
     setIsEditCommentModalOpen(false);
     setValue('comment', '');
   };
 
   return (
     <>
-      <nav>
-        <h2>Editar comentário</h2>
-        <button onClick={() => setIsEditCommentModalOpen(false)}>X</button>
-      </nav>
-      {user ? (
-        <form onSubmit={handleSubmit(submit)}>
-          <div>
-            <textarea
-              id='comment'
-              placeholder={'Old comment'}
-              rows={8}
-              disabled={loading}
-              {...register('comment')}
-            ></textarea>
-            {errors.comment?.message && <p>{errors.comment?.message}</p>}
-          </div>
-          {user ? (
-            <button type='submit'>{loading ? 'Carregando' : 'Editar'}</button>
-          ) : (
-            <button type='submit'>Editar</button>
-          )}
-        </form>
-      ) : (
-        <p>Para editar um comentário é necessário estar logado.</p>
-      )}
-      {user ? (
-        <div>
-          <span>Gostei muito!</span>
-          <span>Incrível!</span>
-          <span>Recomendarei para meus amigos!!</span>
-        </div>
-      ) : null}
+      <DivModalStyle role='dialog'>
+        {user ? (
+          <ModelForm
+            titleForm={'Editar comentário'}
+            onSubmit={handleSubmit(submit)}
+          >
+            <nav>
+              <button onClick={() => setIsEditCommentModalOpen(false)}>
+                X
+              </button>
+            </nav>
+            <div className='content__textarea'>
+              <TextareaStyle
+                id='comment'
+                placeholder={comment.comment}
+                disabled={loading}
+                defaultValue={comment.comment}
+                {...register('comment')}
+              />
+            </div>
+            {user ? (
+              <button type='submit'>{loading ? 'Carregando' : 'Editar'}</button>
+            ) : (
+              <button type='submit'>Editar</button>
+            )}
+          </ModelForm>
+        ) : (
+          <p>Para editar um comentário é necessário estar logado.</p>
+        )}
+      </DivModalStyle>
     </>
   );
 };
