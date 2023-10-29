@@ -15,6 +15,7 @@ import {
 import { ModelForm } from '../ModelForm';
 import { DivModalStyle } from '../CreateAnnouncement/style';
 import { TextareaStyle } from '../../Textarea/style';
+import { Button } from '../../Button';
 
 export const EditComment = ({
   comment,
@@ -62,9 +63,17 @@ export const EditComment = ({
               />
             </div>
             {user ? (
-              <button type='submit'>{loading ? 'Carregando' : 'Editar'}</button>
+              <Button
+                className='update-comment__button'
+                text={loading ? 'Carregando' : 'Salvar alterações'}
+                type='submit'
+              />
             ) : (
-              <button type='submit'>Editar</button>
+              <Button
+                className='update-comment__button'
+                text='Salvar alterações'
+                type='submit'
+              />
             )}
           </ModelForm>
         ) : (

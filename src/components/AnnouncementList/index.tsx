@@ -10,7 +10,7 @@ export const AnnouncementList = () => {
 
   return (
     <>
-      {announcements.length > 0 ? (
+      {announcements?.length > 0 ? (
         <AnnouncementsBoxStyle>
           {user ? (
             user.account_type === 'buyer' ? (

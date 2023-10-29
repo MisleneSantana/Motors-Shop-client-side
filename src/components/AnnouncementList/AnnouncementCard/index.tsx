@@ -45,7 +45,7 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
         <p>{announcement?.description}</p>
         {location === '/' || location === '/buyerHome' ? (
           <StyleUserNameBox>
-            <span>{defineInitialsName(announcement.user?.name)}</span>
+            <span>{defineInitialsName(announcement?.user?.name)}</span>
             <p>{announcement.user?.name}</p>
           </StyleUserNameBox>
         ) : null}

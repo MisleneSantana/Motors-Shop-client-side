@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const SectionProductDetailsStyle = styled.section`
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -9,12 +8,12 @@ export const SectionProductDetailsStyle = styled.section`
 `;
 
 export const ProductCoverImgStyle = styled.div`
-  border: 1px solid red;
-
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+  border: 1.5px solid ${({ theme }) => theme.colors.grey10};
+  background: ${({ theme }) => theme.colors.grey10};
 
   img {
     width: 18.75rem;
@@ -30,11 +29,14 @@ export const BoxAdInfosStyle = styled.div`
   padding: 1.75rem 1.75rem;
   border-radius: 4px;
   border: 1px solid red;
+  border: 1.5px solid ${({ theme }) => theme.colors.grey10};
+  background: ${({ theme }) => theme.colors.grey10};
 
   > h4 {
     font-family: Lexend;
     font-size: 1.25rem;
     font-weight: 600;
+    margin-bottom: 1rem;
     color: ${({ theme }) => theme.colors.grey1};
   }
 
@@ -86,11 +88,14 @@ export const ProductDescriptionStyle = styled.div`
   gap: 1.5rem;
 
   padding: 1.75rem 1.75rem;
+  border: 1.5px solid ${({ theme }) => theme.colors.grey10};
+  background: ${({ theme }) => theme.colors.grey10};
 
   h3 {
     font-family: Lexend;
     font-size: 1.25rem;
     font-weight: 600;
+    margin-bottom: 1rem;
     color: ${({ theme }) => theme.colors.grey1};
   }
 

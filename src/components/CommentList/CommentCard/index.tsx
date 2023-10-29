@@ -1,12 +1,12 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { TCommentResponse } from '../../../interfaces/comment.interfaces';
-import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { UserContext } from '../../../providers/User/UserContext';
 import { BoxButtonsStyle, CommentCardStyle, CommentOwnerStyle } from './style';
 import { Button } from '../../Button';
 import { commentDate } from './commentDate';
 import { EditComment } from '../../Form/EditComment';
+import { DeleteCommentModal } from '../../Modal/DeleteCommentModal';
 
 interface ICommentProps {
   comment: TCommentResponse;
@@ -15,8 +15,9 @@ interface ICommentProps {
 export const CommentCard = ({ comment }: ICommentProps) => {
   const [isEditCommentModalOpen, setIsEditCommentModalOpen] =
     useState<boolean>(false);
+  const [isConfirmDeleteCommentModalOpen, setIsConfirmDeleteCommentModalOpen] =
+    useState<boolean>(false);
   const { user } = useContext(AuthContext);
-  const { setIsConfirmDeleteCommentModalOpen } = useContext(ModalContext);
   const { defineInitialsName } = useContext(UserContext);
 
   return (
@@ -51,6 +52,14 @@ export const CommentCard = ({ comment }: ICommentProps) => {
         <EditComment
           comment={comment}
           setIsEditCommentModalOpen={setIsEditCommentModalOpen}
+        />
+      ) : null}
+      {isConfirmDeleteCommentModalOpen ? (
+        <DeleteCommentModal
+          comment={comment}
+          setIsConfirmDeleteCommentModalOpen={
+            setIsConfirmDeleteCommentModalOpen
+          }
         />
       ) : null}
     </>

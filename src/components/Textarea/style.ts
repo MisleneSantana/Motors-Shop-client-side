@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const TextareaStyle = styled.textarea`
   box-sizing: border-box;
-  height: 5rem;
+  height: 6.5625rem;
   width: 100%;
   padding: 0.75rem 1rem;
 

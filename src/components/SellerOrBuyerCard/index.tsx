@@ -16,7 +16,7 @@ export const SellerOrBuyerCard = () => {
   return (
     <SectionStyle>
       <DivUserAvatarStyle>
-        <p>{user ? defineInitialsName(user.name) : undefined}</p>
+        <p>{user ? defineInitialsName(user?.name) : undefined}</p>
       </DivUserAvatarStyle>
 
       <DivUsernameStyle>

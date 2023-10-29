@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 export const CommentsBoxStyle = styled.div`
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 
   padding: 1.75rem 1.75rem;
+  border: 1.5px solid ${({ theme }) => theme.colors.grey10};
+  background: ${({ theme }) => theme.colors.grey10};
 
   & > h2 {
     font-family: Lexend;
@@ -17,10 +18,8 @@ export const CommentsBoxStyle = styled.div`
   }
 
   & > ul {
-    border: 1px solid red;
-
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
   }
 `;

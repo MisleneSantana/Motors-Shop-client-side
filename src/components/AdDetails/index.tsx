@@ -10,7 +10,7 @@ import {
 import { CommentList } from '../CommentList';
 import { CreateComment } from '../Form/CreateComment';
 
-export const ProductDetails = () => {
+export const AdDetails = () => {
   const { singleAnnouncement } = useContext(AnnouncementContext);
 
   return (
@@ -49,7 +49,7 @@ export const ProductDetails = () => {
           <h3>Descrição</h3>
           <p>{singleAnnouncement?.description}</p>
         </ProductDescriptionStyle>
-        <CommentList/>
+        <CommentList />
         {singleAnnouncement ? (
           <CreateComment singleAnnouncement={singleAnnouncement} />
         ) : null}

@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 
 export const DivFormStyle = styled.div`
-  border: 1px solid red;
   padding: 1.75rem 1.75rem;
   display: flex;
   flex-direction: column;
 
+  border: 1.5px solid ${({ theme }) => theme.colors.grey10};
+  background: ${({ theme }) => theme.colors.grey10};
+
   & > form {
     padding: 0;
+    margin-bottom: 0rem;
+    margin-top: 1rem;
 
     & > textarea {
       height: 7rem;
@@ -47,7 +51,6 @@ export const BoxUserInfosStyle = styled.div`
 
 export const BoxReactionsStyle = styled.div`
   display: flex;
-  align-items: center;
   gap: 1rem;
 
   & > span {
@@ -55,6 +58,10 @@ export const BoxReactionsStyle = styled.div`
     border-radius: 0.25rem;
     background: ${({ theme }) => theme.colors.grey7};
     color: ${({ theme }) => theme.colors.grey3};
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     font-size: 0.75rem;
     font-weight: 500;

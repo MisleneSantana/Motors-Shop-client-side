@@ -234,6 +234,8 @@ export const AnnouncementProvider = ({
         return updateComment;
       });
 
+      await getComments(singleAnnouncement!.id);
+
       Toast({ message: 'Comentário atualizado com sucesso', successful: true });
     } catch {
       Toast({ message: 'Não foi possível concluir sua solicitação.' });
@@ -252,7 +254,9 @@ export const AnnouncementProvider = ({
         (comment) => comment.id !== commentId
       );
 
+      console.log((singleAnnouncement!.id), (commentId));
       setComments(listWithoutComment);
+      await getComments(singleAnnouncement!.id);
       Toast({ message: 'Comentário deletado com sucesso', successful: true });
     } catch (error) {
       Toast({ message: 'Não foi possível concluir sua solicitação.' });
@@ -266,12 +270,6 @@ export const AnnouncementProvider = ({
       await getAnnouncements();
     })();
   }, [announcements]);
-
-  useEffect(() => {
-    if (comments && singleAnnouncement && singleAnnouncement.id) {
-      getComments(singleAnnouncement!.id);
-    }
-  });
 
   return (
     <AnnouncementContext.Provider
@@ -319,4 +317,10 @@ export const AnnouncementProvider = ({
 //     ad.id === announcementId ? { ...announcement, ...data } : announcement
 //   );
 //   return updateAd;
+// });
+
+// useEffect(() => {
+//   if (singleAnnouncement && singleAnnouncement.id) {
+//     getComments(singleAnnouncement!.id);
+//   }
 // });

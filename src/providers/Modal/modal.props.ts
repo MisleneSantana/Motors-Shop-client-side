@@ -15,8 +15,4 @@ export interface IModalContext {
   >;
   isEditUserAddressModalOpen: boolean;
   setIsEditUserAddressModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isConfirmDeleteCommentModalOpen: boolean;
-  setIsConfirmDeleteCommentModalOpen: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
 }

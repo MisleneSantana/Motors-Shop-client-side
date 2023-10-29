@@ -17,7 +17,7 @@ export const BuyerDashboardMainStyle = styled.main`
   background-color: ${({ theme }) => theme.colors.grey8};
 `;
 
-export const SpanBackgroundStyle = styled.main`
+export const SpanBackgroundStyle = styled.div`
   display: flex;
 
   width: 100vw;

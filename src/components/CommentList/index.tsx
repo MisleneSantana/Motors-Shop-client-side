@@ -8,7 +8,7 @@ export const CommentList = () => {
 
   return (
     <>
-      {comments.length === 0 ? (
+      {comments?.length === 0 ? (
         <div>
           <p>Este anúncio não possui comentários.</p>
         </div>
@@ -16,10 +16,8 @@ export const CommentList = () => {
         <CommentsBoxStyle>
           <h2>Comentários</h2>
           <ul>
-            {comments?.map((comment) => {
-              return (
-                <CommentCard key={comment.id} comment={comment}/>
-              );
+            {comments?.map((comment, index) => {
+              return <CommentCard key={index} comment={comment} />;
             })}
           </ul>
         </CommentsBoxStyle>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const CommentCardStyle = styled.li`
-  border: 1px solid red;
+  // border: 1px solid red;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -61,7 +61,7 @@ export const BoxButtonsStyle = styled.div`
   button {
     display: flex;
     height: 38px;
-    padding: 12px 12px;
+    padding: 0.75rem 1.75rem;
     justify-content: center;
     align-items: center;
     border-radius: 0.25rem;
