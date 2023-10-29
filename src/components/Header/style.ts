@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const HeaderStyle = styled.header`
   border: 2px solid red;
-  width: 100%;
   // height: 80px;
   height: 8%;
 
@@ -38,12 +37,11 @@ export const NavBarStyle = styled.nav`
   gap: 1rem;
 
   margin-right: 2rem;
-  // width: 20%;
   border-left: 2px solid ${({ theme }) => theme.colors.grey6};
   background-color: ${({ theme }) => theme.colors.grey10};
 
   @media (max-width: 768px) {
-    width: 100%;
+    border-left: none;
   }
 
   & > .login__button {
@@ -53,6 +51,10 @@ export const NavBarStyle = styled.nav`
     font-weight: 600;
     background-color: ${({ theme }) => theme.colors.white};
     color: ${({ theme }) => theme.colors.grey2};
+
+    @media (max-width: 500px) {
+      display: none;
+    }
   }
 
   & > .register__button {
@@ -63,13 +65,24 @@ export const NavBarStyle = styled.nav`
     border: 2px solid ${({ theme }) => theme.colors.grey2};
     border-radius: 4px;
     background-color: ${({ theme }) => theme.colors.white};
+
+    @media (max-width: 500px) {
+      display: none;
+    }
   }
 
-  // &:hover {
-  //   background-color: ${({ theme }) => theme.colors.grey10};
-  //   // border: 2px solid ${({ theme }) => theme.colors.grey6};
-  //   color: ${({ theme }) => theme.colors.brand1};
-  // }
+  & > .navbar-mobile__button {
+    display: flex;
+
+    img {
+      width: 2rem;
+      height: 2.5rem;
+      background: transparent;
+    }
+    @media (min-width: 500px) {
+      display: none;
+    }
+  }
 
   & > .avatar-user__button {
     width: 32px;

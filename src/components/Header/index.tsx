@@ -6,10 +6,13 @@ import { DivStyle, HeaderStyle, NavBarStyle } from './style';
 import { ModalNavBar } from '../Modal/ModalNavBar';
 import { Button } from '../Button';
 import { UserContext } from '../../providers/User/UserContext';
+import navBar from '../../assets/icons/bars.svg';
+import { ModalNavBarMobile } from '../Modal/ModalNavBarMobile';
 
 export const Header = () => {
   const navigate = useNavigate();
   const [openModalNavBar, setOpenModalNavBar] = useState(false);
+  const [openModalNavBarMobile, setOpenModalNavBarMobile] = useState(false);
   const { user: userLogged } = useContext(AuthContext);
   const { defineInitialsName } = useContext(UserContext);
 
@@ -33,7 +36,7 @@ export const Header = () => {
       {!userLogged?.id ? (
         <NavBarStyle>
           <Button
-            text={'Fazer Login'}
+            text={'Login'}
             className='login__button'
             onClick={() => {
               navigate('/login');
@@ -46,6 +49,14 @@ export const Header = () => {
               navigate('/register');
             }}
           />
+          <button
+            className='navbar-mobile__button'
+            onClick={() => {
+              setOpenModalNavBarMobile(true);
+            }}
+          >
+            <img src={navBar} />
+          </button>
         </NavBarStyle>
       ) : (
         <NavBarStyle>
@@ -74,6 +85,11 @@ export const Header = () => {
           ) : null}
         </NavBarStyle>
       )}
+      {openModalNavBarMobile ? (
+        <ModalNavBarMobile
+          setOpenModalNavBarMobile={setOpenModalNavBarMobile}
+        />
+      ) : null}
     </HeaderStyle>
   );
 };

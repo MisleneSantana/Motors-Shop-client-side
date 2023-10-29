@@ -8,7 +8,7 @@ export const HomeDivStyle = styled.div`
 `;
 
 export const HomeMainStyle = styled.main`
-  border: 1px solid blue;
+  // border: 1px solid blue;
   width: 100vw;
   margin-top: 80px;
 
@@ -16,7 +16,7 @@ export const HomeMainStyle = styled.main`
   flex-direction: column;
   align-items: center;
 
-  background-color: ${({ theme }) => theme.colors.grey8};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const BoxBackgroundStyle = styled.div`
@@ -29,12 +29,12 @@ export const BoxBackgroundStyle = styled.div`
   gap: 1rem;
 
   width: 100vw;
-  height: 400px;
+  height: 34rem;
 
-  border-bottom: 2px solid rgba(222,226,230,1);
-  background-image: url(src/assets/images/capa_4.jpg);
+  border-bottom: 2px solid ${({ theme }) => theme.colors.brand1};
+  background-image: url(src/assets/images/capa_7.jpg);
   background-repeat: repeat;
-  background-size: auto;
+  background-size: cover;
   background-position: center;
 
   & > h1 {
@@ -43,7 +43,11 @@ export const BoxBackgroundStyle = styled.div`
     color: ${({ theme }) => theme.colors.white};
 
     strong {
-      color: ${({ theme }) => theme.colors.brand1};
+      color: ${({ theme }) => theme.colors.white};
+    }
+
+    @media (max-width: 768px) {
+      font-size: 2rem;
     }
   }
 
@@ -52,6 +56,14 @@ export const BoxBackgroundStyle = styled.div`
     font-weight: 700;
     color: ${({ theme }) => theme.colors.white};
     margin-bottom: 3rem;
+
+    @media (max-width: 425px) {
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 375px) {
+      font-size: 0.75rem;
+    }
   }
 `;
 

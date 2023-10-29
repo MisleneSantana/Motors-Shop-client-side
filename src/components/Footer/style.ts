@@ -16,8 +16,8 @@ export const FooterStyle = styled.footer`
   background-color: ${({ theme }) => theme.colors.grey0};
 
   > a {
-    width: 3.3125rem;
-    height: 3.125rem;
+    width: 2.8125rem;
+    height: 2.8125rem;
 
     display: flex;
     align-items: center;
@@ -29,6 +29,11 @@ export const FooterStyle = styled.footer`
     border-radius: 4px;
 
     scroll-behavior: smooth;
+
+    @media (max-width: 500px) {
+      width: 1.875rem;
+      height: 1.875rem;
+    }
   }
 
   @media (max-width: 768px) {
@@ -47,4 +52,8 @@ export const ImageStyle = styled.img`
 
 export const ParagraphStyle = styled.p`
   color: ${({ theme }) => theme.colors.white};
+
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
