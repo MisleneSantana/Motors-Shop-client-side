@@ -3,11 +3,11 @@ import { AuthContext } from '../../../providers/Auth/AuthContext';
 import { TCommentResponse } from '../../../interfaces/comment.interfaces';
 import { UserContext } from '../../../providers/User/UserContext';
 import { BoxButtonsStyle, CommentCardStyle, CommentOwnerStyle } from './style';
-import { Button } from '../../Button';
 import { commentDate } from './commentDate';
 import { EditComment } from '../../Form/EditComment';
 import { DeleteCommentModal } from '../../Modal/DeleteCommentModal';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+// import { useParams } from 'react-router-dom';
 
 interface ICommentProps {
   comment: TCommentResponse;
@@ -20,6 +20,10 @@ export const CommentCard = ({ comment }: ICommentProps) => {
     useState<boolean>(false);
   const { user } = useContext(AuthContext);
   const { defineInitialsName } = useContext(UserContext);
+
+  // const userLogged = localStorage.getItem('@user:id');
+  // const { id } = useParams();
+  // const userId = id;
 
   return (
     <>
@@ -37,17 +41,22 @@ export const CommentCard = ({ comment }: ICommentProps) => {
 
         {user && comment?.user?.id === user.id && (
           <BoxButtonsStyle>
-            <FaEdit
-              // text='Editar'
-              onClick={() => setIsEditCommentModalOpen(true)}
-            />
+            <FaEdit onClick={() => setIsEditCommentModalOpen(true)} />
             <FaTrash
               className='delete-comment__button'
-              // text='Excluir'
               onClick={() => setIsConfirmDeleteCommentModalOpen(true)}
             />
           </BoxButtonsStyle>
         )}
+
+        {/* {user && userId === userLogged && (
+          <BoxButtonsStyle>
+            <FaTrash
+              className='delete-comment__button'
+              onClick={() => setIsConfirmDeleteCommentModalOpen(true)}
+            />
+          </BoxButtonsStyle>
+        )} */}
       </CommentCardStyle>
       {isEditCommentModalOpen ? (
         <EditComment

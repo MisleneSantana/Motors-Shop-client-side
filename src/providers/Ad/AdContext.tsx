@@ -32,16 +32,16 @@ export const AnnouncementProvider = ({
   const [singleAnnouncement, setSingleAnnouncement] = useState<
     TAnnouncement | undefined
   >({} as TAnnouncement);
+
   const [sellerAnnouncements, setSellerAnnouncements] = useState<
-    TAnnouncement[]
+    TAnnouncementResponse[]
   >([]);
   const [comments, setComments] = useState<TCommentResponse[]>([]);
 
-  const { setLoading } = useContext(LoadingContext);
+  const { loading, setLoading } = useContext(LoadingContext);
   const { setIsSuccessModalOpen } = useContext(ModalContext);
 
   // 1. Leitura de todos os anúncios:
-
   const getAnnouncements = async () => {
     try {
       const { data } = await api.get<IPaginationAnnouncements>(
@@ -67,7 +67,6 @@ export const AnnouncementProvider = ({
 
       setAnnouncements((announcements) => [...announcements, data]);
       setIsSuccessModalOpen(true);
-
     } catch (error) {
       Toast({
         message: 'Não foi possível concluir sua solicitação.',
@@ -89,11 +88,13 @@ export const AnnouncementProvider = ({
     }
   };
 
+  // sellerId: string | undefined
   // 4. Buscar os anúncios de um anunciante:
-  const getAnnouncementsBySeller = async (sellerId: string | undefined) => {
+  const getAnnouncementsBySeller = async () => {
+    const userId = localStorage.getItem('@user:id');
     try {
       const response = await api
-        .get<TAnnouncementResponse[]>(`announcements/${sellerId}/seller`)
+        .get<TAnnouncementResponse[]>(`announcements/${userId}/seller`)
         .then((res) => {
           const data = res.data;
           setSellerAnnouncements(data);
@@ -268,6 +269,15 @@ export const AnnouncementProvider = ({
     })();
   }, [announcements]);
 
+  useEffect(() => {
+    const token = localStorage.getItem('@user:token');
+    (async () => {
+      if (token) {
+        await getAnnouncementsBySeller();
+      }
+    })();
+  }, [loading, sellerAnnouncements]);
+
   return (
     <AnnouncementContext.Provider
       value={{
@@ -293,31 +303,3 @@ export const AnnouncementProvider = ({
     </AnnouncementContext.Provider>
   );
 };
-
-// useEffect(() => {
-//   const getAnnouncements = async () => {
-//     try {
-//       const { data } = await api.get<IPaginationAnnouncements>(
-//         '/announcements'
-//       );
-//       setAdsPagination(data);
-//       setAnnouncements(data.data);
-//     } catch (error) {
-//       Toast({ message: 'Não foi possível concluir sua solicitação.' });
-//     }
-//   };
-//   getAnnouncements();
-// }, [loading]);
-
-// setAnnouncements((announcement) => {
-//   const updateAd = announcements.map((ad) =>
-//     ad.id === announcementId ? { ...announcement, ...data } : announcement
-//   );
-//   return updateAd;
-// });
-
-// useEffect(() => {
-//   if (singleAnnouncement && singleAnnouncement.id) {
-//     getComments(singleAnnouncement!.id);
-//   }
-// });

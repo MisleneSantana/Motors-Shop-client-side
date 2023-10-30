@@ -17,12 +17,10 @@ export interface IAnnouncementProviderValues {
   setAnnouncements: React.Dispatch<
     React.SetStateAction<TAnnouncementResponse[]>
   >;
-
-  // announcements: TAnnouncement[];
-  // setAnnouncements: React.Dispatch<React.SetStateAction<TAnnouncement[]>>;
-
   singleAnnouncement: TAnnouncement | undefined;
-  sellerAnnouncements: TAnnouncement[];
+
+  sellerAnnouncements: TAnnouncementResponse[];
+  
   getAnnouncements: () => Promise<void>;
   createAnnouncement: (formData: TAnnouncementRequest) => Promise<void>;
   getAnnouncement: (announcementId: string | undefined) => Promise<void>;
