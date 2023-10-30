@@ -7,8 +7,6 @@ interface IFormStyleProps {
 }
 
 export const FormStyle = styled.form<IFormStyleProps>`
-  // border: 1px solid blue;
-
   margin: 2rem 0;
 
   display: flex;
@@ -16,7 +14,6 @@ export const FormStyle = styled.form<IFormStyleProps>`
   justify-content: center;
   align-items: flex-start;
   height: max-content;
-  // width: 25.6875rem;
   padding: 2.75rem;
   background-color: ${({ theme }) => theme.colors.grey10};
   color: ${({ theme }) => theme.colors.grey0};
@@ -81,5 +78,9 @@ export const FormStyle = styled.form<IFormStyleProps>`
   & .update-comment__button:hover {
     background-color: ${({ theme }) => theme.colors.brand1};
     border: ${({ theme }) => theme.colors.brand1};
+  }
+
+  @media (max-width: 520px) {
+    padding: 1.75rem 1rem;
   }
 `;

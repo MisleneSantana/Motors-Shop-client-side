@@ -66,5 +66,13 @@ export const BoxReactionsStyle = styled.div`
     font-size: 0.75rem;
     font-weight: 500;
     line-height: 1.5rem;
+
+    @media (max-width: 768px) {
+      padding: 0.25rem;
+      border-radius: 2rem;
+    }
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;

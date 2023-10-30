@@ -37,7 +37,24 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
     <>
       <StyleAnnouncementCard>
         <StyleImageAd>
-          <img src={announcement?.cover_image_url} alt={announcement?.brand} />
+          {location === '/' || location === '/buyerHome' ? (
+            <Link
+              to='/product'
+              onClick={() => (
+                getAnnouncement(announcement.id), getComments(announcement.id)
+              )}
+            >
+              <img
+                src={announcement?.cover_image_url}
+                alt={announcement?.brand}
+              />
+            </Link>
+          ) : (
+            <img
+              src={announcement?.cover_image_url}
+              alt={announcement?.brand}
+            />
+          )}
         </StyleImageAd>
         <h4>
           {announcement?.brand} - {announcement?.model}
@@ -72,7 +89,7 @@ export const AnnouncementCard = ({ announcement }: IAnnouncementProps) => {
           user?.id === userId ? (
             <>
               <StyleAdButtons>
-                {user?.id === announcement.user.id ? (
+                {user?.id === announcement?.user?.id ? (
                   <Button
                     text=' Editar'
                     onClick={() => setIsEditOrDeleteAdsModalOpen(true)}

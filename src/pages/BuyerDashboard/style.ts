@@ -19,6 +19,7 @@ export const BuyerDashboardMainStyle = styled.main`
 
 export const SpanBackgroundStyle = styled.div`
   display: flex;
+  margin-top: 5rem;
 
   width: 100vw;
   height: 22.3125rem;

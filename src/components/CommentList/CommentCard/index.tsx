@@ -7,6 +7,7 @@ import { Button } from '../../Button';
 import { commentDate } from './commentDate';
 import { EditComment } from '../../Form/EditComment';
 import { DeleteCommentModal } from '../../Modal/DeleteCommentModal';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 interface ICommentProps {
   comment: TCommentResponse;
@@ -36,13 +37,13 @@ export const CommentCard = ({ comment }: ICommentProps) => {
 
         {user && comment?.user?.id === user.id && (
           <BoxButtonsStyle>
-            <Button
-              text='Editar'
+            <FaEdit
+              // text='Editar'
               onClick={() => setIsEditCommentModalOpen(true)}
             />
-            <Button
+            <FaTrash
               className='delete-comment__button'
-              text='Excluir'
+              // text='Excluir'
               onClick={() => setIsConfirmDeleteCommentModalOpen(true)}
             />
           </BoxButtonsStyle>

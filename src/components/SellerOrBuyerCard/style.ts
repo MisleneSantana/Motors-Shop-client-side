@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const SectionStyle = styled.section`
-  // border: 1px solid red;
-
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -21,7 +19,7 @@ export const SectionStyle = styled.section`
     font-size: 1rem;
     font-weight: 400;
     color: ${({ theme }) => theme.colors.grey2};
-    margin-top: 0.5rem;
+    line-height: 24px;
   }
 
   & > button {
@@ -34,11 +32,17 @@ export const SectionStyle = styled.section`
     color: ${({ theme }) => theme.colors.brand1};
     border-radius: 4px;
   }
+
+  @media (max-width: 500px) {
+    left: 5vw;
+
+    width: 90vw;
+  }
 `;
 
 export const DivUserAvatarStyle = styled.div`
-  height: 104px;
-  width: 104px;
+  height: 6.5rem;
+  width: 6.5rem;
 
   display: flex;
   align-items: center;
@@ -50,6 +54,11 @@ export const DivUserAvatarStyle = styled.div`
   background-color: ${({ theme }) => theme.colors.brand1};
   border: 1px solid ${({ theme }) => theme.colors.brand1};
   border-radius: 150px;
+
+  @media (max-width: 768px) {
+    width: 5.25rem;
+    height: 5.25rem;
+  }
 `;
 
 export const DivUsernameStyle = styled.div`
@@ -74,5 +83,11 @@ export const DivUsernameStyle = styled.div`
     background-color: ${({ theme }) => theme.colors.brand4};
     color: ${({ theme }) => theme.colors.brand1};
     border-radius: 4px;
+  }
+
+  @media (max-width: 400px) {
+    align-items: flex-start;
+    gap: 1rem;
+    flex-direction: column;
   }
 `;

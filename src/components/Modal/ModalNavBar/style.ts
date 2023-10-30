@@ -8,7 +8,7 @@ export const ModalNavBarStyle = styled.div`
   width: 100vw;
   height: 100vh;
 
-  top: 5.75rem;
+  top: 4.9rem;
   left: 0;
   align-items: flex-end;
 

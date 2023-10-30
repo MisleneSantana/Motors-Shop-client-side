@@ -1,21 +1,20 @@
 import styled from 'styled-components';
 
 export const AnnouncementsBoxStyle = styled.div`
-  border: 1px solid red;
-
   width: 80%;
-  padding: 1rem;
-
   margin-top: 10rem;
 
   & > h3 {
     font-family: Lexend;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 600;
+
+    @media (max-width: 500px) {
+      font-size: 1.125rem;
+    }
   }
 
   & > ul {
-    border: 1px solid red;
     margin: 1rem;
 
     display: grid;
@@ -44,11 +43,17 @@ export const AnnouncementsBoxStyle = styled.div`
         border-radius: 20px;
       }
     }
-  }
 
+    @media (max-width: 500px) {
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 
   @media (max-width: 500px) {
     width: 90%;
+    padding: 0;
   }
-
 `;

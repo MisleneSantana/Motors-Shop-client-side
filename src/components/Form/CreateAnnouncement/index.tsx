@@ -160,7 +160,7 @@ export const CreateAnnouncement = () => {
           <Input
             key={input}
             id={`images${input}`}
-            label={`${input}ª Imagem da Galeria`}
+            label={`${input}ª Imagem da galeria`}
             type='text'
             placeholder={'https://image.com'}
             {...register(`images.${index}.image_url`)}

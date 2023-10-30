@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const CommentCardStyle = styled.li`
-  // border: 1px solid red;
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -57,6 +56,7 @@ export const BoxButtonsStyle = styled.div`
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
+  align-items: center;
 
   button {
     display: flex;
@@ -70,10 +70,11 @@ export const BoxButtonsStyle = styled.div`
     color: rgba(33, 37, 41, 1);
   }
 
+  svg {
+    color: ${({ theme }) => theme.colors.grey3};
+  }
+
   .delete-comment__button {
-    border-radius: 4px;
-    border: 1.5px solid ${({ theme }) => theme.colors.feedbackAlert2};
-    background: ${({ theme }) => theme.colors.feedbackAlert2};
     color: ${({ theme }) => theme.colors.feedbackAlert1};
   }
 `;

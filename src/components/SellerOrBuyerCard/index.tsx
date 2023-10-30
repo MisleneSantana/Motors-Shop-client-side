@@ -9,7 +9,7 @@ export const SellerOrBuyerCard = () => {
   const { defineInitialsName } = useContext(UserContext);
   const { setIsCreateAdsModalOpen } = useContext(ModalContext);
 
-  const userFullName = user?.name;
+  const username = user?.name;
   user?.name &&
     user?.name[0].toUpperCase() + user?.name.substring(1).toLowerCase();
 
@@ -20,7 +20,7 @@ export const SellerOrBuyerCard = () => {
       </DivUserAvatarStyle>
 
       <DivUsernameStyle>
-        <p>{user ? userFullName : undefined}</p>
+        <p>{user ? username : undefined}</p>
         <span>
           {user
             ? user.account_type === 'seller'

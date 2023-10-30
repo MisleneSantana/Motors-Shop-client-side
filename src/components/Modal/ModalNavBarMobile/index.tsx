@@ -1,33 +1,33 @@
 import { Link } from 'react-router-dom';
-import { ModalNavBarMobileStyle } from './style';
+import { MenuMobileStyle } from './style';
 
-export const ModalNavBarMobile = ({
+export const MenuMobile = ({
   setOpenModalNavBarMobile,
 }: {
   setOpenModalNavBarMobile: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   return (
     <>
-      <ModalNavBarMobileStyle role='dialog'>
-        <div>
-          <Link
-            to={'/login'}
-            onClick={() => {
-              setOpenModalNavBarMobile(false);
-            }}
-          >
-            Login
-          </Link>
-          <Link
-            to={'/register'}
-            onClick={() => {
-              setOpenModalNavBarMobile(false);
-            }}
-          >
-            Cadastrar
-          </Link>
-        </div>
-      </ModalNavBarMobileStyle>
+      <MenuMobileStyle>
+        <Link
+          className='login-mobile__link'
+          to={'/login'}
+          onClick={() => {
+            setOpenModalNavBarMobile(false);
+          }}
+        >
+          Login
+        </Link>
+        <Link
+          className='register-mobile__link'
+          to={'/register'}
+          onClick={() => {
+            setOpenModalNavBarMobile(false);
+          }}
+        >
+          Cadastrar
+        </Link>
+      </MenuMobileStyle>
     </>
   );
 };

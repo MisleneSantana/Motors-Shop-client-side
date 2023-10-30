@@ -1,44 +1,43 @@
 import styled from 'styled-components';
-import { AnimationFadeIn } from '../../../styles/animation';
 
-export const ModalNavBarMobileStyle = styled.div`
+export const MenuMobileStyle = styled.div`
+  position: absolute;
+  backdrop-filter: blur(3px);
+  width: 100vw;
+  height: max-content;
+  padding: 1.75rem 0rem;
+  top: 28px;
+
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 
-  width: 100vw;
-  height: 100vh;
+  background-color: ${({ theme }) => theme.colors.white};
 
-  top: 5.75rem;
-  left: 0;
-  align-items: flex-end;
+  pointer-events: auto;
+  transform: translateY(50px);
 
-  position: fixed;
-  z-index: 999;
+  transition: 0.5s;
 
-  background: rgba(51, 51, 51, 0.5);
+  & .login-mobile__link {
+    width: 90%;
+    font-size: 16px;
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.grey2};
+  }
 
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 1rem;
-
-    width: 12.5rem;
-
-    animation: ${AnimationFadeIn} 1s ease 0s 1 alternate backwards;
-
-    padding: 1.5rem 1rem 1.5rem 2rem;
-    background: ${({ theme }) => theme.colors.grey9};
-    box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
+  & .register-mobile__link {
+    width: 90%;
+    padding: 12px 28px;
     border-radius: 4px;
+    border: 1.5px solid ${({ theme }) => theme.colors.grey4};
 
-    & > a {
-      font_size: 1rem;
-      font-weight: 400;
-      line-height: 1.75rem;
-      color: ${({ theme }) => theme.colors.grey2};
-      background-color: transparent;
-    }
+    display: flex;
+    justify-content: center;
+
+    color: ${({ theme }) => theme.colors.grey0};
+    font-weight: 600;
   }
 `;

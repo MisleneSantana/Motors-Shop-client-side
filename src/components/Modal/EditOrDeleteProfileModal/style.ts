@@ -9,7 +9,6 @@ export const DivModalStyle = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
 
-  // position: absolute;
   position: fixed;
   inset: 0;
 
@@ -21,6 +20,10 @@ export const DivModalStyle = styled.div`
     margin: 0 auto;
     top: 80px;
     width: 32.5rem;
+
+    @media (max-width: 520px) {
+      width: 100%;
+    }
 
     border-radius: 8px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
@@ -64,7 +67,6 @@ export const DivModalStyle = styled.div`
         color: ${({ theme }) => theme.colors.grey2};
       }
 
-
       & > .delete-profile__button {
         padding: 0.75rem 0.875rem;
         border-radius: 4px;
@@ -79,6 +81,10 @@ export const DivModalStyle = styled.div`
         border: 1.5px solid ${({ theme }) => theme.colors.brand1};
         background: ${({ theme }) => theme.colors.brand1};
         color: ${({ theme }) => theme.colors.white};
+      }
+
+      @media (max-width: 425px) {
+        flex-direction: column;
       }
     }
   }

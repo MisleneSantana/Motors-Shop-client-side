@@ -9,18 +9,25 @@ export const DivModalStyle = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
 
-  // position: absolute;
   position: fixed;
   inset: 0;
 
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.5);
 
+  @media (max-width: 520px) {
+    height: auto;
+  }
+
   & > form {
     position: relative;
     margin: 0 auto;
     top: 80px;
     width: 32.5rem;
+
+    @media (max-width: 520px) {
+      width: 100%;
+    }
 
     border-radius: 8px;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
@@ -53,6 +60,7 @@ export const DivModalStyle = styled.div`
       gap: 1rem;
       width: 100%;
       justify-content: flex-end;
+      align-items: center;
       margin-top: 1rem;
 
       & > .cancel__button,
@@ -67,6 +75,13 @@ export const DivModalStyle = styled.div`
 
       & > .delete__button {
         width: 50%;
+
+        @media (max-width: 375px) {
+          display: inline-flex;
+          align-items: center;
+
+          font-size: 0.8125rem;
+        }
       }
 
       & > .create-ad__button,

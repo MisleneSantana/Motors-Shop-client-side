@@ -5,6 +5,11 @@ export const SectionProductDetailsStyle = styled.section`
   flex-direction: column;
   gap: 1rem;
   width: 50vw;
+
+  @media (max-width: 700px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 export const ProductCoverImgStyle = styled.div`
@@ -19,6 +24,7 @@ export const ProductCoverImgStyle = styled.div`
     width: 18.75rem;
     height: 15.75rem;
     object-fit: contain;
+    padding: 1rem;
   }
 `;
 
@@ -28,7 +34,6 @@ export const BoxAdInfosStyle = styled.div`
   gap: 1rem;
   padding: 1.75rem 1.75rem;
   border-radius: 4px;
-  border: 1px solid red;
   border: 1.5px solid ${({ theme }) => theme.colors.grey10};
   background: ${({ theme }) => theme.colors.grey10};
 
@@ -56,15 +61,32 @@ export const BoxAdInfosStyle = styled.div`
         background: ${({ theme }) => theme.colors.brand4};
         color: ${({ theme }) => theme.colors.brand1};
       }
+
+      @media (max-width: 768px) {
+        font-size: 12px;
+      }
+
+      @media (max-width: 320px) {
+        font-size: 12px;
+      }
     }
 
     > p {
       color: ${({ theme }) => theme.colors.grey1};
       font-weight: 500;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+      }
+
+      @media (max-width: 320px) {
+        font-size: 12px;
+      }
     }
   }
 
   & > button {
+    cursor: no-drop;
     display: flex;
     align-items: center;
 
@@ -80,8 +102,6 @@ export const BoxAdInfosStyle = styled.div`
 `;
 
 export const ProductDescriptionStyle = styled.div`
-  border: 1px solid red;
-
   display: flex;
   flex-direction: column;
   border-radius: 4px;

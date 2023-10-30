@@ -15,7 +15,7 @@ export const DivModalStyle = styled.div`
   & > div {
     width: 100%;
     max-width: 32.5rem;
-    max-height: 17.9375rem;
+    height: max-content;
 
     display: flex;
     flex-direction: column;
@@ -32,10 +32,16 @@ export const DivModalStyle = styled.div`
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.2);
 
+    @media (max-width: 520px) {
+      width: auto;
+      margin: 5rem 0;
+    }
+
     & > nav {
       display: flex;
       justify-content: space-between;
       margin-bottom: 2rem;
+      background-color: transparent;
 
       > h3 {
         font-family: 'Lexend';
@@ -50,34 +56,11 @@ export const DivModalStyle = styled.div`
       }
     }
 
-    & > h3 {
-      font-family: 'Lexend';
+    img {
+      height: 11.25rem;
+      border-radius: 4px;
+      background: ${({ theme }) => theme.colors.grey7};
+      object-fit: contain;
     }
-
-    & > p {
-      color: ${({ theme }) => theme.colors.grey2};
-    }
-
-    @media(max-width:500px){
-      width: auto;
-    }
-  }
-`;
-
-export const LinkModalStyle = styled.div`
-  width: max-content;
-  padding: 0.625rem 1.25rem;
-  margin-bottom: 1rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: ${({ theme }) => theme.colors.brand1};
-  border: 1.5px solid ${({ theme }) => theme.colors.brand1};
-  border-radius: 4px;
-
-  & > a {
-    color: ${({ theme }) => theme.colors.white};
   }
 `;

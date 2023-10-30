@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AnnouncementContext } from '../../providers/Ad/AdContext';
 import { Button } from '../Button';
 import {
@@ -9,8 +9,10 @@ import {
 } from './style';
 import { CommentList } from '../CommentList';
 import { CreateComment } from '../Form/CreateComment';
+import { ModalCoverImg } from '../Modal/ModalCoverImg';
 
 export const AdDetails = () => {
+  const [isOpenCoverImg, setIsOpenCoverImg] = useState<boolean>(false);
   const { singleAnnouncement } = useContext(AnnouncementContext);
 
   return (
@@ -20,6 +22,7 @@ export const AdDetails = () => {
           <img
             src={singleAnnouncement?.cover_image_url}
             alt={singleAnnouncement?.brand}
+            onClick={() => setIsOpenCoverImg(true)}
           />
         </ProductCoverImgStyle>
         <BoxAdInfosStyle>
@@ -43,15 +46,23 @@ export const AdDetails = () => {
               })}
             </p>
           </div>
-          <Button text='Comprar' disabled={true} />
+          <Button className='disabled__button' text='Comprar' disabled={true} />
         </BoxAdInfosStyle>
         <ProductDescriptionStyle>
           <h3>Descrição</h3>
           <p>{singleAnnouncement?.description}</p>
         </ProductDescriptionStyle>
         <CommentList />
+
         {singleAnnouncement ? (
           <CreateComment singleAnnouncement={singleAnnouncement} />
+        ) : null}
+
+        {isOpenCoverImg ? (
+          <ModalCoverImg
+            cover_img={singleAnnouncement?.cover_image_url}
+            setIsOpenCoverImg={setIsOpenCoverImg}
+          />
         ) : null}
       </SectionProductDetailsStyle>
     </>

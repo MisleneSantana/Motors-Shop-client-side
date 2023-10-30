@@ -7,6 +7,7 @@ import { SellerDashboard } from '../pages/SellerDashboard';
 import { BuyerDashboard } from '../pages/BuyerDashboard';
 import { ResetPassword } from '../pages/ResetPassword';
 import { Ad } from '../pages/Ad';
+import { RoutesProtected } from '../components/RoutesProtected';
 
 export const RoutesMain = () => {
   return (
@@ -16,11 +17,11 @@ export const RoutesMain = () => {
       <Route path='/register' element={<Register />}></Route>
       <Route path='/resetPassword' element={<ResetPassword />}></Route>
 
-      {/* <Route element={<RoutesProtected />}> */}
-      <Route path='/buyerHome' element={<BuyerDashboard />} />
-      <Route path='/sellerHome' element={<SellerDashboard />} />
-      <Route path='/product' element={<Ad />} />
-      {/* </Route> */}
+      <Route element={<RoutesProtected />}>
+        <Route path='/buyerHome' element={<BuyerDashboard />} />
+        <Route path='/sellerHome' element={<SellerDashboard />} />
+        <Route path='/product' element={<Ad />} />
+      </Route>
 
       <Route path='*' element={<NotFound />}></Route>
     </Routes>

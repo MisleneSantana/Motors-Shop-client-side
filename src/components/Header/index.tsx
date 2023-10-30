@@ -2,12 +2,17 @@ import logo from '../../assets/icons/logo.svg';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../providers/Auth/AuthContext';
-import { DivStyle, HeaderStyle, NavBarStyle } from './style';
+import {
+  BoxHeaderItemsStyle,
+  DivStyle,
+  HeaderStyle,
+  NavBarStyle,
+} from './style';
 import { ModalNavBar } from '../Modal/ModalNavBar';
 import { Button } from '../Button';
 import { UserContext } from '../../providers/User/UserContext';
-import navBar from '../../assets/icons/bars.svg';
-import { ModalNavBarMobile } from '../Modal/ModalNavBarMobile';
+import { MenuMobile } from '../Modal/ModalNavBarMobile';
+import { FiAlignJustify } from 'react-icons/fi';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -30,65 +35,69 @@ export const Header = () => {
 
   return (
     <HeaderStyle>
-      <DivStyle>
-        <img src={logo} alt='logo' />
-      </DivStyle>
-      {!userLogged?.id ? (
-        <NavBarStyle>
-          <Button
-            text={'Login'}
-            className='login__button'
+      <BoxHeaderItemsStyle>
+        <DivStyle>
+          <img
+            src={logo}
+            alt='logo'
             onClick={() => {
-              navigate('/login');
+              setOpenModalNavBarMobile(false);
             }}
           />
-          <Button
-            text={'Cadastrar'}
-            className='register__button'
-            onClick={() => {
-              navigate('/register');
-            }}
-          />
-          <button
-            className='navbar-mobile__button'
-            onClick={() => {
-              setOpenModalNavBarMobile(true);
-            }}
-          >
-            <img src={navBar} />
-          </button>
-        </NavBarStyle>
-      ) : (
-        <NavBarStyle>
-          {userLogged ? (
+        </DivStyle>
+        {!userLogged?.id ? (
+          <NavBarStyle>
             <Button
-              text={defineInitialsName(userLogged?.name)}
-              className='avatar-user__button'
+              text={'Login'}
+              className='login__button'
               onClick={() => {
-                setOpenModalNavBar(false);
+                navigate('/login');
               }}
             />
-          ) : undefined}
-
-          {userLogged ? (
             <Button
-              text={formatUserName(userLogged?.name)}
-              className='username__button'
+              text={'Cadastrar'}
+              className='register__button'
               onClick={() => {
-                setOpenModalNavBar(true);
+                navigate('/register');
               }}
             />
-          ) : undefined}
+            <FiAlignJustify
+              className='navbar-mobile__button'
+              onClick={() => {
+                setOpenModalNavBarMobile(true);
+              }}
+            ></FiAlignJustify>
+          </NavBarStyle>
+        ) : (
+          <NavBarStyle>
+            {userLogged ? (
+              <Button
+                text={defineInitialsName(userLogged?.name)}
+                className='avatar-user__button'
+                onClick={() => {
+                  setOpenModalNavBar(false);
+                }}
+              />
+            ) : undefined}
 
-          {openModalNavBar ? (
-            <ModalNavBar setOpenModalNavBar={setOpenModalNavBar} />
-          ) : null}
-        </NavBarStyle>
-      )}
+            {userLogged ? (
+              <Button
+                text={formatUserName(userLogged?.name)}
+                className='username__button'
+                onClick={() => {
+                  setOpenModalNavBar(true);
+                }}
+              />
+            ) : undefined}
+
+            {openModalNavBar ? (
+              <ModalNavBar setOpenModalNavBar={setOpenModalNavBar} />
+            ) : null}
+          </NavBarStyle>
+        )}
+      </BoxHeaderItemsStyle>
       {openModalNavBarMobile ? (
-        <ModalNavBarMobile
-          setOpenModalNavBarMobile={setOpenModalNavBarMobile}
-        />
+        <MenuMobile setOpenModalNavBarMobile={setOpenModalNavBarMobile} />
       ) : null}
     </HeaderStyle>
   );

@@ -166,6 +166,7 @@ export const EditOrDeleteAnnouncement = ({
           />
         </div>
 
+        {/* -> Será implementado */}
         {/* <>
           <StyledTexts tag='h3' $fontSize='heading_500_16' className='form__h3'>
             Publicado
@@ -202,7 +203,7 @@ export const EditOrDeleteAnnouncement = ({
           <Input
             key={input}
             id={`images${input}`}
-            label={`${input}ª Imagem da Galeria`}
+            label={`${input}ª Imagem da galeria`}
             type='text'
             placeholder={announcement.images[index].image_url}
             {...register(`images.${index}.image_url`)}

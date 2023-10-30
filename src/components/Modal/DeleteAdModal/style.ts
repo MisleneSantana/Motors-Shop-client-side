@@ -81,8 +81,20 @@ export const DivModalStyle = styled.div`
         border: 1.5px solid ${({ theme }) => theme.colors.feedbackAlert2};
         background: ${({ theme }) => theme.colors.feedbackAlert2};
         color: ${({ theme }) => theme.colors.feedbackAlert1};
-        font-size: 600;
+        font-weight: 600;
+        font-size: 0.875rem;
+
+        @media (max-width: 500px) {
+          display: inline-flex;
+          align-items: center;
+          font-size: 0.8125rem;
+        }
       }
+    }
+
+    @media (max-width: 520px) {
+      width: auto;
+      display: inline-block;
     }
   }
 `;

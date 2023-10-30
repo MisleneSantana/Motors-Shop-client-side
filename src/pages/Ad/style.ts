@@ -12,7 +12,6 @@ export const AdMainStyle = styled.main`
 
 export const SectionStyle = styled.section`
   width: 70%;
-  // padding: 2rem 0;
 
   display: flex;
   gap: 1rem;
@@ -22,4 +21,13 @@ export const SectionStyle = styled.section`
 
   position: relative;
   top: -218px;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
+  @media (max-width: 700px) {
+    width: 90%;
+    flex-direction: column;
+  }
 `;

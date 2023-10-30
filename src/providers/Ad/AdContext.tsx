@@ -68,12 +68,10 @@ export const AnnouncementProvider = ({
       setAnnouncements((announcements) => [...announcements, data]);
       setIsSuccessModalOpen(true);
 
-      // await getAnnouncements();
     } catch (error) {
       Toast({
         message: 'Não foi possível concluir sua solicitação.',
       });
-      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -254,7 +252,6 @@ export const AnnouncementProvider = ({
         (comment) => comment.id !== commentId
       );
 
-      console.log((singleAnnouncement!.id), (commentId));
       setComments(listWithoutComment);
       await getComments(singleAnnouncement!.id);
       Toast({ message: 'Comentário deletado com sucesso', successful: true });

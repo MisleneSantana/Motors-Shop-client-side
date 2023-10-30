@@ -8,7 +8,6 @@ export const HomeDivStyle = styled.div`
 `;
 
 export const HomeMainStyle = styled.main`
-  // border: 1px solid blue;
   width: 100vw;
   margin-top: 80px;
 
@@ -22,7 +21,6 @@ export const HomeMainStyle = styled.main`
 export const BoxBackgroundStyle = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
   color: ${({ theme }) => theme.colors.white};
   align-items: center;
   justify-content: center;
@@ -57,11 +55,19 @@ export const BoxBackgroundStyle = styled.div`
     color: ${({ theme }) => theme.colors.white};
     margin-bottom: 3rem;
 
-    @media (max-width: 425px) {
+    @media (max-width: 580px) {
+      font-size: 1.125rem;
+    }
+
+    @media (max-width: 450px) {
+      font-size: 1rem;
+    }
+
+    @media (max-width: 400px) {
       font-size: 0.875rem;
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: 350px) {
       font-size: 0.75rem;
     }
   }

@@ -2,28 +2,37 @@ import { z } from 'zod';
 
 export const registerValidator = z
   .object({
-    name: z
-      .string()
-      .nonempty({ message: 'Campo obrigatório' }),
-      // .transform((name) => {
-      //   return name
-      //     .trim()
-      //     .split('')
-      //     .map((word) =>
-      //       word[0].toUpperCase().concat(word.substring(1)).toLowerCase()
-      //     )
-      //     .join('');
-      // }),
+    name: z.string().nonempty({ message: 'Campo obrigatório' }),
     email: z
       .string()
       .nonempty({ message: 'Campo obrigatório' })
       .email('E-mail inválido'),
     cpf: z.string().nonempty({ message: 'Campo obrigatório' }),
-    phone_number: z.string().nonempty({ message: 'Campo obrigatório' }),
+    phone_number: z
+      .string()
+      .nonempty({ message: 'Campo obrigatório' })
+      .transform((data) => {
+        return data
+          .replace('.', '')
+          .replace('-', '')
+          .replace('(', '')
+          .replace(')', '')
+          .trim();
+      }),
     birth_date: z.string().nonempty({ message: 'Campo obrigatório' }),
     description: z.string().optional(),
     address: z.object({
-      cep: z.string().nonempty({ message: 'Campo obrigatório' }),
+      cep: z
+        .string()
+        .nonempty({ message: 'Campo obrigatório' })
+        .transform((data) => {
+          return data
+            .replace('.', '')
+            .replace('-', '')
+            .replace('(', '')
+            .replace(')', '')
+            .trim();
+        }),
       state: z.string().nonempty({ message: 'Campo obrigatório' }),
       city: z.string().nonempty({ message: 'Campo obrigatório' }),
       street: z.string().nonempty({ message: 'Campo obrigatório' }),
@@ -63,12 +72,32 @@ export const registerRequestValidator = z.object({
     .email('E-mail inválido')
     .nonempty({ message: 'Campo obrigatório' }),
   cpf: z.string().nonempty({ message: 'Campo obrigatório' }),
-  phone_number: z.string().nonempty({ message: 'Campo obrigatório' }),
+  phone_number: z
+    .string()
+    .nonempty({ message: 'Campo obrigatório' })
+    .transform((data) => {
+      return data
+        .replace('.', '')
+        .replace('-', '')
+        .replace('(', '')
+        .replace(')', '')
+        .trim();
+    }),
   birth_date: z.string().nonempty({ message: 'Campo obrigatório' }),
   description: z.string().optional(),
   address: z.object({
-    cep: z.string().nonempty({ message: 'Campo obrigatório' }),
-    state: z.string().nonempty({ message: 'Campo obrigatório' }),
+    cep: z
+      .string()
+      .nonempty({ message: 'Campo obrigatório' })
+      .transform((data) => {
+        return data
+          .replace('.', '')
+          .replace('-', '')
+          .replace('(', '')
+          .replace(')', '')
+          .trim();
+      }),
+    state: z.string().nonempty({ message: 'Campo obrigatório. Ex: SP' }),
     city: z.string().nonempty({ message: 'Campo obrigatório' }),
     street: z.string().nonempty({ message: 'Campo obrigatório' }),
     number: z.string().nonempty({ message: 'Campo obrigatório' }),
@@ -79,7 +108,5 @@ export const registerRequestValidator = z.object({
 });
 
 export type TRegisterValidator = z.infer<typeof registerValidator>;
-export type TRegisterReqValidator = z.infer<
-  typeof registerRequestValidator
->;
+export type TRegisterReqValidator = z.infer<typeof registerRequestValidator>;
 export const editUserSchema = registerRequestValidator.partial();

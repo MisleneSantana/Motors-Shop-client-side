@@ -31,6 +31,12 @@ export const StyleImageAd = styled.div`
 
   background: ${({ theme }) => theme.colors.grey7};
 
+  & > a > img {
+    width: 16.375rem;
+    height: 9.3925rem;
+    object-fit: contain;
+  }
+
   & > img {
     width: 16.375rem;
     height: 9.3925rem;
@@ -58,6 +64,10 @@ export const StyleInfosAd = styled.div`
   & > p {
     color: ${({ theme }) => theme.colors.grey1};
     font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
   }
 `;
 

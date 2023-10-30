@@ -10,8 +10,6 @@ import { TUserUpdate } from '../../../interfaces/user.interfaces';
 import { ModelForm } from '../ModelForm';
 import { StyledTexts } from '../../../styles/typography';
 import { Button } from '../../Button';
-// import { userAddressUpdateSchema } from '../../../schemas/address.schema';
-// import { userUpdateSchema } from '../../../schemas/user.schema';
 import { editUserSchema } from '../RegisterForm/register.validator';
 
 export const EditAddress = () => {

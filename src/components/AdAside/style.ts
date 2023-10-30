@@ -5,6 +5,11 @@ export const AdAsideStyle = styled.aside`
   flex-direction: column;
   gap: 1rem;
   width: 50vw;
+
+  @media (max-width: 700px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 export const BoxAdImages = styled.div`
@@ -31,4 +36,5 @@ export const BoxListGalleryImgs = styled.ul`
   justify-content: start;
   gap: 1rem;
   margin-top: 2rem;
+
 `;

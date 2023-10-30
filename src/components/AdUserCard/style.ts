@@ -25,6 +25,11 @@ export const BoxAdUserCardStyle = styled.div`
 
     background: ${({ theme }) => theme.colors.brand1};
     border-radius: 150px;
+
+    @media (max-width: 768px) {
+      width: 5.25rem;
+      height: 5.25rem;
+    }
   }
 
   & > .username__p {
