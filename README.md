@@ -1,27 +1,49 @@
-# React + TypeScript + Vite
+# Motors Shop API (Front End)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### O front-end da API foi desenvolvido com o intuito de criar uma interface de-commerce para venda e compra de carros.
 
-Currently, two official plugins are available:
+## 1. Visão Geral
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Um pouco das tecnologias, bibliotecas e ferramentas utilizadas:
 
-## Expanding the ESLint configuration
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [react-hook-form](https://react-hook-form.com/)
+- [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+- [styled-components](https://styled-components.com/)
+- [@hookform/resolvers](https://www.npmjs.com/package/@hookform/resolvers)
+- [react-icons](https://www.npmjs.com/package/react-icons?activeTab=dependencies)
+- [zod](https://zod.dev/)
+- [react-toastify](https://www.npmjs.com/package/react-toastify)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 2. Instalação
 
-- Configure the top-level `parserOptions` property like this:
+Clone o projeto em sua máquina e instale as dependências do projeto com o comando:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+# Instalação para yarn
+yarn
+
+# Instalação para npm
+npm i
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 3. Inicializar o servidor
+
+Rode o servidor com o seguinte comando:
+
+```bash
+# caso tenha instalado yarn
+yarn dev
+
+# caso tenha instalado npm
+npm run dev
+```
+
+# 4. Rota para documentação (back-end)
+
+Após conectar-se ao banco de dados (back-end) e rodar o servidor (back-end e front-end), consulte a documentação completa da API em:
+
+http://localhost:3000/api-docs/
+
+# 5. Envio de e-mail com recuperação de senha (ainda não está funcional no front-end), e será implementado em breve, bem como a page NOt FOUND.
