@@ -7,23 +7,19 @@ import { commentDate } from './commentDate';
 import { EditComment } from '../../Form/EditComment';
 import { DeleteCommentModal } from '../../Modal/DeleteCommentModal';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-// import { useParams } from 'react-router-dom';
 
 interface ICommentProps {
   comment: TCommentResponse;
 }
 
 export const CommentCard = ({ comment }: ICommentProps) => {
+  const userLogged = localStorage.getItem('@user:id');
   const [isEditCommentModalOpen, setIsEditCommentModalOpen] =
     useState<boolean>(false);
   const [isConfirmDeleteCommentModalOpen, setIsConfirmDeleteCommentModalOpen] =
     useState<boolean>(false);
   const { user } = useContext(AuthContext);
   const { defineInitialsName } = useContext(UserContext);
-
-  // const userLogged = localStorage.getItem('@user:id');
-  // const { id } = useParams();
-  // const userId = id;
 
   return (
     <>
@@ -39,7 +35,7 @@ export const CommentCard = ({ comment }: ICommentProps) => {
 
         <p className='comment__p'>{comment?.comment}</p>
 
-        {user && comment?.user?.id === user.id && (
+        {user && comment?.user?.id === user.id ? (
           <BoxButtonsStyle>
             <FaEdit onClick={() => setIsEditCommentModalOpen(true)} />
             <FaTrash
@@ -47,16 +43,18 @@ export const CommentCard = ({ comment }: ICommentProps) => {
               onClick={() => setIsConfirmDeleteCommentModalOpen(true)}
             />
           </BoxButtonsStyle>
+        ) : (
+          <>
+            {user && user?.id === userLogged && (
+              <BoxButtonsStyle>
+                <FaTrash
+                  className='delete-comment__button'
+                  onClick={() => setIsConfirmDeleteCommentModalOpen(true)}
+                />
+              </BoxButtonsStyle>
+            )}
+          </>
         )}
-
-        {/* {user && userId === userLogged && (
-          <BoxButtonsStyle>
-            <FaTrash
-              className='delete-comment__button'
-              onClick={() => setIsConfirmDeleteCommentModalOpen(true)}
-            />
-          </BoxButtonsStyle>
-        )} */}
       </CommentCardStyle>
       {isEditCommentModalOpen ? (
         <EditComment

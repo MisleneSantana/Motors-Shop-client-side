@@ -20,9 +20,9 @@ export const RoutesMain = () => {
       <Route element={<RoutesProtected />}>
         <Route path='/buyerHome' element={<BuyerDashboard />} />
         <Route path='/sellerHome' element={<SellerDashboard />} />
-        <Route path='/product' element={<Ad />} />
       </Route>
 
+      <Route path='/product' element={<Ad />} />
       <Route path='*' element={<NotFound />}></Route>
     </Routes>
   );

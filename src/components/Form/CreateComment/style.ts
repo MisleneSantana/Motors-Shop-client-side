@@ -27,6 +27,13 @@ export const DivFormStyle = styled.div`
       align-items: center;
     }
   }
+
+  p {
+    color: rgba(73, 80, 87, 1);
+    font-family: Lexend;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
 `;
 
 export const BoxUserInfosStyle = styled.div`

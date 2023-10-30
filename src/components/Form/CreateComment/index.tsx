@@ -20,6 +20,7 @@ export interface ISingleAnnouncementProps {
 export const CreateComment = ({
   singleAnnouncement,
 }: ISingleAnnouncementProps) => {
+  const userToken = localStorage.getItem('@user:token');
   const { user } = useContext(AuthContext);
   const { defineInitialsName } = useContext(UserContext);
   const { loading } = useContext(LoadingContext);
@@ -39,14 +40,14 @@ export const CreateComment = ({
 
   return (
     <DivFormStyle>
-      {user ? (
+      {user && userToken ? (
         <BoxUserInfosStyle>
           <span>{`${defineInitialsName(user?.name)}`}</span>
           <p>{user.name}</p>
         </BoxUserInfosStyle>
       ) : null}
 
-      {user ? (
+      {user && userToken ? (
         <ModelForm titleForm='' onSubmit={handleSubmit(submit)}>
           <div className='content__textarea'>
             <TextareaStyle
@@ -67,7 +68,7 @@ export const CreateComment = ({
         <p>Para realizar um comentário é necessário estar logado.</p>
       )}
 
-      {user ? (
+      {user && userToken ? (
         <BoxReactionsStyle>
           <span>Gostei muito!</span>
           <span>Incrível!</span>

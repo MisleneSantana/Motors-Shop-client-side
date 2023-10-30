@@ -23,5 +23,10 @@ export const SpanBackgroundStyle = styled.div`
 
   width: 100vw;
   height: 22.3125rem;
+  // height: 27.3125rem;
   background-color: ${({ theme }) => theme.colors.brand1};
+
+  @media (max-width: 500px) {
+    height: 22.3125rem;
+  }
 `;

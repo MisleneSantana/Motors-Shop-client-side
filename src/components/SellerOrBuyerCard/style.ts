@@ -7,6 +7,7 @@ export const SectionStyle = styled.section`
 
   position: absolute;
   top: 155px;
+  // top: 230px;
   left: 20vw;
 
   width: 60vw;
@@ -35,6 +36,7 @@ export const SectionStyle = styled.section`
 
   @media (max-width: 500px) {
     left: 5vw;
+    top: 155px;
 
     width: 90vw;
   }
