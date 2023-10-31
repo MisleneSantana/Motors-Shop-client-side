@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const AnnouncementsBoxStyle = styled.div`
   width: 80%;
   margin: 3.5rem auto;
-  border: 1px solid red;
 
   display: flex;
   flex-direction: column;
@@ -16,7 +15,6 @@ export const AnnouncementsBoxStyle = styled.div`
     font-weight: 600;
     display: flex;
     width: 100%;
-    border: 1px solid red;
 
     @media (max-width: 500px) {
       font-size: 1.125rem;
