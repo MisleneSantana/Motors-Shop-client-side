@@ -14,5 +14,14 @@ export const CardGalleryImgStyle = styled.li`
     width: 5.9375rem;
     height: 3.4375rem;
     object-fit: contain;
+
+    @media (max-width: 320px) {
+      width: 85px;
+      height: 45px;
+    }
+  }
+
+  @media (max-width: 320px) {
+    width: 5.625rem;
   }
 `;

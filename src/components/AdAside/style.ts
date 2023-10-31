@@ -36,4 +36,9 @@ export const BoxListGalleryImgs = styled.ul`
   justify-content: start;
   gap: 1rem;
   margin-top: 2rem;
+
+  @media (max-width: 320px) {
+    grid-template-columns: repeat(auto-fit, 5.625rem);
+    grid-template-rows: repeat(auto-fit, 5.625rem);
+  }
 `;
