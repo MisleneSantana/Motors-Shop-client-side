@@ -29,11 +29,12 @@ export const BoxBackgroundStyle = styled.div`
   width: 100vw;
   height: 34rem;
 
-  border-bottom: 2px solid ${({ theme }) => theme.colors.brand1};
+  box-shadow: 0 5px 15px rgba(0,0,0,.2);
   background-image: url(src/assets/images/capa_7.jpg);
   background-repeat: repeat;
   background-size: cover;
   background-position: center;
+  opacity: 92%;
 
   & > h1 {
     font-size: 44px;
