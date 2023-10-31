@@ -11,7 +11,6 @@ export const SellerDashboardMainStyle = styled.main`
   width: 100vw;
   align-items: center;
 
-
   display: flex;
   flex-direction: column;
   align-items: center;

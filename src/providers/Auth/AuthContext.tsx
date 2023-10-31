@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     setLoading(false);
   }, []);
 
-  // 1. Login (entrar)
+  // 1. Login
   const login = async (formData: TUserLogin) => {
     try {
       setLoading(true);

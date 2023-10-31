@@ -36,5 +36,4 @@ export const BoxListGalleryImgs = styled.ul`
   justify-content: start;
   gap: 1rem;
   margin-top: 2rem;
-
 `;

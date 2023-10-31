@@ -88,7 +88,6 @@ export const AnnouncementProvider = ({
     }
   };
 
-  // sellerId: string | undefined
   // 4. Buscar os anúncios de um anunciante:
   const getAnnouncementsBySeller = async () => {
     const userId = localStorage.getItem('@user:id');

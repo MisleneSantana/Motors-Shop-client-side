@@ -13,7 +13,9 @@ export type TAnnouncementRequest = z.infer<typeof announcementRequestSchema>;
 export type TAnnouncementResponse = z.infer<typeof announcementResponseSchema>;
 export type TAnnouncementRead = z.infer<typeof announcementReadSchema>;
 export type TAnnouncementUpdate = z.infer<typeof announcementUpdate>;
-export type TSingleAnnouncementRead= z.infer<typeof singleAnnouncementReadSchema>
+export type TSingleAnnouncementRead = z.infer<
+  typeof singleAnnouncementReadSchema
+>;
 
 export interface IPaginationAnnouncements {
   prevPage: string | null;

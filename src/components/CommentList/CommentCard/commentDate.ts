@@ -9,7 +9,6 @@ export const commentDate = (date: string | Date) => {
   );
 
   const monthsAgo = Math.floor(daysAgo / 30);
-
   if (daysAgo < 30) {
     if (daysAgo === 0) {
       return 'hoje';

@@ -34,7 +34,7 @@ export const StyledTexts = styled(BaseTexts)<IStyledTypographyProps>`
 
   text-align: ${({ textAlign }) => textAlign};
 
- ${({ $fontSize }) => {
+  ${({ $fontSize }) => {
     switch ($fontSize) {
       case 'heading_700_44':
         return css`

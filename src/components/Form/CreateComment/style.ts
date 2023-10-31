@@ -32,7 +32,8 @@ export const DivFormStyle = styled.div`
     color: rgba(73, 80, 87, 1);
     font-family: Lexend;
     font-size: 0.875rem;
-    font-weight: 500;
+    line-height: 1.5rem;
+    font-weight: 400;
   }
 `;
 

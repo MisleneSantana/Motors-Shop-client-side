@@ -6,7 +6,7 @@ export interface IRadioButtonProps
   extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
-  value: string | boolean | number;
+  value: string | number | readonly string[] | undefined;
   defaultChecked?: boolean;
   error?: FieldError;
 }

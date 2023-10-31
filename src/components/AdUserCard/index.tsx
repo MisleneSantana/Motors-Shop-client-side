@@ -9,6 +9,7 @@ export const AdUserCard = () => {
   const userId = localStorage.getItem('@user:id');
   const { user: userLogged } = useContext(AuthContext);
   const { defineInitialsName } = useContext(UserContext);
+
   return (
     <>
       {userLogged && userToken && userLogged.id === userId ? (
@@ -22,7 +23,11 @@ export const AdUserCard = () => {
             <Link to={'/buyerHome'}>Ver todos anúncios</Link>
           )}
         </BoxAdUserCardStyle>
-      ) : undefined}
+      ) : (
+        <BoxAdUserCardStyle>
+          <Link to={'/'}>Página inicial</Link>
+        </BoxAdUserCardStyle>
+      )}
     </>
   );
 };

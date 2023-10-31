@@ -21,7 +21,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
   const { setUser, logout } = useContext(AuthContext);
   const { setIsCreateAccountModalOpen } = useContext(ModalContext);
 
-  // 1. Cadastrar (users)
+  // 1. Cadastrar (user)
   const registerUser = async (formData: TUserRegisterRequest) => {
     try {
       setLoading(true);
@@ -75,7 +75,7 @@ export const UserProvider = ({ children }: IUserProviderProps) => {
     }
   };
 
-  // 4. Atualizar perfil / address (users)
+  // 4. Atualizar perfil/address (users)
   const updateUserProfileOrAddress = async (
     formData: TUserUpdate,
     userId: string

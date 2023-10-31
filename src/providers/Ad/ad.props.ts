@@ -20,7 +20,7 @@ export interface IAnnouncementProviderValues {
   singleAnnouncement: TAnnouncement | undefined;
 
   sellerAnnouncements: TAnnouncementResponse[];
-  
+
   getAnnouncements: () => Promise<void>;
   createAnnouncement: (formData: TAnnouncementRequest) => Promise<void>;
   getAnnouncement: (announcementId: string | undefined) => Promise<void>;

@@ -36,11 +36,8 @@ export const NoCommentsBoxStyle = styled.div`
   p {
     color: ${({ theme }) => theme.colors.grey2};
     font-family: Lexend;
-    font-size: 0.875rem;
-    font-weight: 500;
-
-    @media (max-width: 320px) {
-      font-size: 0.75rem;
-    }
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5rem;
   }
 `;

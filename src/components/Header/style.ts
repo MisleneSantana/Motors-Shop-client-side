@@ -116,7 +116,7 @@ export const NavBarStyle = styled.nav`
     background: transparent;
     color: ${({ theme }) => theme.colors.grey2};
     font-weight: 400;
-    line-height: 28px;
+    line-height: 1rem;
 
     @media (max-width: 500px) {
       font-size: 12px;

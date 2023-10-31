@@ -18,10 +18,10 @@ export const RoutesMain = () => {
       <Route path='/resetPassword' element={<ResetPassword />}></Route>
 
       <Route element={<RoutesProtected />}>
-        <Route path='/buyerHome' element={<BuyerDashboard />} />
         <Route path='/sellerHome' element={<SellerDashboard />} />
       </Route>
 
+      <Route path='/buyerHome' element={<BuyerDashboard />} />
       <Route path='/product' element={<Ad />} />
       <Route path='*' element={<NotFound />}></Route>
     </Routes>

@@ -4,12 +4,14 @@ import { Button } from '../../Button';
 import { ModalNavBarStyle } from './style';
 import { ModalContext } from '../../../providers/Modal/ModalContext';
 import { AnnouncementContext } from '../../../providers/Ad/AdContext';
+import { useNavigate } from 'react-router-dom';
 
 export const ModalNavBar = ({
   setOpenModalNavBar,
 }: {
   setOpenModalNavBar: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const navigate = useNavigate();
   const userId = localStorage.getItem('@user:id');
   const { user: userLogged, logout } = useContext(AuthContext);
   const { getAnnouncementsBySeller } = useContext(AnnouncementContext);
@@ -66,7 +68,9 @@ export const ModalNavBar = ({
             <Button
               text='Meus Anúncios'
               onClick={() => {
-                getAnnouncementsBySeller(userId);
+                getAnnouncementsBySeller(userId),
+                  setOpenModalNavBar(false),
+                  navigate('/sellerHome');
               }}
             />
             <Button

@@ -2,12 +2,21 @@ import styled from 'styled-components';
 
 export const AnnouncementsBoxStyle = styled.div`
   width: 80%;
-  margin-top: 10rem;
+  margin: 3.5rem auto;
+  border: 1px solid red;
+
+  display: flex;
+  flex-direction: column;
 
   & > h3 {
     font-family: Lexend;
     font-size: 1.5rem;
     font-weight: 600;
+
+    font-weight: 600;
+    display: flex;
+    width: 100%;
+    border: 1px solid red;
 
     @media (max-width: 500px) {
       font-size: 1.125rem;
@@ -21,8 +30,7 @@ export const AnnouncementsBoxStyle = styled.div`
     grid-template-columns: repeat(auto-fit, 19.5rem);
     grid-template-rows: repeat(auto-fit, 22.25rem);
     justify-content: center;
-    justify-items: center;
-    padding: 30px;
+    padding: 20px;
     gap: 1rem;
 
     @media (max-width: 500px) {
